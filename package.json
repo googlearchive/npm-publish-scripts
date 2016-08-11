@@ -6,7 +6,8 @@
     "build": "",
     "build-docs": "",
     "test": "echo No Tests.",
-    "bundle": "./project/create-release-bundle.sh"
+    "bundle": "./project/create-release-bundle.sh",
+    "publish-release": "./src/publish-release.sh"
   },
   "repository": {
     "type": "git",
