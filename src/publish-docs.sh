@@ -47,7 +47,14 @@ echo "Clone repo and get gh-pages branch"
 echo ""
 git clone $GITHUB_REPO ./gh-pages
 cd ./gh-pages
-git checkout gh-pages
+{
+  git checkout gh-pages
+} || {
+  echo ""
+  echo "WARNING: gh-pages doesn't exist so nothing we can do."
+  echo ""
+  exit 0;
+}
 cd ..
 
 echo ""
