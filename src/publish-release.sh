@@ -147,30 +147,18 @@ rm -rf ./tagged-release
 
 echo ""
 echo ""
-echo "Generating a PR to update masters package.json"
+echo "Commiting package.json updates to master"
 echo ""
-
 git add package.json
 git commit -m "Auto-generated PR to update package.json with new version - $PACKAGE_VERSION"
-git push origin -f $currentBranch:release-pr
-
-# Make sure any pending commits on master are reset (i.e. the package.json commit)
-git reset --hard origin/$currentBranch
-
-# This is the path of this script (i.e. if it's used within node_modules)
-SCRIPT=$(readlink -f "$0")
-SCRIPTPATH=$(dirname "$SCRIPT")
-
-{
-  pullr --new --from release-pr --into master --title 'Auto-generated PR to update the version number' --description 'Please review this change and ensure that package.json is the ONLY file changed AND that the version matches the latest tagged release.'
-} || {
-  echo ""
-  echo "ERROR: Unable to auto-generate the Pull Request from release-pr into master. Please do so manually."
-  echo ""
-}
+git push origin -f $currentBranch
 
 echo ""
 echo ""
 echo "Build and Publish Docs"
 echo ""
+# This is the path of this script (i.e. if it's used within node_modules)
+SCRIPT=$(readlink -f "$0")
+SCRIPTPATH=$(dirname "$SCRIPT")
+
 "$SCRIPTPATH/publish-docs.sh" releases/$2/$PACKAGE_VERSION
