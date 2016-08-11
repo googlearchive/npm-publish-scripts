@@ -53,6 +53,8 @@ cd ./gh-pages
   echo ""
   echo "WARNING: gh-pages doesn't exist so nothing we can do."
   echo ""
+  cd ..
+  rm -rf ./gh-pages
   exit 0;
 }
 cd ..
