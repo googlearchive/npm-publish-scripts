@@ -1,10 +1,10 @@
 {
   "name": "npm-publish-scripts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple set of scripts to help when publishing to NPM from a Github Repo",
   "scripts": {
-    "build": "",
-    "build-docs": "",
+    "build": "echo No Build.",
+    "build-docs": "echo No Docs.",
     "test": "echo No Tests.",
     "bundle": "./project/create-release-bundle.sh",
     "publish-release": "./src/publish-release.sh"
