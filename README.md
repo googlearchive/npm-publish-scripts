@@ -54,3 +54,23 @@ A set of shell scripts to help with publishing to NPM (Helping deal with tagging
 
    **NOTE:** Do NOT call this 'release', this conflicts with an NPM reserved
    command.
+
+ 1. Finally, permform a release:
+
+     npm run publish-release minor stable
+
+     The options are:
+
+         - patch | minor | major
+            This outlines the type of update, patch will bump 0.0.X value.
+            So for current version 0.0.1, a new patch release would be 0.0.2.
+
+            Minor goes from 0.0.1 to 0.1.1.
+
+            Major goes from 0.0.1 to 1.0.1
+
+        - stable | alpha | beta
+            This is the kind of release. Stable will publish on Github and NPM
+            as a normal release. Alpha or Beta will add a tag to NPM so users
+            must use `npm install project-name@alpha` or
+            `npm install project-name@beta`.
