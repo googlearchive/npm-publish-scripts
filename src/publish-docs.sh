@@ -80,10 +80,14 @@ echo ""
 echo "Update Jekyll Template in gh-pages"
 echo ""
 cd ./gh-pages
+echo "        Removing previous template files"
 find . -maxdepth 1 ! -name 'docs' ! -name '.*' | xargs rm -rf
 cd ..
+echo "        Getting SCRIPT value"
 SCRIPT=$(readlink -f "$0")
+echo "        Getting SCRIPTPATH value"
 SCRIPTPATH=$(dirname "$SCRIPT")
+echo "        Copying $SCRIPTPATH/docs-template/. to gh-pages"
 cp -r "$SCRIPTPATH/docs-template/." ./gh-pages/
 
 echo ""
