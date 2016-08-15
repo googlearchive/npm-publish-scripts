@@ -151,7 +151,7 @@ echo "Commiting package.json updates to master"
 echo ""
 git add package.json
 git commit -m "Auto-generated PR to update package.json with new version - $PACKAGE_VERSION"
-git push origin -f $currentBranch
+git push origin $currentBranch
 
 echo ""
 echo ""
