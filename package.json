@@ -8,7 +8,7 @@
     "test": "echo No Tests.",
     "bundle": "./project/create-release-bundle.sh",
     "publish-release": "./src/publish-release.sh",
-    "publis-docs": "echo No Publish Docs."
+    "publish-docs": "echo No Publish Docs."
   },
   "repository": {
     "type": "git",
