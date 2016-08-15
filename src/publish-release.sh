@@ -157,8 +157,4 @@ echo ""
 echo ""
 echo "Build and Publish Docs"
 echo ""
-# This is the path of this script (i.e. if it's used within node_modules)
-SCRIPT=$(readlink -f "$0")
-SCRIPTPATH=$(dirname "$SCRIPT")
-
-"$SCRIPTPATH/publish-docs.sh" releases/$2/$PACKAGE_VERSION
+npm run publish-docs releases/$2/$PACKAGE_VERSION

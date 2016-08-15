@@ -31,11 +31,6 @@ fi
 
 GITHUB_REPO=$(git config --get remote.origin.url)
 
-if [ -z "$1" ]; then
-  echo "    Bad input: Expected a directory as the first argument for the docs to go into (i.e. master or releases/v1.0.0)";
-  exit 1;
-fi
-
 echo ""
 echo ""
 echo "Deploying new docs"
@@ -59,21 +54,23 @@ cd ./gh-pages
 }
 cd ..
 
-echo ""
-echo ""
-echo "Build the docs"
-echo ""
-npm run build-docs
+if [ -z "$1" ]; then
+  echo ""
+  echo ""
+  echo "Build the docs"
+  echo ""
+  npm run build-docs
 
 
-echo ""
-echo ""
-echo "Copy docs to gh-pages"
-echo ""
-docLocation="./gh-pages/docs/$1"
-rm -rf $docLocation
-mkdir -p $docLocation
-cp -r ./docs/. $docLocation
+  echo ""
+  echo ""
+  echo "Copy docs to gh-pages"
+  echo ""
+  docLocation="./gh-pages/docs/$1"
+  rm -rf $docLocation
+  mkdir -p $docLocation
+  cp -r ./docs/. $docLocation
+fi
 
 echo ""
 echo ""
@@ -100,7 +97,8 @@ mkdir -p _data
 DOCS_INFO_OUTPUT="./_data/gendoclist.yml"
 echo "# Auto-generated from the sw-testing-helper module" >> $DOCS_INFO_OUTPUT
 echo "releases:" >> $DOCS_INFO_OUTPUT
-RELEASE_DIRECTORIES=$(find ./docs/releases/stable/ -maxdepth 1 -mindepth 1 -type d | xargs -n 1 basename | sort --version-sort --reverse);
+UNSORTED_RELEASE_DIRECTORIES=$(find ./docs/releases/stable/ -maxdepth 1 -mindepth 1 -type d | xargs -n 1 basename);
+RELEASE_DIRECTORIES=$(semver ${UNSORTED_RELEASE_DIRECTORIES} | sort --reverse)
 for releaseDir in $RELEASE_DIRECTORIES; do
   if [ -f ./docs/releases/stable/$releaseDir/index.html ]; then
     echo "    - $releaseDir" >> $DOCS_INFO_OUTPUT

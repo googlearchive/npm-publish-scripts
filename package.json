@@ -7,7 +7,8 @@
     "build-docs": "echo No Docs.",
     "test": "echo No Tests.",
     "bundle": "./project/create-release-bundle.sh",
-    "publish-release": "./src/publish-release.sh"
+    "publish-release": "./src/publish-release.sh",
+    "publis-docs": "echo No Publish Docs."
   },
   "repository": {
     "type": "git",
@@ -18,5 +19,7 @@
     "url": "https://github.com/GoogleChrome/publish-scripts/issues"
   },
   "homepage": "https://github.com/GoogleChrome/publish-scripts#readme",
-  "devDependencies": {}
+  "devDependencies": {
+    "semver": "^5.3.0"
+  }
 }
