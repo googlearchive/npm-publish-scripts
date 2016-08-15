@@ -39,7 +39,11 @@ if [[ $1 != "patch" && $1 != "minor" && $1 != "major" ]] ; then
   exit 1;
 fi
 
-if [[ $2 != "stable" && $2 != "alpha" && $2 != "beta" ]] ; then
+RELEASE_TYPE=$2;
+if [ "$RELEASE_TYPE" = '' ]; then
+ RELEASE_TYPE="stable"
+fi
+if [[ $RELEASE_TYPE != "stable" && $RELEASE_TYPE != "alpha" && $RELEASE_TYPE != "beta" ]] ; then
   echo "    Bad input: Expected a release type of \"stable\", \"alpha\" or \"beta\"";
   exit 1;
 fi
@@ -87,7 +91,7 @@ echo ""
 # in master to have the new version
 PACKAGE_VERSION=$(npm --no-git-tag-version version $1)
 
-if [[ $2 != "stable" ]]; then
+if [[ $RELEASE_TYPE != "stable" ]]; then
   PACKAGE_VERSION="${PACKAGE_VERSION}-${2}"
 fi
 
@@ -132,10 +136,10 @@ echo ""
 echo ""
 echo "Publish update to NPM"
 echo ""
-if [[ $2 == "stable" ]]; then
+if [[ $RELEASE_TYPE == "stable" ]]; then
   npm publish
 else
-  npm publish --tag $2
+  npm publish --tag $RELEASE_TYPE
 fi
 
 echo ""
@@ -157,4 +161,4 @@ echo ""
 echo ""
 echo "Build and Publish Docs"
 echo ""
-npm run publish-docs releases/$2/$PACKAGE_VERSION
+npm run publish-docs releases/$RELEASE_TYPE/$PACKAGE_VERSION
