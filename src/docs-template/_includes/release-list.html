@@ -1,9 +1,21 @@
+{% if include.title and include.releaseData and include.releaseType %}
+
 ## {{ include.title }}
 
-[View the docs for the latest release]({{ include.releaseData.latest | prepend: "/docs/releases/stable/" | prepend: site.github.url | replace: 'http://', 'https://' }})
+{% capture latestUrl %}{{ site.github.url }}/docs/releases/{{ include.releaseType }}/{{ include.releaseData.latest }}{% endcapture %}
+
+[View the docs for the latest release]({{ latestUrl | replace: 'http://', 'https://' }})
 
 <ul>
-{% for release in include.releaseData.all %}
-<li>[View the docs for {{ release }}]({{ release | prepend: "/docs/releases/stable/" | prepend: site.github.url | replace: 'http://', 'https://' }})</li>
-{% endfor %}
+  {% for release in include.releaseData.all %}
+
+  {% capture releaseUrl %}{{ site.github.url }}/docs/releases/{{ include.releaseType }}/{{ release }}{% endcapture %}
+
+  <li>
+    <a href="{{ releaseUrl | replace: 'http://', 'https://' }}">View the docs for {{ release }}</a>
+  </li>
+
+  {% endfor %}
 </ul>
+
+{% endif %}
