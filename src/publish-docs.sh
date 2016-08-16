@@ -43,6 +43,7 @@ echo ""
 git clone $GITHUB_REPO ./gh-pages
 cd ./gh-pages
 {
+  git fetch origin
   git checkout gh-pages
 } || {
   echo ""
@@ -54,7 +55,7 @@ cd ./gh-pages
 }
 cd ..
 
-if [ -z "$1" ]; then
+if [ -d "$1" ]; then
   echo ""
   echo ""
   echo "Build the docs"
@@ -78,13 +79,15 @@ echo "Update Jekyll Template in gh-pages"
 echo ""
 cd ./gh-pages
 echo "        Removing previous template files"
+echo ""
 find . -maxdepth 1 ! -name 'docs' ! -name '.*' | xargs rm -rf
 cd ..
-echo "        Getting SCRIPT value"
-SCRIPT=$(readlink -f "$0")
+
 echo "        Getting SCRIPTPATH value"
-SCRIPTPATH=$(dirname "$SCRIPT")
+echo ""
+SCRIPTPATH="${PWD}/node_modules/npm-publish-scripts"
 echo "        Copying $SCRIPTPATH/docs-template/. to gh-pages"
+echo ""
 cp -r "$SCRIPTPATH/docs-template/." ./gh-pages/
 
 echo ""
@@ -95,17 +98,37 @@ echo ""
 cd ./gh-pages
 mkdir -p _data
 DOCS_INFO_OUTPUT="./_data/gendoclist.yml"
-echo "# Auto-generated from the sw-testing-helper module" >> $DOCS_INFO_OUTPUT
+
+echo "# Auto-generated from the npm-publish-scripts module" >> $DOCS_INFO_OUTPUT
 echo "releases:" >> $DOCS_INFO_OUTPUT
-UNSORTED_RELEASE_DIRECTORIES=$(find ./docs/releases/stable/ -maxdepth 1 -mindepth 1 -type d | xargs -n 1 basename);
-RELEASE_DIRECTORIES=$(semver ${UNSORTED_RELEASE_DIRECTORIES} | sort --reverse)
-for releaseDir in $RELEASE_DIRECTORIES; do
-  if [ -f ./docs/releases/stable/$releaseDir/index.html ]; then
-    echo "    - $releaseDir" >> $DOCS_INFO_OUTPUT
-  else
-    echo "Skipping releases/stable/$releasesDir due to no index.html file"
+
+RELEASE_TYPES=("alpha" "beta" "stable")
+for releaseType in "${RELEASE_TYPES[@]}"; do
+  if [ ! -d "./docs/releases/$releaseType/" ]; then
+    echo "    No $releaseType docs."
+    continue
   fi
+
+  echo "    Found $releaseType docs."
+
+  UNSORTED_RELEASE_DIRECTORIES=$(find ./docs/releases/$releaseType/ -maxdepth 1 -mindepth 1 -type d | xargs -n 1 basename);
+  RELEASE_DIRECTORIES=$(semver ${UNSORTED_RELEASE_DIRECTORIES} | sort --reverse)
+  RELEASE_DIRECTORIES=($RELEASE_DIRECTORIES)
+
+  echo "    $releaseType:" >> $DOCS_INFO_OUTPUT
+  echo "        latest: v${RELEASE_DIRECTORIES[0]}" >> $DOCS_INFO_OUTPUT
+  echo "        all:" >> $DOCS_INFO_OUTPUT
+
+  for releaseDir in "${RELEASE_DIRECTORIES[@]}"; do
+    releaseDir="v${releaseDir}"
+    if [ -f "./docs/releases/$releaseType/$releaseDir/index.html" ]; then
+      echo "            - $releaseDir" >> $DOCS_INFO_OUTPUT
+    else
+      echo "Skipping releases/$releaseType/$releasesDir due to no index.html file"
+    fi
+  done
 done
+
 echo "docs:" >> $DOCS_INFO_OUTPUT
 DOC_DIRECTORIES=$(find ./docs/ -maxdepth 1 -mindepth 1 -type d | xargs -n 1 basename);
 for docDir in $DOC_DIRECTORIES; do

@@ -1,0 +1,9 @@
+## {{ include.title }}
+
+[View the docs for the latest release]({{ include.releaseData.latest | prepend: "/docs/releases/stable/" | prepend: site.github.url | replace: 'http://', 'https://' }})
+
+<ul>
+{% for release in include.releaseData.all %}
+<li>[View the docs for {{ release }}]({{ release | prepend: "/docs/releases/stable/" | prepend: site.github.url | replace: 'http://', 'https://' }})</li>
+{% endfor %}
+</ul>
