@@ -55,7 +55,7 @@ cd ./gh-pages
 }
 cd ..
 
-if [ -d "$1" ]; then
+if [ ! -z "$1" ]; then
   echo ""
   echo ""
   echo "Build the docs"
