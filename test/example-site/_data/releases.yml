@@ -1,0 +1,19 @@
+# Auto-generated from the npm-publish-scripts module
+stable:
+    latest: /docs/releases/stable/v0.3.0
+    all:
+        - /docs/releases/stable/v0.3.0
+        - /docs/releases/stable/v0.2.0
+        - /docs/releases/stable/v0.1.6
+        - /docs/releases/stable/v0.1.4
+        - /docs/releases/stable/v0.1.2
+        - /docs/releases/stable/v0.1.1
+        - /docs/releases/stable/v0.1.0
+        - /docs/releases/stable/v0.0.4
+beta:
+    latest: /docs/releases/beta/v0.4.0-beta
+    all:
+        - /docs/releases/beta/v0.4.0-beta
+        - /docs/releases/beta/v0.3.1-beta
+other:
+  - /docs/master

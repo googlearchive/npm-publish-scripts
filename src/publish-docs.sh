@@ -100,7 +100,6 @@ mkdir -p _data
 DOCS_INFO_OUTPUT="./_data/gendoclist.yml"
 
 echo "# Auto-generated from the npm-publish-scripts module" >> $DOCS_INFO_OUTPUT
-echo "releases:" >> $DOCS_INFO_OUTPUT
 
 RELEASE_TYPES=("alpha" "beta" "stable")
 for releaseType in "${RELEASE_TYPES[@]}"; do
@@ -115,9 +114,9 @@ for releaseType in "${RELEASE_TYPES[@]}"; do
   RELEASE_DIRECTORIES=$(semver ${UNSORTED_RELEASE_DIRECTORIES} | sort --reverse)
   RELEASE_DIRECTORIES=($RELEASE_DIRECTORIES)
 
-  echo "    $releaseType:" >> $DOCS_INFO_OUTPUT
-  echo "        latest: v${RELEASE_DIRECTORIES[0]}" >> $DOCS_INFO_OUTPUT
-  echo "        all:" >> $DOCS_INFO_OUTPUT
+  echo "$releaseType:" >> $DOCS_INFO_OUTPUT
+  echo "    latest: /docs/releases/${releaseType}/v${RELEASE_DIRECTORIES[0]}" >> $DOCS_INFO_OUTPUT
+  echo "    all:" >> $DOCS_INFO_OUTPUT
 
   for releaseDir in "${RELEASE_DIRECTORIES[@]}"; do
     releaseDir="v${releaseDir}"
@@ -129,7 +128,7 @@ for releaseType in "${RELEASE_TYPES[@]}"; do
   done
 done
 
-echo "docs:" >> $DOCS_INFO_OUTPUT
+echo "other:" >> $DOCS_INFO_OUTPUT
 DOC_DIRECTORIES=$(find ./docs/ -maxdepth 1 -mindepth 1 -type d | xargs -n 1 basename);
 for docDir in $DOC_DIRECTORIES; do
   if [ "$docDir" = 'releases' ]; then
@@ -137,7 +136,7 @@ for docDir in $DOC_DIRECTORIES; do
   fi
 
   if [ -f ./docs/$docDir/index.html ]; then
-    echo "  - $docDir" >> $DOCS_INFO_OUTPUT
+    echo "  - /docs/$docDir" >> $DOCS_INFO_OUTPUT
   else
     echo "Skipping $docDir due to no index.html file"
   fi
