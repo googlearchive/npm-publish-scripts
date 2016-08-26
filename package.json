@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/GoogleChrome/publish-scripts#readme",
   "devDependencies": {
+    "del": "^2.2.2",
+    "gulp": "github:gulpjs/gulp#4.0",
     "semver": "^5.3.0"
   },
   "bin": {
