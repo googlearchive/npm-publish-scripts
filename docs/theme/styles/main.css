@@ -1,12 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500,700);
 
-@import "/styles/variables/dimens.css";
-@import "/styles/variables/colors.css";
+@import "./variables/dimens.css";
+@import "./variables/colors.css";
 
-@import "/styles/components/page-header.css";
-@import "/styles/components/site-header.css";
-@import "/styles/components/footer.css";
-@import "/styles/components/code-styles.css";
+@import "./components/page-header.css";
+@import "./components/site-header.css";
+@import "./components/footer.css";
+@import "./components/code-styles.css";
 
 html, body {
   width:100%;

@@ -1,5 +1,7 @@
 source:       .
 destination:  ./build/
+layouts_dir: ./theme/_layouts/
+includes_dir: ./theme/_includes/
 
 # This adds github pages data
 gems: ['jekyll-github-metadata']
