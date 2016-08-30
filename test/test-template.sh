@@ -17,11 +17,14 @@ if [ "$BASH_VERSION" = '' ]; then
  exit 1;
 fi
 
-rm -rf ./test/output/
+cd ./test/example-site/
 
-cp -r ./src/docs-template/. ./test/output/
-cp -r ./test/docs-template/. ./test/output/
+rm -rf ./docs/theme/
 
-cd test/output/
+cp -r ../../src/docs-template/theme/. ./docs/theme/
 
-jekyll serve
+jsdoc ./src/**.js -c ../../src/docs-template/_jsdoc.conf -d ./docs/reference-docs/stable/v1.0.0/
+
+cd ./docs/
+
+jekyll serve --config ../../../src/docs-template/_config.yml
