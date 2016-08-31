@@ -17,15 +17,17 @@ if [ "$BASH_VERSION" = '' ]; then
  exit 1;
 fi
 
+# CHANGE DIRECTORY TO EXAMPLE SITE
 cd ./test/example-site/
 
-rm -rf ./docs/theme/
+# DELETE ANY OLD DOCS
+rm -rf ./docs/jekyll-theme/
+rm -rf ./docs/reference-docs/
 
-cp -r ../../src/docs-template/theme/. ./docs/theme/
+# COPY JEKYLL THEME
+cp -r ../../src/all-themes/jekyll-theme/. ./docs/jekyll-theme/
+jsdoc ./src/* -c ./_jsdoc.conf -d ./docs/reference-docs/stable/v1.0.0/
 
-rm -rf ./docs/reference-docs/stable/v1.0.0/
-jsdoc ./src/* -c ../../src/docs-template/_jsdoc.conf -d ./docs/reference-docs/stable/v1.0.0/
-
+# SERVER JEKYLL FROM INSIDE the example-sites docs directory
 cd ./docs/
-
-jekyll serve --config ../../../src/docs-template/_config.yml
+jekyll serve --config ../_config.yml

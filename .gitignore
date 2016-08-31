@@ -5,4 +5,4 @@ _site/
 .sass-cache/
 test/output/
 test/example-site/docs/reference-docs/
-test/example-site/docs/theme/
+test/example-site/docs/jekyll-theme/
