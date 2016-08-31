@@ -130,7 +130,7 @@ if [ -d "./docs/reference-docs/" ]; then
   echo "other:" >> $DOCS_RELEASE_OUTPUT
   DOC_DIRECTORIES=$(find ./docs/reference-docs/ -maxdepth 1 -mindepth 1 -type d | xargs -n 1 basename);
   for docDir in $DOC_DIRECTORIES; do
-    if [ "$docDir" = 'stable' || "$docDir" = 'alpha' || "$docDir" = 'beta' ]; then
+    if [ "$docDir" = 'stable' ] || [ "$docDir" = 'alpha' ] || [ "$docDir" = 'beta' ]; then
       continue
     fi
 
