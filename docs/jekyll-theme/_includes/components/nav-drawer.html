@@ -1,3 +1,4 @@
+{% include variables.html %}
 <aside class="js-side-nav js-menu-hide side-nav">
   <nav class="js-side-nav-container side-nav__container">
 
@@ -6,7 +7,7 @@
     {% for nav_page in navigation_pages %}
       {% if nav_page['navigation_weight'] %}
       <li>
-        <a href="{{ nav_page.url }}" {% if nav_page.url == page.url %}class="active"{% endif %}>
+        <a href="{{ project_root_url }}{{ nav_page.url }}" {% if nav_page.url == page.url %}class="active"{% endif %}>
           {{ nav_page.title }}
         </a>
       </li>
