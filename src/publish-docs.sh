@@ -36,121 +36,120 @@ echo ""
 echo "Deploying new docs"
 echo ""
 
-echo ""
-echo ""
-echo "Clone repo and get gh-pages branch"
-echo ""
-git clone $GITHUB_REPO ./gh-pages
-cd ./gh-pages
-{
-  git fetch origin
-  git checkout gh-pages
-} || {
-  echo ""
-  echo "WARNING: gh-pages doesn't exist so nothing we can do."
-  echo ""
-  cd ..
-  rm -rf ./gh-pages
-  exit 0;
-}
-cd ..
+#echo ""
+#echo ""
+#echo "Clone repo and get gh-pages branch"
+#echo ""
+#git clone $GITHUB_REPO ./gh-pages
+#cd ./gh-pages
+# {
+#  git fetch origin
+#  git checkout gh-pages
+# } || {
+#  echo ""
+#  echo "WARNING: gh-pages doesn't exist so nothing we can do."
+#  echo ""
+#  cd ..
+#  rm -rf ./gh-pages
+#  exit 0;
+#}
+#cd ..
 
+# If a path is passed in as an argument, it indicates a snapshot of docs
+# is desired and should be stored in the passed in location
 if [ ! -z "$1" ]; then
   echo ""
   echo ""
   echo "Build the docs"
   echo ""
-  npm run build-docs
+  npm run build-docs ./reference-docs
 
 
   echo ""
   echo ""
   echo "Copy docs to gh-pages"
   echo ""
-  docLocation="./gh-pages/docs/$1"
-  rm -rf $docLocation
-  mkdir -p $docLocation
-  cp -r ./docs/. $docLocation
+  DOC_LOCATION="./docs/$1"
+  rm -rf $DOC_LOCATION
+  mkdir -p $DOC_LOCATION
+  cp -r ./reference-docs/. $DOC_LOCATION
 fi
 
 echo ""
 echo ""
 echo "Update Jekyll Template in gh-pages"
 echo ""
-cd ./gh-pages
+# cd ./docs
 echo "        Removing previous template files"
 echo ""
-find . -maxdepth 1 ! -name 'docs' ! -name '.*' | xargs rm -rf
-cd ..
+rm -rf ./docs/jekyll-theme
+# cd ..
 
 echo "        Getting SCRIPTPATH value"
 echo ""
-SCRIPTPATH="${PWD}/node_modules/npm-publish-scripts"
-echo "        Copying $SCRIPTPATH/docs-template/. to gh-pages"
+SCRIPTPATH=$(dirname $0) # "${PWD}/node_modules/npm-publish-scripts"
+echo "        Copying $SCRIPTPATH/jekyll-theme/ to ./docs/"
 echo ""
-cp -r "$SCRIPTPATH/docs-template/." ./gh-pages/
+cp -r "$SCRIPTPATH/jekyll-theme" ./docs/
 
 echo ""
 echo ""
-echo "Configure Doc Directories in _data/gendoclist.yml"
+echo "Configure Doc Directories in _data/releases.yml"
 echo ""
 
-cd ./gh-pages
+cd ./docs
 mkdir -p _data
-DOCS_INFO_OUTPUT="./_data/gendoclist.yml"
+DOCS_RELEASE_OUTPUT="./_data/releases.yml"
 
-echo "# Auto-generated from the npm-publish-scripts module" >> $DOCS_INFO_OUTPUT
+echo "# Auto-generated from the npm-publish-scripts module" >> $DOCS_RELEASE_OUTPUT
 
 RELEASE_TYPES=("alpha" "beta" "stable")
 for releaseType in "${RELEASE_TYPES[@]}"; do
-  if [ ! -d "./docs/releases/$releaseType/" ]; then
+  if [ ! -d "./docs/reference-docs/$releaseType/" ]; then
     echo "    No $releaseType docs."
     continue
   fi
 
   echo "    Found $releaseType docs."
 
-  UNSORTED_RELEASE_DIRECTORIES=$(find ./docs/releases/$releaseType/ -maxdepth 1 -mindepth 1 -type d | xargs -n 1 basename);
+  UNSORTED_RELEASE_DIRECTORIES=$(find ./docs/reference-docs/$releaseType/ -maxdepth 1 -mindepth 1 -type d | xargs -n 1 basename);
   RELEASE_DIRECTORIES=$(semver ${UNSORTED_RELEASE_DIRECTORIES} | sort --reverse)
   RELEASE_DIRECTORIES=($RELEASE_DIRECTORIES)
 
-  echo "$releaseType:" >> $DOCS_INFO_OUTPUT
-  echo "    latest: /docs/releases/${releaseType}/v${RELEASE_DIRECTORIES[0]}" >> $DOCS_INFO_OUTPUT
-  echo "    all:" >> $DOCS_INFO_OUTPUT
+  echo "$releaseType:" >> $DOCS_RELEASE_OUTPUT
+  echo "    latest: /docs/reference-docs/${releaseType}/v${RELEASE_DIRECTORIES[0]}" >> $DOCS_RELEASE_OUTPUT
+  echo "    all:" >> $DOCS_RELEASE_OUTPUT
 
   for releaseDir in "${RELEASE_DIRECTORIES[@]}"; do
     releaseDir="v${releaseDir}"
-    if [ -f "./docs/releases/$releaseType/$releaseDir/index.html" ]; then
-      echo "            - $releaseDir" >> $DOCS_INFO_OUTPUT
+    if [ -f "./docs/reference-docs/$releaseType/$releaseDir/index.html" ]; then
+      echo "            - $releaseDir" >> $DOCS_RELEASE_OUTPUT
     else
-      echo "Skipping releases/$releaseType/$releasesDir due to no index.html file"
+      echo "Skipping reference-docs/$releaseType/$releasesDir due to no index.html file"
     fi
   done
 done
 
-echo "other:" >> $DOCS_INFO_OUTPUT
-DOC_DIRECTORIES=$(find ./docs/ -maxdepth 1 -mindepth 1 -type d | xargs -n 1 basename);
+echo "other:" >> $DOCS_RELEASE_OUTPUT
+DOC_DIRECTORIES=$(find ./docs/reference-docs/ -maxdepth 1 -mindepth 1 -type d | xargs -n 1 basename);
 for docDir in $DOC_DIRECTORIES; do
-  if [ "$docDir" = 'releases' ]; then
+  if [ "$docDir" = 'reference-docs' ]; then
     continue
   fi
 
   if [ -f ./docs/$docDir/index.html ]; then
-    echo "  - /docs/$docDir" >> $DOCS_INFO_OUTPUT
+    echo "  - /docs/reference-docs/$docDir" >> $DOCS_RELEASE_OUTPUT
   else
-    echo "Skipping $docDir due to no index.html file"
+    echo "Skipping reference-docs/$docDir due to no index.html file"
   fi
 done
 cd ..
 
 echo ""
 echo ""
-echo "Commit to gh-pages"
+echo "Commit New Docs Changes"
 echo ""
 # The curly braces act as a try / catch
-
-cd ./gh-pages
-
 {
   if [ "$TRAVIS" ]; then
     # inside this git repo we'll pretend to be a new user
@@ -158,7 +157,7 @@ cd ./gh-pages
     git config user.email "gauntface@google.com"
   fi
 
-  git add ./
+  git add ./docs/
   git commit -m "Deploy to GitHub Pages"
 
   if [ "$TRAVIS" ]; then
@@ -166,9 +165,9 @@ cd ./gh-pages
     # repo's gh-pages branch. (All previous history on the gh-pages branch
     # will be lost, since we are overwriting it.) We redirect any output to
     # /dev/null to hide any sensitive credential data that might otherwise be exposed.
-    git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" gh-pages > /dev/null 2>&1
+    git push "https://${GH_TOKEN}@${GH_REF}" master > /dev/null 2>&1
   else
-    git push --force origin gh-pages
+    git push origin master
   fi
 } || {
   echo ""
@@ -180,5 +179,3 @@ echo ""
 echo ""
 echo "Clean up gh-pages"
 echo ""
-cd ..
-rm -rf ./gh-pages

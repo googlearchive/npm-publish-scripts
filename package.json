@@ -8,24 +8,24 @@
     "test": "echo No Tests.",
     "bundle": "./project/create-release-bundle.sh",
     "publish-release": "./src/publish-release.sh",
-    "publish-docs": "echo No Publish Docs."
+    "publish-docs": "./src/publish-docs.sh"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GoogleChrome/publish-scripts.git"
+    "url": "git+https://github.com:GoogleChrome/npm-publish-scripts.git"
   },
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/GoogleChrome/publish-scripts/issues"
+    "url": "https://github.com/GoogleChrome/npm-publish-scripts/issues"
   },
-  "homepage": "https://github.com/GoogleChrome/publish-scripts#readme",
+  "homepage": "https://googlechrome.github.io/npm-publish-scripts/",
   "devDependencies": {
     "del": "^2.2.2",
     "gulp": "github:gulpjs/gulp#4.0",
     "semver": "^5.3.0"
   },
   "bin": {
-    "publish-docs.sh": "src/publish-docs.sh",
-    "publish-release.sh": "src/publish-release.sh"
+    "publish-docs.sh": "./publish-docs.sh",
+    "publish-release.sh": "./publish-release.sh"
   }
 }
