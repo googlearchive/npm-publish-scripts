@@ -25,10 +25,8 @@ any of this you first need to install the module via NPM.
 
 # Usage
 
-In the project you wish to add the release script to perform the following
-steps.
 
-## Setup NPM Run Scripts
+## Publish Release to NPM
 
 When you want to publish to NPM there are a few steps that should be taken
 before anything is published.
@@ -48,7 +46,8 @@ of the above steps. Initially add the following to your `package.json` file.
     "build": "echo 'No Build Step.'",
     "test": "echo 'No Tests Defined.'",
     "build-docs": "echo 'No Build Docs Step.'",
-    "bundle": "No 'Bundle Step Defined.'"
+    "bundle": "No 'Bundle Step Defined.'",
+    "publish-release": "publish-release.sh"
   }
 ```
 
@@ -94,17 +93,9 @@ cp package.json $1
 cp README.md $1
 ```
 
-## Setup `publish-release.sh`
-
 Once you have the NPM Scripts set up, the next step is to kick off a release.
 The easiest way to do this is to add a `publish-release` NPM script to your
-package.json.
-
-```json
-"scripts": {
-  "publish-release": "publish-release.sh"
-}
-```
+`package.json`, which we added above.
 
 To perform a release you can run the script like so:
 
@@ -119,6 +110,44 @@ treated as stable.
 When you first start using this module you probably want to perform releases
 using the `alpha or `beta` label in case there are any issues.
 
-# Want to Publish Docs?
+## Publish Docs to Github Pages
 
-This should include any reference docs or relevant information / guides.
+To publish docs using this theme is create a folder called `docs` at the root
+of your project, create an `index.md` file and add the following:
+
+```markdown
+---
+layout: index
+title: "Home"
+navigation_weight: 0
+---
+
+# Hello World
+```
+
+Then create a `docs/_config.yml` file in paste in the following:
+
+```
+source:       .
+layouts_dir: ./jekyll-theme/_layouts/
+includes_dir: ./jekyll-theme/_includes/
+
+# This adds github pages data
+gems: ['jekyll-github-metadata']
+```
+
+Then add a new NPM run script:
+
+```json
+"publish-docs": "publish-docs.sh"
+```
+
+Then run `npm run publish-docs` this should push the docs with theme to Github,
+the last step is to enable Github Pages on your project.
+
+### Configuring Github Pages
+
+Go to `Settings > Github Pages > Source` and select
+'Master Branch /docs Folder'.
+
+Then you should have the docs live on your Github Pages URL.
