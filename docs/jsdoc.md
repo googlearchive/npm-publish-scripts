@@ -7,7 +7,7 @@ navigation_weight: 1
 If you want to use JSDoc to create reference documentation for your project
 all you need to do is define the template in your JSDoc's config file.
 
-    opts > template > node_modules/npm-publish-scripts/jsdoc-theme/
+    node_modules/npm-publish-scripts/jsdoc-theme/
 
 An example for a config file would like so:
 
