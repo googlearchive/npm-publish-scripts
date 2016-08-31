@@ -289,32 +289,28 @@ function attachModuleSymbols(doclets, modules) {
     });
 }
 
-function buildMemberNav(items, itemHeading, itemsSeen, linktoFn) {
-    var nav = '';
+function buildMemberNav(items, itemsSeen, linktoFn) {
+    var nav = [];
 
     if (items.length) {
-        var itemsNav = '';
-
         items.forEach(function(item) {
+            var itemNav = {};
+
             if ( !hasOwnProp.call(item, 'longname') ) {
-                itemsNav += '<li>' + linktoFn('', item.name) + '</li>';
-            }
-            else if ( !hasOwnProp.call(itemsSeen, item.longname) ) {
+                itemNav.anchor = linktoFn('', item.name);
+            } else if ( !hasOwnProp.call(itemsSeen, item.longname) ) {
                 var displayName;
                 if (env.conf.templates.default.useLongnameInNav) {
                     displayName = item.longname;
                 } else {
                     displayName = item.name;
                 }
-                itemsNav += '<li>' + linktoFn(item.longname, displayName.replace(/\b(module|event):/g, '')) + '</li>';
-
-                itemsSeen[item.longname] = true;
+                itemNav.anchor = linktoFn(item.longname, displayName.replace(/\b(module|event):/g, ''));
+                itemsSeen[displayName] = true;
             }
-        });
 
-        if (itemsNav !== '') {
-            nav += '<h3>' + itemHeading + '</h3><ul>' + itemsNav + '</ul>';
-        }
+            nav.push(itemNav);
+        });
     }
 
     return nav;
@@ -343,35 +339,34 @@ function linktoExternal(longName, name) {
  * @return {string} The HTML for the navigation sidebar.
  */
 function buildNav(members) {
-    var nav = '<h2><a href="index.html">Home</a></h2>';
+    var nav = {};
     var seen = {};
     var seenTutorials = {};
 
-    nav += buildMemberNav(members.modules, 'Modules', {}, linkto);
-    nav += buildMemberNav(members.externals, 'Externals', seen, linktoExternal);
-    nav += buildMemberNav(members.classes, 'Classes', seen, linkto);
-    nav += buildMemberNav(members.events, 'Events', seen, linkto);
-    nav += buildMemberNav(members.namespaces, 'Namespaces', seen, linkto);
-    nav += buildMemberNav(members.mixins, 'Mixins', seen, linkto);
-    nav += buildMemberNav(members.tutorials, 'Tutorials', seenTutorials, linktoTutorial);
-    nav += buildMemberNav(members.interfaces, 'Interfaces', seen, linkto);
+    nav['Modules'] = buildMemberNav(members.modules, {}, linkto);
+    nav['Externals'] = buildMemberNav(members.externals, seen, linktoExternal);
+    nav['Classes'] = buildMemberNav(members.classes, seen, linkto);
+    nav['Events'] = buildMemberNav(members.events, seen, linkto);
+    nav['Namespaces'] = buildMemberNav(members.namespaces, seen, linkto);
+    nav['Mixins'] = buildMemberNav(members.mixins, seen, linkto);
+    nav['Tutorials'] = buildMemberNav(members.tutorials, seenTutorials, linktoTutorial);
+    nav['Interfaces'] = buildMemberNav(members.interfaces, seen, linkto);
 
     if (members.globals.length) {
-        var globalNav = '';
+        var globalNav = [];
 
         members.globals.forEach(function(g) {
             if ( g.kind !== 'typedef' && !hasOwnProp.call(seen, g.longname) ) {
-                globalNav += '<li>' + linkto(g.longname, g.name) + '</li>';
+                globalNav.push(linkto(g.longname, g.name));
             }
             seen[g.longname] = true;
         });
 
-        if (!globalNav) {
+        if (globalNav.length === 0) {
             // turn the heading into a link so you can actually get to the global page
-            nav += '<h3>' + linkto('global', 'Global') + '</h3>';
-        }
-        else {
-            nav += '<h3>Global</h3><ul>' + globalNav + '</ul>';
+            // nav += '<h3>' + linkto('global', 'Global') + '</h3>';
+        } else {
+            nav['Global'] = globalNav;
         }
     }
 

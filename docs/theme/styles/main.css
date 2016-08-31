@@ -135,7 +135,7 @@ h6 {
   list-style-type: none;
 }
 
-.side-nav__container ul li a {
+.side-nav__container ul li a, .side-nav__container .subheading {
   display: block;
   padding: calc(var(--padding) * 0.75) var(--padding);
 }

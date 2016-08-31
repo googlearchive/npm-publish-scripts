@@ -23,7 +23,8 @@ rm -rf ./docs/theme/
 
 cp -r ../../src/docs-template/theme/. ./docs/theme/
 
-jsdoc ./src/**.js -c ../../src/docs-template/_jsdoc.conf -d ./docs/reference-docs/stable/v1.0.0/
+rm -rf ./docs/reference-docs/stable/v1.0.0/
+jsdoc ./src/* -c ../../src/docs-template/_jsdoc.conf -d ./docs/reference-docs/stable/v1.0.0/
 
 cd ./docs/
 

@@ -4,3 +4,5 @@ test/doc-template/output/
 _site/
 .sass-cache/
 test/output/
+test/example-site/docs/reference-docs/
+test/example-site/docs/theme/

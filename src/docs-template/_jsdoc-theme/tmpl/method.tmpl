@@ -2,6 +2,7 @@
 var data = obj;
 var self = this;
 ?>
+<section class="jsdoc-method">
 <?js if (data.kind !== 'module') { ?>
     <?js if (data.kind === 'class' && data.classdesc) { ?>
     <h2>Constructor</h2>
@@ -17,7 +18,7 @@ var self = this;
 
 <?js if (data.kind !== 'module' && data.description) { ?>
 <div class="description">
-    <?js= data.description ?>
+  <p><?js= data.description ?></p>
 </div>
 <?js } ?>
 
@@ -41,11 +42,9 @@ var self = this;
 <?js } ?>
 
 <?js if (data.params && params.length) { ?>
-    <h5>Parameters:</h5>
+    <h5 class="jsdoc-params-heading">Parameters</h5>
     <?js= this.partial('params.tmpl', params) ?>
 <?js } ?>
-
-<?js= this.partial('details.tmpl', data) ?>
 
 <?js if (data.kind !== 'module' && data.requires && data.requires.length) { ?>
 <h5>Requires:</h5>
@@ -88,18 +87,14 @@ var self = this;
 } } ?>
 
 <?js if (data.returns && returns.length) { ?>
-<h5>Returns:</h5>
-<?js if (returns.length > 1) { ?><ul><?js
-    returns.forEach(function(r) { ?>
-        <li><?js= self.partial('returns.tmpl', r) ?></li>
-    <?js });
-?></ul><?js } else {
-    returns.forEach(function(r) { ?>
-        <?js= self.partial('returns.tmpl', r) ?>
-    <?js });
-} } ?>
+<h5 class="jsdoc-returns-heading">Returns</h5>
+<?js= self.partial('returns.tmpl', returns) ?>
+<?js } ?>
 
 <?js if (data.examples && examples.length) { ?>
     <h5>Example<?js= examples.length > 1? 's':'' ?></h5>
     <?js= this.partial('examples.tmpl', examples) ?>
 <?js } ?>
+
+<?js= this.partial('details.tmpl', data) ?>
+</section>

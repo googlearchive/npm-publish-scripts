@@ -14,6 +14,10 @@
   <!-- Stylesheet -->
   <link href="{{ project_root_url }}/theme/styles/main.css" rel="stylesheet" type="text/css">
   <link href="{{ project_root_url }}/theme/styles/components/nav-drawer.css" rel="stylesheet" type="text/css">
+  {% if page.layout == 'jsdoc' %}
+  <link href="{{ project_root_url }}/theme/styles/jsdoc/details.css" rel="stylesheet" type="text/css">
+  <link href="{{ project_root_url }}/theme/styles/jsdoc/method.css" rel="stylesheet" type="text/css">
+  {% endif %}
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" type="text/css">
