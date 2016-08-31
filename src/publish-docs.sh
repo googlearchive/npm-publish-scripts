@@ -58,21 +58,12 @@ echo ""
 # If a path is passed in as an argument, it indicates a snapshot of docs
 # is desired and should be stored in the passed in location
 if [ ! -z "$1" ]; then
+  DOC_LOCATION="./docs/$1"
   echo ""
   echo ""
   echo "Build the docs"
   echo ""
-  npm run build-docs ./reference-docs
-
-
-  echo ""
-  echo ""
-  echo "Copy docs to gh-pages"
-  echo ""
-  DOC_LOCATION="./docs/$1"
-  rm -rf $DOC_LOCATION
-  mkdir -p $DOC_LOCATION
-  cp -r ./reference-docs/. $DOC_LOCATION
+  npm run build-docs $DOC_LOCATION
 fi
 
 echo ""
@@ -87,7 +78,12 @@ rm -rf ./docs/jekyll-theme
 
 echo "        Getting SCRIPTPATH value"
 echo ""
-SCRIPTPATH=$(dirname $0) # "${PWD}/node_modules/npm-publish-scripts"
+# When publishing on THIS repo
+if [ -d "${PWD}/node_modules/npm-publish-scripts" ]; then
+  SCRIPTPATH="${PWD}/node_modules/npm-publish-scripts"
+else
+  SCRIPTPATH="${PWD}/src"
+fi
 echo "        Copying $SCRIPTPATH/jekyll-theme/ to ./docs/"
 echo ""
 cp -r "$SCRIPTPATH/jekyll-theme" ./docs/
@@ -97,9 +93,9 @@ echo ""
 echo "Configure Doc Directories in _data/releases.yml"
 echo ""
 
-cd ./docs
 mkdir -p _data
-DOCS_RELEASE_OUTPUT="./_data/releases.yml"
+DOCS_RELEASE_OUTPUT="./docs/_data/releases.yml"
+rm $DOCS_RELEASE_OUTPUT
 
 echo "# Auto-generated from the npm-publish-scripts module" >> $DOCS_RELEASE_OUTPUT
 
@@ -130,20 +126,22 @@ for releaseType in "${RELEASE_TYPES[@]}"; do
   done
 done
 
-echo "other:" >> $DOCS_RELEASE_OUTPUT
-DOC_DIRECTORIES=$(find ./docs/reference-docs/ -maxdepth 1 -mindepth 1 -type d | xargs -n 1 basename);
-for docDir in $DOC_DIRECTORIES; do
-  if [ "$docDir" = 'reference-docs' ]; then
-    continue
-  fi
+if [ -d "./docs/reference-docs/" ]; then
+  echo "other:" >> $DOCS_RELEASE_OUTPUT
+  DOC_DIRECTORIES=$(find ./docs/reference-docs/ -maxdepth 1 -mindepth 1 -type d | xargs -n 1 basename);
+  for docDir in $DOC_DIRECTORIES; do
+    if [ "$docDir" = 'stable' || "$docDir" = 'alpha' || "$docDir" = 'beta' ]; then
+      continue
+    fi
 
-  if [ -f ./docs/$docDir/index.html ]; then
-    echo "  - /docs/reference-docs/$docDir" >> $DOCS_RELEASE_OUTPUT
-  else
-    echo "Skipping reference-docs/$docDir due to no index.html file"
-  fi
-done
-cd ..
+    if [ -f ./docs/reference-docs/$docDir/index.html ]; then
+      # DO NOT include the ./docs/ piece as github pages serves from docs.
+      echo "  - /reference-docs/$docDir" >> $DOCS_RELEASE_OUTPUT
+    else
+      echo "Skipping reference-docs/$docDir due to no index.html file"
+    fi
+  done
+fi
 
 echo ""
 echo ""
