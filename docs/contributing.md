@@ -1,3 +1,8 @@
+---
+layout: index
+title: "Want to Contribute?"
+navigation_weight: 3
+---
 # Developer Notes
 
 Looking to make a change to the template or shell script in this project? If so,

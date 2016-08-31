@@ -124,18 +124,47 @@ h6 {
   margin-bottom: 0;
 }
 
+table {
+  width: 100%;
+
+  margin-bottom: calc(var(--vertical-padding) / 4);
+}
+
+table, th, td {
+  border-style: solid;
+  border-width: 1px;
+  border-collapse: collapse;
+}
+
+td {
+  padding: calc(var(--padding) / 4);
+}
+
+td code {
+  background: inherit;
+}
+
 .u-center {
     text-align: center;
 }
 
 .side-nav__container ul {
   padding: 0;
-  margin: 0;
+  margin: 0 0 0 var(--padding);
 
   list-style-type: none;
 }
 
-.side-nav__container ul li a, .side-nav__container .subheading {
+.side-nav__container > ul {
+  margin: 0;
+}
+
+.side-nav__container ul li a {
   display: block;
   padding: calc(var(--padding) * 0.75) var(--padding);
+}
+
+.side-nav__container .subheading {
+  display: block;
+  padding: 0 var(--padding);
 }

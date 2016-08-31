@@ -1,8 +1,0 @@
-{% if include.docsPath %}
-  {% capture docsUrl %}{{ project_root_url }}{{ include.docsPath }}{% endcapture %}
-  <li>
-    <a href="{{ docsUrl }}" {% if docsUrl == page.url %}class="active"{% endif %}>
-      {{ include.text }}
-    </a>
-  </li>
-{% endif %}
