@@ -1,6 +1,6 @@
 {
   "name": "npm-publish-scripts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple set of scripts to help when publishing to NPM from a Github Repo",
   "scripts": {
     "build": "echo No Build.",
