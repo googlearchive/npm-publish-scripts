@@ -113,13 +113,13 @@ for releaseType in "${RELEASE_TYPES[@]}"; do
   RELEASE_DIRECTORIES=($RELEASE_DIRECTORIES)
 
   echo "$releaseType:" >> $DOCS_RELEASE_OUTPUT
-  echo "    latest: /docs/reference-docs/${releaseType}/v${RELEASE_DIRECTORIES[0]}" >> $DOCS_RELEASE_OUTPUT
+  echo "    latest: /reference-docs/${releaseType}/v${RELEASE_DIRECTORIES[0]}" >> $DOCS_RELEASE_OUTPUT
   echo "    all:" >> $DOCS_RELEASE_OUTPUT
 
   for releaseDir in "${RELEASE_DIRECTORIES[@]}"; do
     releaseDir="v${releaseDir}"
     if [ -f "./docs/reference-docs/$releaseType/$releaseDir/index.html" ]; then
-      echo "            - $releaseDir" >> $DOCS_RELEASE_OUTPUT
+      echo "            - /reference-docs/$releaseType/$releaseDir" >> $DOCS_RELEASE_OUTPUT
     else
       echo "Skipping reference-docs/$releaseType/$releasesDir due to no index.html file"
     fi
