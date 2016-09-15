@@ -113,7 +113,7 @@ for releaseType in "${RELEASE_TYPES[@]}"; do
   RELEASE_DIRECTORIES=($RELEASE_DIRECTORIES)
 
   echo "$releaseType:" >> $DOCS_RELEASE_OUTPUT
-  echo "    latest: ${REFERENCE_DOC_LOCATION}/${releaseType}/v${RELEASE_DIRECTORIES[0]}" >> $DOCS_RELEASE_OUTPUT
+  echo "    latest: /${REFERENCE_DOC_DIR}/${releaseType}/v${RELEASE_DIRECTORIES[0]}" >> $DOCS_RELEASE_OUTPUT
   echo "    all:" >> $DOCS_RELEASE_OUTPUT
 
   for releaseDir in "${RELEASE_DIRECTORIES[@]}"; do
