@@ -5,4 +5,7 @@
 
   --menu-button-height: 64px;
   --menu-button-svg-size: 24px;
+
+  --page-header-height: calc(var(--padding) * 4);
+  --site-header-height: calc(var(--padding) * 18);
 }

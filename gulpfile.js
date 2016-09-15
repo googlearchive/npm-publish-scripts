@@ -1,43 +1,77 @@
 'use strict';
 
-const TEST_OUTPUT_PATH = './test/output';
-const DOCS_TEMPLATE_PATH = './src/docs-template';
+const BUILD_OUTPUT_PATH = './build';
+const SRC_PATH = './src';
+const JEKYLL_THEME_PATH = './src/jekyll-theme';
+const JSDOC_THEME_PATH = './src/jsdoc-theme';
 const EXAMPLE_SITE_PATH = './test/example-site';
 
 const gulp = require('gulp');
 const del = require('del');
+const postcss = require('gulp-postcss');
+const cssimport = require('gulp-cssimport');
+const cssnext = require('postcss-cssnext');
+const cssnano = require('cssnano');
 const spawn = require('child_process').spawn;
 
 let globalJekyllProcess;
+let globalJSDocProcess;
 
 gulp.task('clean', () => {
   // You can use multiple globbing patterns as you would with `gulp.src`
-  return del([TEST_OUTPUT_PATH]);
+  return del([BUILD_OUTPUT_PATH]);
 });
 
-gulp.task('copy-docs-template', () => {
-  return gulp.src(DOCS_TEMPLATE_PATH + '/**/*')
-  .pipe(gulp.dest(TEST_OUTPUT_PATH));
+gulp.task('dev-jekyll-theme', () => {
+  return gulp.src(JEKYLL_THEME_PATH + '/**/*')
+  .pipe(gulp.dest(BUILD_OUTPUT_PATH + '/docs/jekyll-theme'));
 });
 
-gulp.task('copy-example-site', () => {
+gulp.task('dev-example-site', () => {
   return gulp.src(EXAMPLE_SITE_PATH + '/**/*')
-  .pipe(gulp.dest(TEST_OUTPUT_PATH));
+  .pipe(gulp.dest(BUILD_OUTPUT_PATH));
+});
+
+gulp.task('dev-jsdoc-build', cb => {
+  globalJSDocProcess = spawn('./test/jsdoc-run.sh', [], {
+    stdio: 'inherit'
+  });
+  cb();
 });
 
 gulp.task('jekyll-serve', cb => {
   const jekyllCommand = process.platform === 'win32' ? 'jekyll.bat' : 'jekyll';
-  const params = ['exec', jekyllCommand, 'serve', '--trace'];
+  const params = ['exec', jekyllCommand, 'serve', '--trace', '--config', '../_config.yml'];
   globalJekyllProcess = spawn('bundle', params, {
-    cwd: TEST_OUTPUT_PATH,
+    cwd: BUILD_OUTPUT_PATH + '/docs',
     stdio: 'inherit'
   });
   cb();
 });
 
 gulp.task('watch', () => {
-  gulp.watch(DOCS_TEMPLATE_PATH + '/**/*', gulp.series('copy-docs-template'));
-  gulp.watch(EXAMPLE_SITE_PATH + '/**/*', gulp.series('copy-example-site'));
+  gulp.watch(JEKYLL_THEME_PATH + '/**/*', gulp.series('dev-jekyll-theme'));
+  gulp.watch(EXAMPLE_SITE_PATH + '/**/*', gulp.series('dev-example-site', 'dev-jsdoc-build'));
 })
 
-gulp.task('default', gulp.series('clean', gulp.parallel('copy-docs-template', 'copy-example-site'), 'jekyll-serve', 'watch'));
+gulp.task('dev', gulp.series('clean', gulp.parallel('dev-jekyll-theme', 'dev-example-site'), 'dev-jsdoc-build', 'jekyll-serve', 'watch'));
+
+gulp.task('copy-release-files', () => {
+  return gulp.src(SRC_PATH + '/**/*')
+  .pipe(gulp.dest(BUILD_OUTPUT_PATH));
+});
+
+gulp.task('css-next', () => {
+  const browserSupport = ['last 2 versions'];
+  const processors = [
+    cssnext({browsers: browserSupport, warnForDuplicates: false}),
+    cssnano()
+  ];
+
+  return gulp.src(SRC_PATH + '/**/*.css')
+  .pipe(cssimport({}))
+  .pipe(postcss(processors))
+  .pipe(gulp.dest(BUILD_OUTPUT_PATH));
+});
+
+gulp.task('build', gulp.series('clean', 'copy-release-files', 'css-next'));

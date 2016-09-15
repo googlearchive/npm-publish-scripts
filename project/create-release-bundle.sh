@@ -23,7 +23,7 @@ if [ -z "$1" ]; then
 fi
 
 # Copy over files that we want in the release
-cp -r ./src/. $1
+cp -r ./build/. $1
 cp LICENSE $1
 cp package.json $1
 cp README.md $1

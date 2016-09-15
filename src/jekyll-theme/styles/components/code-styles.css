@@ -1,3 +1,4 @@
+@import "../variables/dimens.css";
 @import "../../third_party/prism/prism.css";
 
 figure.highlight {
@@ -71,3 +72,4 @@ pre code::before, pre code::after {
 
 .token.function {
   color: #009688;
+}
