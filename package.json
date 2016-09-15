@@ -1,0 +1,35 @@
+{
+  "name": "npm-publish-scripts",
+  "version": "2.0.4",
+  "description": "A simple set of scripts to help when publishing to NPM from a Github Repo",
+  "scripts": {
+    "build": "gulp build",
+    "build-docs": "echo No Docs.",
+    "test": "echo No Tests.",
+    "bundle": "./project/create-release-bundle.sh",
+    "publish-release": "./src/publish-release.sh",
+    "publish-docs": "./src/publish-docs.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com:GoogleChrome/npm-publish-scripts.git"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/GoogleChrome/npm-publish-scripts/issues"
+  },
+  "homepage": "https://googlechrome.github.io/npm-publish-scripts/",
+  "devDependencies": {
+    "cssnano": "^3.7.4",
+    "del": "^2.2.2",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-cssimport": "^3.1.0",
+    "gulp-postcss": "^6.2.0",
+    "postcss-cssnext": "^2.8.0",
+    "semver": "^5.3.0"
+  },
+  "bin": {
+    "publish-docs.sh": "./publish-docs.sh",
+    "publish-release.sh": "./publish-release.sh"
+  }
+}
