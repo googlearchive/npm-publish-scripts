@@ -30,7 +30,8 @@ if [ "$BASH_VERSION" = '' ]; then
 fi
 
 GITHUB_REPO=$(git config --get remote.origin.url)
-
+REFERENCE_DOC_DIR="reference-docs"
+REFERENCE_DOC_LOCATION="./docs/${REFERENCE_DOC_DIR}"
 echo ""
 echo ""
 echo "Deploying new docs"
@@ -58,7 +59,7 @@ echo ""
 # If a path is passed in as an argument, it indicates a snapshot of docs
 # is desired and should be stored in the passed in location
 if [ ! -z "$1" ]; then
-  DOC_LOCATION="./docs/$1"
+  DOC_LOCATION="${REFERENCE_DOC_LOCATION}/$1"
   echo ""
   echo ""
   echo "Build the docs"
@@ -100,44 +101,44 @@ echo "# Auto-generated from the npm-publish-scripts module" >> $DOCS_RELEASE_OUT
 
 RELEASE_TYPES=("alpha" "beta" "stable")
 for releaseType in "${RELEASE_TYPES[@]}"; do
-  if [ ! -d "./docs/reference-docs/$releaseType/" ]; then
+  if [ ! -d "${REFERENCE_DOC_LOCATION}/$releaseType/" ]; then
     echo "    No $releaseType docs."
     continue
   fi
 
   echo "    Found $releaseType docs."
 
-  UNSORTED_RELEASE_DIRECTORIES=$(find ./docs/reference-docs/$releaseType/ -maxdepth 1 -mindepth 1 -type d | xargs -n 1 basename);
+  UNSORTED_RELEASE_DIRECTORIES=$(find ${REFERENCE_DOC_LOCATION}/$releaseType/ -maxdepth 1 -mindepth 1 -type d | xargs -n 1 basename);
   RELEASE_DIRECTORIES=$(semver ${UNSORTED_RELEASE_DIRECTORIES} | sort --reverse)
   RELEASE_DIRECTORIES=($RELEASE_DIRECTORIES)
 
   echo "$releaseType:" >> $DOCS_RELEASE_OUTPUT
-  echo "    latest: /reference-docs/${releaseType}/v${RELEASE_DIRECTORIES[0]}" >> $DOCS_RELEASE_OUTPUT
+  echo "    latest: ${REFERENCE_DOC_LOCATION}/${releaseType}/v${RELEASE_DIRECTORIES[0]}" >> $DOCS_RELEASE_OUTPUT
   echo "    all:" >> $DOCS_RELEASE_OUTPUT
 
   for releaseDir in "${RELEASE_DIRECTORIES[@]}"; do
     releaseDir="v${releaseDir}"
-    if [ -f "./docs/reference-docs/$releaseType/$releaseDir/index.html" ]; then
-      echo "            - /reference-docs/$releaseType/$releaseDir" >> $DOCS_RELEASE_OUTPUT
+    if [ -f "${REFERENCE_DOC_LOCATION}/$releaseType/$releaseDir/index.html" ]; then
+      echo "            - /${REFERENCE_DOC_DIR}/$releaseType/$releaseDir" >> $DOCS_RELEASE_OUTPUT
     else
-      echo "Skipping reference-docs/$releaseType/$releasesDir due to no index.html file"
+      echo "Skipping ${REFERENCE_DOC_LOCATION}/$releaseType/$releasesDir due to no index.html file"
     fi
   done
 done
 
-if [ -d "./docs/reference-docs/" ]; then
+if [ -d "${REFERENCE_DOC_LOCATION}/" ]; then
   echo "other:" >> $DOCS_RELEASE_OUTPUT
-  DOC_DIRECTORIES=$(find ./docs/reference-docs/ -maxdepth 1 -mindepth 1 -type d | xargs -n 1 basename);
+  DOC_DIRECTORIES=$(find ${REFERENCE_DOC_LOCATION}/ -maxdepth 1 -mindepth 1 -type d | xargs -n 1 basename);
   for docDir in $DOC_DIRECTORIES; do
     if [ "$docDir" = 'stable' ] || [ "$docDir" = 'alpha' ] || [ "$docDir" = 'beta' ]; then
       continue
     fi
 
-    if [ -f ./docs/reference-docs/$docDir/index.html ]; then
+    if [ -f $REFERENCE_DOC_LOCATION/$docDir/index.html ]; then
       # DO NOT include the ./docs/ piece as github pages serves from docs.
-      echo "  - /reference-docs/$docDir" >> $DOCS_RELEASE_OUTPUT
+      echo "  - /${REFERENCE_DOC_DIR}/$docDir" >> $DOCS_RELEASE_OUTPUT
     else
-      echo "Skipping reference-docs/$docDir due to no index.html file"
+      echo "Skipping ${REFERENCE_DOC_LOCATION}/$docDir due to no index.html file"
     fi
   done
 fi

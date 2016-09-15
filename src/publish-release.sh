@@ -164,4 +164,4 @@ echo ""
 echo ""
 echo "Build and Publish Docs"
 echo ""
-npm run publish-docs releases/$RELEASE_TYPE/$PACKAGE_VERSION
+npm run publish-docs $RELEASE_TYPE/$PACKAGE_VERSION
