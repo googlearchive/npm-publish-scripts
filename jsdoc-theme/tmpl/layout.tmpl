@@ -1,0 +1,16 @@
+---
+layout: jsdoc
+title: "<?js= title ?>"
+jsdocNav: <?js
+var nav = this.nav;
+var navKeys = Object.keys(this.nav);
+navKeys.forEach(function(navKey) {
+  if (nav[navKey].length === 0) {
+    return;
+  }
+  ?>
+  - <?js= navKey ?>:<?js nav[navKey].forEach(function(item) {?>
+    - <?js= item.anchor ?><?js }); ?><?js});?>
+---
+
+<?js= content ?>
