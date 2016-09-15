@@ -26,7 +26,8 @@ rm -rf ./docs/reference-docs/
 
 # COPY JEKYLL THEME
 cp -r ../../src/jekyll-theme/. ./docs/jekyll-theme/
-jsdoc ./src/* -c ./_jsdoc.conf -d ./docs/reference-docs/stable/v1.0.0/
+jsdoc ./src/* --readme JSDOC_README.md -c ./_jsdoc.conf -d ./docs/reference-docs/stable/v1.0.0/
+# jsdoc ./src/* -c ./_jsdoc.conf -d ./docs/reference-docs/stable/v1.0.0/
 
 # SERVER JEKYLL FROM INSIDE the example-sites docs directory
 cd ./docs/

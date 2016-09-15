@@ -69,12 +69,11 @@ fi
 echo ""
 echo ""
 echo "Update Jekyll Template in gh-pages"
+
 echo ""
-# cd ./docs
 echo "        Removing previous template files"
 echo ""
 rm -rf ./docs/jekyll-theme
-# cd ..
 
 echo "        Getting SCRIPTPATH value"
 echo ""
@@ -151,7 +150,7 @@ echo ""
 {
   if [ "$TRAVIS" ]; then
     # inside this git repo we'll pretend to be a new user
-    git config user.name "Travis CI"
+    git config user.name "npm-publish-script"
     git config user.email "gauntface@google.com"
   fi
 
@@ -173,7 +172,7 @@ echo ""
   echo ""
 }
 
-echo ""
-echo ""
-echo "Clean up gh-pages"
-echo ""
+# echo ""
+# echo ""
+# echo "Clean up gh-pages"
+# echo ""

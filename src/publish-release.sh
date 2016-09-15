@@ -30,6 +30,7 @@ if [ "$BASH_VERSION" = '' ]; then
 fi
 
 GITHUB_REPO=$(git config --get remote.origin.url)
+RELEASE_BUNDLE_FOLDER="tagged-release"
 
 # NOTES:
 #     To delete a tag use: git push origin :v1.0.0
@@ -65,12 +66,6 @@ echo ""
 echo "Building Library"
 echo ""
 npm run build
-
-echo ""
-echo ""
-echo "Building Docs"
-echo ""
-npm run build-docs
 
 echo ""
 echo "Perform Tests"
@@ -112,13 +107,21 @@ echo ""
 echo "Create and Copy Files for Release"
 echo ""
 # Remove any remaining artifacts from previous builds
-rm -rf ./tagged-release
-mkdir tagged-release
+rm -rf "./${RELEASE_BUNDLE_FOLDER}"
+mkdir "${RELEASE_BUNDLE_FOLDER}"
 
 # Copy over files that we want in the release
-npm run bundle -- ./tagged-release
+npm run bundle -- "./${RELEASE_BUNDLE_FOLDER}"
 
-cd ./tagged-release/
+# Disabled as the jsdoc theme requires parsing through Jekyll. This could
+# be achieved by building docs and bundling in the `npm run bundle` step.
+# echo ""
+# echo ""
+# echo "Building Docs into Release"
+# echo ""
+# npm run build-docs "${RELEASE_BUNDLE_FOLDER}/reference-docs/"
+
+cd "./${RELEASE_BUNDLE_FOLDER}/"
 
 echo ""
 echo ""
@@ -147,7 +150,7 @@ echo ""
 echo "Removing Tagged Release"
 echo ""
 cd ..
-rm -rf ./tagged-release
+rm -rf "./${RELEASE_BUNDLE_FOLDER}"
 
 echo ""
 echo ""
