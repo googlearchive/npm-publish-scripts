@@ -1,153 +1,65 @@
 ---
 layout: index
-title: "Home"
+title: "NPM Publish Scripts"
 navigation_weight: 0
 ---
 
 # Why
 
-There are two primary reasons this project exists:
+There are a few reasons why this project exists:
 
 1. To give a common way to release versions of projects on NPM.
-1. To offer a consistent look and feel for GitHub pages and to encourage
-a more structured way of documenting projects.
+1. To offer a consistent look and feel for GitHub pages.
+1. Encourage a more structured way of documenting projects.
 
-A lot of this work was born out of build files living in the master branch
-of Github, a release resulting in multiple releases due to human error or
-releases being blocked of only one person knowing the process.
+If your project suffers from human errors when releasing, has build files
+in the master branch or you simply want reference docs, then this
+module may be useful.
 
 # Install
 
-This module contains shell scripts and themes for Jekyll and JSDoc. To use
-any of this you first need to install the module via NPM.
+This module contains shell scripts and themes for Jekyll and JSDoc.
+Simple install via NPM like so:
 
     npm install npm-publish-scripts --save-dev
 
 # Usage
 
+There are three pieces to this project:
 
-## Publish Release to NPM
+1. Publishing a Release
 
-When you want to publish to NPM there are a few steps that should be taken
-before anything is published.
+    The `publish-release.sh` script will run the following steps
+    when releasing a new version of a project to NPM:
 
-1. *Build* the project if needed final release. An example would be minifying
-   code for use in browsers.
-1. *Test* the project to make sure what is released actually works.
-1. *Build documentation* so it can be shared with the release.
-1. *Bundle* the source code, build files, documentation and other files
-   you want to be shipped in the NPM Module.
+      1. Perform any build steps.
+      1. Run any tests the project has.
+      1. Bundle any assets to include in the final release.
+      1. Bump the version number and publish to NPM.
+      1. (If supported) Publish docs to Github pages.
 
-The `publish-release.sh` will look for **NPM Run Scripts** that perform each
-of the above steps. Initially add the following to your `package.json` file.
+    Setting this up means releases are more consistent and anyone
+    on the team can perform a release without needing to know
+    or perform any manual steps.
 
-```json
-  "scripts": {
-    "build": "echo 'No Build Step.'",
-    "test": "echo 'No Tests Defined.'",
-    "build-docs": "echo 'No Build Docs Step.'",
-    "bundle": "No 'Bundle Step Defined.'",
-    "publish-release": "publish-release.sh"
-  }
-```
+    <a href="./publish-release">How to Publish a Release</a>
 
-If you have a build process (i.e. running `gulp`) configure it in the `build`
-NPM script. Any test configuration you have should be defined in `test`.
-`build-docs` should output any reference docs you have into './reference-docs/'.
-Lastly, the `bundle` script will be given a directory as an argument that should
-be used to copy files you wish to publish into.
+1. Build a Github Pages Site
 
-Here's an example set of NPM scripts for each of these steps:
+    If you want to have stylised docs with versioning for reference
+    documentation you can use `publish-docs.sh` to help.
 
-```json
-"scripts": {
-    "build": "echo 'Skip Build Step.'",
-    "test": "npm run lint && mocha",
-    "build-docs": "jsdoc -c ./jsdoc.conf",
-    "bundle": "./project/create-release-bundle.sh",
-    "lint": "eslint ./**/*.js",
-  },
-```
+    This script will set up a Jekyll theme and keep it up to date
+    and if you have a `reference-docs` directory, it will generate
+    a sorted version list for the theme to use.
 
-The shell script for the `bundle` script looks like this:
+    <a href="./build-github-pages">Build a Github Pages Site</a>
 
-```bash
-#!/bin/bash
-set -e
+1. Use the JSDoc Theme
 
-if [ "$BASH_VERSION" = '' ]; then
- echo "    Please run this script via this command: './<Script Location>/<Script Name>.sh'"
- exit 1;
-fi
+    To match the Jekyll theme, this project has a JSDoc theme. This
+    is solely to give the Github Pages a bit more consistency and
+    to give control over the look and feel of the reference
+    documentation.
 
-if [ -z "$1" ]; then
-  echo "    Bad input: Expected a directory as the first argument for the path to put the final bundle files into (i.e. ./tagged-release)";
-  exit 1;
-fi
-
-# Copy over files that we want in the release
-cp -r ./reference-docs $1
-cp -r ./src $1
-cp LICENSE $1
-cp package.json $1
-cp README.md $1
-```
-
-Once you have the NPM Scripts set up, the next step is to kick off a release.
-The easiest way to do this is to add a `publish-release` NPM script to your
-`package.json`, which we added above.
-
-To perform a release you can run the script like so:
-
-    npm run publish-release < patch | minor | major > < alpha | beta | stable>
-
-You *must* define `patch`, `minor` or `major` when performing a release, this
-will let the script bump the version for you.
-
-The `alpha`, `beta` or `stable` tag is optional, by default a release is
-treated as stable.
-
-When you first start using this module you probably want to perform releases
-using the `alpha or `beta` label in case there are any issues.
-
-## Publish Docs to Github Pages
-
-To publish docs using this theme is create a folder called `docs` at the root
-of your project, create an `index.md` file and add the following:
-
-```markdown
----
-layout: index
-title: "Home"
-navigation_weight: 0
----
-
-# Hello World
-```
-
-Then create a `docs/_config.yml` file in paste in the following:
-
-```
-source:       .
-layouts_dir: ./jekyll-theme/_layouts/
-includes_dir: ./jekyll-theme/_includes/
-
-# This adds github pages data
-gems: ['jekyll-github-metadata']
-```
-
-Then add a new NPM run script:
-
-```json
-"publish-docs": "publish-docs.sh"
-```
-
-Then run `npm run publish-docs` this should push the docs with theme to Github,
-the last step is to enable Github Pages on your project.
-
-### Configuring Github Pages
-
-Go to `Settings > Github Pages > Source` and select
-'Master Branch /docs Folder'.
-
-Then you should have the docs live on your Github Pages URL.
+    <a href="./use-jsdoc-theme">Use the JSDoc Theme</a>
