@@ -1,6 +1,6 @@
 ---
 layout: index
-title: "Home"
+title: "Project Title"
 navigation_weight: 0
 ---
 
