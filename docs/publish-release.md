@@ -19,11 +19,11 @@ The `publish-release.sh` will look for **NPM Run Scripts** that perform each
 of the above steps. Initially add the following to your `package.json` file.
 
 ```json
-  "scripts": {
-    "build": "echo 'No Build Step.'",
-    "test": "echo 'No Tests Defined.'",
-    "bundle": "No 'Bundle Step Defined.'"
-  }
+"scripts": {
+  "build": "echo 'No Build Step.'",
+  "test": "echo 'No Tests Defined.'",
+  "bundle": "No 'Bundle Step Defined.'"
+}
 ```
 
 If you have a build process (i.e. running `gulp` to minify / alter your
@@ -38,11 +38,11 @@ Here's an example set of NPM scripts:
 
 ```json
 "scripts": {
-    "build": "echo 'Skip Build Step.'",
-    "test": "npm run lint && mocha",
-    "bundle": "./project/create-release-bundle.sh",
-    "lint": "eslint ./**/*.js",
-  },
+  "build": "echo 'Skip Build Step.'",
+  "test": "npm run lint && mocha",
+  "bundle": "./project/create-release-bundle.sh",
+  "lint": "eslint ./**/*.js",
+}
 ```
 
 An example shell script for the `bundle` step (in this example called
@@ -78,12 +78,12 @@ The easiest way to do this is to add a `publish-release` NPM script to your
 
 ```json
 "scripts": {
-    "build": "echo 'Skip Build Step.'",
-    "test": "npm run lint && mocha",
-    "bundle": "./project/create-release-bundle.sh",
-    "lint": "eslint ./**/*.js",
-    "publish-release": "publish-release.sh"
-  },
+  "build": "echo 'Skip Build Step.'",
+  "test": "npm run lint && mocha",
+  "bundle": "./project/create-release-bundle.sh",
+  "lint": "eslint ./**/*.js",
+  "publish-release": "publish-release.sh"
+}
 ```
 
 NPM will find `publish-release.sh` in `node_modules/npm-publish-scripts/`.
