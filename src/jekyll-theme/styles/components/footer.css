@@ -9,7 +9,7 @@ footer {
   justify-content: center;
 
   background-color: rgb(33,33,33);
-  color: #757575;
+  color: var(--callout-text-color);
 
   padding: var(--vertical-padding) var(--horizontal-padding);
 
