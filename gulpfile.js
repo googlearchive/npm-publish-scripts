@@ -52,7 +52,7 @@ gulp.task('jekyll-serve', cb => {
 gulp.task('watch', () => {
   gulp.watch(JEKYLL_THEME_PATH + '/**/*', gulp.series('dev-jekyll-theme'));
   gulp.watch(EXAMPLE_SITE_PATH + '/**/*', gulp.series('dev-example-site', 'dev-jsdoc-build'));
-})
+});
 
 gulp.task('dev', gulp.series('clean', gulp.parallel('dev-jekyll-theme', 'dev-example-site'), 'dev-jsdoc-build', 'jekyll-serve', 'watch'));
 
