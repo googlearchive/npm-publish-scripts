@@ -10,10 +10,7 @@
     "publish-release": "./src/publish-release.sh",
     "publish-docs": "./src/publish-docs.sh"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com:GoogleChrome/npm-publish-scripts.git"
-  },
+  "repository": "GoogleChrome/npm-publish-scripts",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/GoogleChrome/npm-publish-scripts/issues"
