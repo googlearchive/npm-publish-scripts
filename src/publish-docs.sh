@@ -32,6 +32,9 @@ fi
 GITHUB_REPO=$(git config --get remote.origin.url)
 REFERENCE_DOC_DIR="reference-docs"
 REFERENCE_DOC_LOCATION="./docs/${REFERENCE_DOC_DIR}"
+DATA_PATH="./docs/_data"
+DOCS_RELEASE_OUTPUT="${DATA_PATH}/releases.yml"
+
 echo ""
 echo ""
 echo "Deploying new docs"
@@ -90,12 +93,12 @@ cp -r "$SCRIPTPATH/jekyll-theme" ./docs/
 
 echo ""
 echo ""
-echo "Configure Doc Directories in _data/releases.yml"
+echo "Configure Doc Directories in ${DOCS_RELEASE_OUTPUT}"
 echo ""
 
-mkdir -p _data
-DOCS_RELEASE_OUTPUT="./docs/_data/releases.yml"
-rm $DOCS_RELEASE_OUTPUT
+mkdir -p $DATA_PATH
+# -f prevents error being thrown when the file doesn't exist
+rm -f $DOCS_RELEASE_OUTPUT
 
 echo "# Auto-generated from the npm-publish-scripts module" >> $DOCS_RELEASE_OUTPUT
 
