@@ -101,3 +101,18 @@ treated as stable.
 > When you first start using this module you probably want to
 > perform releases using the `alpha` or `beta` label in case there are
 > any issues.
+
+## Testing During a Release
+
+There may be tests that you don't want to run before a release (i.e.
+particularly flakey tests or browsers that are known to fail).
+
+In this scenario you can look for the **RELEASE_SCRIPT** environment variable
+which will set to true if `npm run test` was called from `publish-release.sh`.
+
+An example of skipping tests would be:
+
+    if (process.env.TRAVIS || process.env.RELEASE_SCRIPT) {
+      // Selenium Tests are Flakey
+      this.retries(3);
+    }
