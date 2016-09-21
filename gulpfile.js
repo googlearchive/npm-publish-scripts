@@ -41,7 +41,7 @@ gulp.task('dev-jsdoc-build', cb => {
 
 gulp.task('jekyll-serve', cb => {
   const jekyllCommand = process.platform === 'win32' ? 'jekyll.bat' : 'jekyll';
-  const params = ['exec', jekyllCommand, 'serve', '--trace', '--config', '../_config.yml'];
+  const params = ['exec', jekyllCommand, 'serve', '--trace', '--config', './_config.yml'];
   globalJekyllProcess = spawn('bundle', params, {
     cwd: BUILD_OUTPUT_PATH + '/docs',
     stdio: 'inherit'
@@ -75,3 +75,5 @@ gulp.task('css-next', () => {
 });
 
 gulp.task('build', gulp.series('clean', 'copy-release-files', 'css-next'));
+
+gulp.task('default', gulp.series('dev'));
