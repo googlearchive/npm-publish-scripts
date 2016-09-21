@@ -1,0 +1,40 @@
+<?js
+var data = obj;
+var self = this;
+?>
+
+<?js if (data.kind === 'package' && (data.name || data.version)) { ?>
+    <h3><?js= data.name ?> <?js= data.version ?></h3>
+<?js } ?>
+
+<?js if (data.readme) { ?>
+    <?js= data.readme ?>
+<?js } ?>
+
+<?js if (data.kind === 'mainpage') { ?>
+  <section class="jsdoc-api-list">
+    <h2>Reference Docs</h2>
+
+    <p>Below is a list of all the reference documentation for this
+      project. You can find links to these in the navigation drawer
+      as well.</p>
+
+    <?js
+    var nav = this.nav;
+    var navKeys = Object.keys(this.nav);
+    navKeys.forEach(function(navKey) {
+      if (nav[navKey].length === 0) {
+        return;
+      }
+      ?>
+
+      <h4><?js= navKey ?></h4>
+
+      <ul>
+      <?js nav[navKey].forEach(function(item) {?>
+        <li><?js= item.anchor ?></li>
+      <?js }); ?>
+      </ul>
+    <?js});?>
+  </section>
+<?js } ?>
