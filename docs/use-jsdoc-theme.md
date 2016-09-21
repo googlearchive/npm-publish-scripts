@@ -24,6 +24,9 @@ An example JSDoc config file to use this theme looks like this:
   "opts": {
     "template": "node_modules/npm-publish-scripts/jsdoc-theme/",
     "recurse": true
+  },
+  "markdown": {
+    "idInHeadings": true
   }
 }
 ```
