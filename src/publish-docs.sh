@@ -58,6 +58,16 @@ cd $GH_PAGES_PATH
   rm -rf $GH_PAGES_PATH
   exit 1;
 }
+
+echo ""
+echo "        Removing previous files"
+echo ""
+# rm -rf "${GH_PAGES_PATH}/jekyll-theme"
+echo "---------------------"
+find . -maxdepth 1 -type d ! -name .git ! -name "${REFERENCE_DOC_DIR}"
+echo "---------------------"
+find . -maxdepth 1 -type d ! -name .git ! -name "${REFERENCE_DOC_DIR}" -exec rm -R {} \;
+
 cd ..
 
 # If a path is passed in as an argument, it indicates a snapshot of docs
@@ -74,12 +84,6 @@ fi
 echo ""
 echo ""
 echo "Update Jekyll Template in gh-pages"
-
-echo ""
-echo "        Removing previous files"
-echo ""
-# rm -rf "${GH_PAGES_PATH}/jekyll-theme"
-find "${GH_PAGES_PATH}/" -type d -not -name "${REFERENCE_DOC_DIR}" -not -name .git -exec rm -R {} \;
 
 echo "        Getting SCRIPTPATH value"
 echo ""
