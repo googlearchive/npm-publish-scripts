@@ -35,6 +35,7 @@ REFERENCE_DOC_DIR="reference-docs"
 REFERENCE_DOC_LOCATION="${GH_PAGES_PATH}/${REFERENCE_DOC_DIR}"
 DATA_PATH="${GH_PAGES_PATH}/_data"
 DOCS_RELEASE_OUTPUT="${DATA_PATH}/releases.yml"
+PROJECT_DOCS="./docs"
 
 echo ""
 echo ""
@@ -62,10 +63,6 @@ cd $GH_PAGES_PATH
 echo ""
 echo "        Removing previous files"
 echo ""
-# rm -rf "${GH_PAGES_PATH}/jekyll-theme"
-echo "---------------------"
-find . -maxdepth 1 -type d ! -name .git ! -name "${REFERENCE_DOC_DIR}"
-echo "---------------------"
 find . -maxdepth 1 -type d ! -name .git ! -name "${REFERENCE_DOC_DIR}" -exec rm -R {} \;
 
 cd ..
@@ -80,6 +77,11 @@ if [ ! -z "$1" ]; then
   echo ""
   npm run build-docs $DOC_LOCATION
 fi
+
+echo ""
+echo ""
+echo "Copy Files from ./docs/"
+cp -r "${PROJECT_DOCS}/." "${GH_PAGES_PATH}/"
 
 echo ""
 echo ""
