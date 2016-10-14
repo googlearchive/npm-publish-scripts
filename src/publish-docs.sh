@@ -29,9 +29,10 @@ if [ "$BASH_VERSION" = '' ]; then
  exit 1;
 fi
 
+GH_PAGES_PATH="./gh-pages"
 GITHUB_REPO=$(git config --get remote.origin.url)
 REFERENCE_DOC_DIR="reference-docs"
-REFERENCE_DOC_LOCATION="./docs/${REFERENCE_DOC_DIR}"
+REFERENCE_DOC_LOCATION="${GH_PAGES_PATH}/${REFERENCE_DOC_DIR}"
 DATA_PATH="./docs/_data"
 DOCS_RELEASE_OUTPUT="${DATA_PATH}/releases.yml"
 
@@ -40,24 +41,24 @@ echo ""
 echo "Deploying new docs"
 echo ""
 
-#echo ""
-#echo ""
-#echo "Clone repo and get gh-pages branch"
-#echo ""
-#git clone $GITHUB_REPO ./gh-pages
-#cd ./gh-pages
-# {
-#  git fetch origin
-#  git checkout gh-pages
-# } || {
-#  echo ""
-#  echo "WARNING: gh-pages doesn't exist so nothing we can do."
-#  echo ""
-#  cd ..
-#  rm -rf ./gh-pages
-#  exit 0;
-#}
-#cd ..
+echo ""
+echo ""
+echo "Clone repo and get gh-pages branch"
+echo ""
+git clone $GITHUB_REPO $GH_PAGES_PATH
+cd $GH_PAGES_PATH
+{
+  git fetch origin
+  git checkout gh-pages
+} || {
+  echo ""
+  echo "WARNING: gh-pages doesn't exist so nothing we can do."
+  echo ""
+  cd ..
+  rm -rf $GH_PAGES_PATH
+  exit 1;
+}
+cd ..
 
 # If a path is passed in as an argument, it indicates a snapshot of docs
 # is desired and should be stored in the passed in location
@@ -77,19 +78,21 @@ echo "Update Jekyll Template in gh-pages"
 echo ""
 echo "        Removing previous template files"
 echo ""
-rm -rf ./docs/jekyll-theme
+rm -rf "${GH_PAGES_PATH}/jekyll-theme"
 
 echo "        Getting SCRIPTPATH value"
 echo ""
 # When publishing on THIS repo
-if [ -d "${PWD}/node_modules/npm-publish-scripts" ]; then
-  SCRIPTPATH="${PWD}/node_modules/npm-publish-scripts"
+CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+if [ -d "${CURRENT_DIR}" ]; then
+  SCRIPTPATH="${CURRENT_DIR}"
 else
   SCRIPTPATH="${PWD}/src"
 fi
-echo "        Copying $SCRIPTPATH/jekyll-theme/ to ./docs/"
+
+echo "        Copying $SCRIPTPATH/jekyll-theme/ to ${GH_PAGES_PATH}/jekyll-theme/"
 echo ""
-cp -r "$SCRIPTPATH/jekyll-theme" ./docs/
+cp -r "$SCRIPTPATH/jekyll-theme" "${GH_PAGES_PATH}/"
 
 echo ""
 echo ""
@@ -150,6 +153,9 @@ echo ""
 echo ""
 echo "Commit New Docs Changes"
 echo ""
+
+cd $GH_PAGES_PATH
+
 # The curly braces act as a try / catch
 {
   if [ "$TRAVIS" ]; then
@@ -158,7 +164,8 @@ echo ""
     git config user.email "gauntface@google.com"
   fi
 
-  git add ./docs/
+  cd $GH_PAGES_PATH
+  git add .
   git commit -m "Deploy to GitHub Pages"
 
   if [ "$TRAVIS" ]; then
@@ -166,9 +173,9 @@ echo ""
     # repo's gh-pages branch. (All previous history on the gh-pages branch
     # will be lost, since we are overwriting it.) We redirect any output to
     # /dev/null to hide any sensitive credential data that might otherwise be exposed.
-    git push "https://${GH_TOKEN}@${GH_REF}" master > /dev/null 2>&1
+    git push "https://${GH_TOKEN}@${GH_REF}" gh-pages > /dev/null 2>&1
   else
-    git push origin master
+    git push origin gh-pages
   fi
 } || {
   echo ""
@@ -176,7 +183,10 @@ echo ""
   echo ""
 }
 
-# echo ""
-# echo ""
-# echo "Clean up gh-pages"
-# echo ""
+cd ..
+
+echo ""
+echo ""
+echo "Clean up gh-pages"
+echo ""
+rm -rf $GH_PAGES_PATH
