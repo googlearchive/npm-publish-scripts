@@ -33,7 +33,7 @@ GH_PAGES_PATH="./gh-pages"
 GITHUB_REPO=$(git config --get remote.origin.url)
 REFERENCE_DOC_DIR="reference-docs"
 REFERENCE_DOC_LOCATION="${GH_PAGES_PATH}/${REFERENCE_DOC_DIR}"
-DATA_PATH="./docs/_data"
+DATA_PATH="${GH_PAGES_PATH}/_data"
 DOCS_RELEASE_OUTPUT="${DATA_PATH}/releases.yml"
 
 echo ""
@@ -76,9 +76,10 @@ echo ""
 echo "Update Jekyll Template in gh-pages"
 
 echo ""
-echo "        Removing previous template files"
+echo "        Removing previous files"
 echo ""
-rm -rf "${GH_PAGES_PATH}/jekyll-theme"
+# rm -rf "${GH_PAGES_PATH}/jekyll-theme"
+find "${GH_PAGES_PATH}/" -type d -not -name "${REFERENCE_DOC_DIR}" -not -name .git -exec rm -R {} \;
 
 echo "        Getting SCRIPTPATH value"
 echo ""
