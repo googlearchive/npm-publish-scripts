@@ -90,9 +90,8 @@ This project has the following in `files` configuration in package.json.
 With this NPM will publish generic files like README and LICENSE, but will also
 include *just* the 'build/' directory.
 
-If you want to test what will be published run `npm link`, go to an empty
-directory and `npm install <name of your module>@<version number>`. This will
-install your local module as if it was retrieved from the npm repository.
+If you want to test what will be published run `npm pack`, which will create
+an example tar of what will be shipped.
 
 # Testing During a Release
 
