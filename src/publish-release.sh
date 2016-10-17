@@ -100,12 +100,6 @@ fi
 
 echo ""
 echo ""
-echo "Tag release on Git"
-echo ""
-git tag -f $PACKAGE_VERSION
-
-echo ""
-echo ""
 echo "Publish update to NPM"
 echo ""
 if [[ $RELEASE_TYPE == "stable" ]]; then
@@ -121,6 +115,13 @@ echo ""
 git add package.json
 git commit -m "Auto-generated PR to update package.json with new version - $PACKAGE_VERSION"
 git push origin $currentBranch
+
+echo ""
+echo ""
+echo "Tag release on Git"
+echo ""
+git tag -f $PACKAGE_VERSION
+git push origin --tags
 
 echo ""
 echo ""
