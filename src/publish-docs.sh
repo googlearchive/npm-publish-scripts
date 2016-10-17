@@ -91,14 +91,21 @@ echo "        Getting SCRIPTPATH value"
 echo ""
 # When publishing on THIS repo
 SCRIPT_EXECUTABLE=${BASH_SOURCE[0]}
-FOLLOW_LINK_PATH=$( readlink ${SCRIPT_EXECUTABLE} )
+
+# For published npm-release-scripts the script is in '.bin' as a link
+{
+  FOLLOW_LINK_PATH=$( readlink ${SCRIPT_EXECUTABLE} )
+} || {
+  FOLLOW_LINK_PATH='.'
+}
 
 SCRIPT_EXECUTABLE_PATH="$( dirname "${SCRIPT_EXECUTABLE}" )"
 CURRENT_DIR="$( cd ${SCRIPT_EXECUTABLE_PATH} && cd $( dirname ${FOLLOW_LINK_PATH} ) &&  pwd )"
 if [ -d "${CURRENT_DIR}" ]; then
   SCRIPTPATH="${CURRENT_DIR}"
 else
-  SCRIPTPATH="${PWD}/src"
+  echo "Unable to find path of the 'publish-docs.sh' script."
+  exit 1;
 fi
 
 echo "        Copying $SCRIPTPATH/jekyll-theme/ to ${GH_PAGES_PATH}/jekyll-theme/"
