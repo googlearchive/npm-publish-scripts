@@ -88,11 +88,11 @@ This project has the following in `files` configuration in package.json.
     ]
 
 With this NPM will publish generic files like README and LICENSE, but will also
-move the contents of the 'build/' directory into the root of the NPM modules.
+include *just* the 'build/' directory.
 
 If you want to test what will be published run `npm link`, go to an empty
-directory and `npm install <name of your module>`. This will install your
-local module as if it was retrieved from the npm repository.
+directory and `npm install <name of your module>@<version number>`. This will
+install your local module as if it was retrieved from the npm repository.
 
 # Testing During a Release
 

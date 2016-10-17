@@ -9,7 +9,7 @@ navigation_weight: 3
 If you want to use the JSDoc theme with your reference documentation,
 all you need to do is tell JSDoc to use this directory for the template:
 
-    node_modules/npm-publish-scripts/jsdoc-theme/
+    node_modules/npm-publish-scripts/build/jsdoc-theme/
 
 An example JSDoc config file to use this theme looks like this:
 
@@ -22,7 +22,7 @@ An example JSDoc config file to use this theme looks like this:
     ]
   },
   "opts": {
-    "template": "node_modules/npm-publish-scripts/jsdoc-theme/",
+    "template": "./node_modules/npm-publish-scripts/build/jsdoc-theme/",
     "recurse": true
   },
   "markdown": {
