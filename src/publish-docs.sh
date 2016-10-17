@@ -90,7 +90,11 @@ echo "Update Jekyll Template in gh-pages"
 echo "        Getting SCRIPTPATH value"
 echo ""
 # When publishing on THIS repo
-CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SCRIPT_EXECUTABLE=${BASH_SOURCE[0]}
+FOLLOW_LINK_PATH=$( readlink ${SCRIPT_EXECUTABLE} )
+
+SCRIPT_EXECUTABLE_PATH="$( dirname "${SCRIPT_EXECUTABLE}" )"
+CURRENT_DIR="$( cd ${SCRIPT_EXECUTABLE_PATH} && cd $( dirname ${FOLLOW_LINK_PATH} ) &&  pwd )"
 if [ -d "${CURRENT_DIR}" ]; then
   SCRIPTPATH="${CURRENT_DIR}"
 else
@@ -171,7 +175,6 @@ cd $GH_PAGES_PATH
     git config user.email "gauntface@google.com"
   fi
 
-  cd $GH_PAGES_PATH
   git add .
   git commit -m "Deploy to GitHub Pages"
 
