@@ -11,7 +11,6 @@ set -e
 #     - npm run build
 #     - npm run build-docs
 #     - npm run test
-#     - npm run bundle
 #
 # - Install this node module:
 #     - npm install --save-dev npm-publish-scripts
@@ -28,9 +27,6 @@ if [ "$BASH_VERSION" = '' ]; then
  echo "    Please run this script via this command: './project/publish-release.sh'"
  exit 1;
 fi
-
-GITHUB_REPO=$(git config --get remote.origin.url)
-RELEASE_BUNDLE_FOLDER="tagged-release"
 
 # NOTES:
 #     To delete a tag use: git push origin :v1.0.0
@@ -104,36 +100,9 @@ fi
 
 echo ""
 echo ""
-echo "Create and Copy Files for Release"
+echo "Tag release on Git"
 echo ""
-# Remove any remaining artifacts from previous builds
-rm -rf "./${RELEASE_BUNDLE_FOLDER}"
-mkdir "${RELEASE_BUNDLE_FOLDER}"
-
-# Copy over files that we want in the release
-npm run bundle -- "./${RELEASE_BUNDLE_FOLDER}"
-
-# Disabled as the jsdoc theme requires parsing through Jekyll. This could
-# be achieved by building docs and bundling in the `npm run bundle` step.
-# echo ""
-# echo ""
-# echo "Building Docs into Release"
-# echo ""
-# npm run build-docs "${RELEASE_BUNDLE_FOLDER}/reference-docs/"
-
-cd "./${RELEASE_BUNDLE_FOLDER}/"
-
-echo ""
-echo ""
-echo "Git push to release branch"
-echo ""
-git init
-git remote add origin $GITHUB_REPO
-git checkout -b release
-git add .
-git commit -m "New tagged release - $PACKAGE_VERSION"
 git tag -f $PACKAGE_VERSION
-git push -f origin release $PACKAGE_VERSION
 
 echo ""
 echo ""
@@ -147,13 +116,6 @@ fi
 
 echo ""
 echo ""
-echo "Removing Tagged Release"
-echo ""
-cd ..
-rm -rf "./${RELEASE_BUNDLE_FOLDER}"
-
-echo ""
-echo ""
 echo "Commiting package.json updates to master"
 echo ""
 git add package.json
@@ -164,4 +126,11 @@ echo ""
 echo ""
 echo "Build and Publish Docs"
 echo ""
-npm run publish-docs $RELEASE_TYPE/$PACKAGE_VERSION
+{
+  npm run publish-docs $RELEASE_TYPE/$PACKAGE_VERSION
+} || {
+  echo ""
+  echo "ERROR: Unable to publish docs. Attemped to run:"
+  echo "    npm run publish-docs ${RELEASE_TYPE}/${PACKAGE_VERSION}"
+  echo ""
+}

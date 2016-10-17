@@ -6,7 +6,6 @@
     "build": "gulp build",
     "build-docs": "echo No Docs.",
     "test": "echo No Tests.",
-    "bundle": "./project/create-release-bundle.sh",
     "publish-release": "./src/publish-release.sh",
     "publish-docs": "./src/publish-docs.sh"
   },

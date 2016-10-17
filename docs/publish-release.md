@@ -12,8 +12,6 @@ before anything is published.
 1. *Build* the project if needed final release. An example would be minifying
    code for use in browsers.
 1. *Test* the project to make sure what is released actually works.
-1. *Bundle* the source code, build files, documentation and other files
-   you want to be shipped in the NPM Module.
 
 The `publish-release.sh` will look for **NPM Run Scripts** that perform each
 of the above steps. Initially add the following to your `package.json` file.
@@ -21,8 +19,7 @@ of the above steps. Initially add the following to your `package.json` file.
 ```json
 "scripts": {
   "build": "echo 'No Build Step.'",
-  "test": "echo 'No Tests Defined.'",
-  "bundle": "No 'Bundle Step Defined.'"
+  "test": "echo 'No Tests Defined.'"
 }
 ```
 
@@ -31,42 +28,14 @@ code before a release) configure it in the `build` NPM script.
 
 The `test` script should run any tests you have for you project.
 
-Lastly, the `bundle` script will be given a directory as an argument
-that should be used to copy the final set of files into.
-
 Here's an example set of NPM scripts:
 
 ```json
 "scripts": {
   "build": "echo 'Skip Build Step.'",
   "test": "npm run lint && mocha",
-  "bundle": "./project/create-release-bundle.sh",
   "lint": "eslint ./**/*.js",
 }
-```
-
-An example shell script for the `bundle` step (in this example called
-`create-release-bundle.sh`) could look like this:
-
-```bash
-#!/bin/bash
-set -e
-
-if [ "$BASH_VERSION" = '' ]; then
- echo "    Please run this script via this command: './<Script Location>/<Script Name>.sh'"
- exit 1;
-fi
-
-if [ -z "$1" ]; then
-  echo "    Bad input: Expected a directory as the first argument for the path to put the final bundle files into (i.e. ./tagged-release)";
-  exit 1;
-fi
-
-# Copy over files that we want in the release
-cp -r ./src $1
-cp LICENSE $1
-cp package.json $1
-cp README.md $1
 ```
 
 Once you have the NPM Scripts set up, the next step is to kick off a release.
@@ -80,7 +49,6 @@ The easiest way to do this is to add a `publish-release` NPM script to your
 "scripts": {
   "build": "echo 'Skip Build Step.'",
   "test": "npm run lint && mocha",
-  "bundle": "./project/create-release-bundle.sh",
   "lint": "eslint ./**/*.js",
   "publish-release": "publish-release.sh"
 }
@@ -102,7 +70,31 @@ treated as stable.
 > perform releases using the `alpha` or `beta` label in case there are
 > any issues.
 
-## Testing During a Release
+# Controlling Files Being Shipped
+
+When publishing a module to NPM you should be considerate of what files you
+publish. Save bytes for developers and users of your modules.
+
+Make use of`.npmignore` to ensure files that aren't required are
+[excluded from the final release](https://docs.npmjs.com/misc/developers#keeping-files-out-of-your-package).
+
+If you have particular files and directories you wish to include you can
+use the `files` parameter in [package.json](https://docs.npmjs.com/files/package.json#files).
+
+This project has the following in `files` configuration in package.json.
+
+    "files": [
+      "build/"
+    ]
+
+With this NPM will publish generic files like README and LICENSE, but will also
+move the contents of the 'build/' directory into the root of the NPM modules.
+
+If you want to test what will be published run `npm link`, go to an empty
+directory and `npm install <name of your module>`. This will install your
+local module as if it was retrieved from the npm repository.
+
+# Testing During a Release
 
 There may be tests that you don't want to run before a release (i.e.
 particularly flakey tests or browsers that are known to fail).
