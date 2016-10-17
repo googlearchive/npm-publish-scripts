@@ -1,4 +1,5 @@
 @import "../variables/dimens.css";
+@import "../variables/colors.css";
 
 footer {
   height: 120px;
