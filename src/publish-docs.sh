@@ -63,7 +63,7 @@ cd $GH_PAGES_PATH
 echo ""
 echo "        Removing previous files"
 echo ""
-find . -maxdepth 1 -type d ! -name .git ! -name "${REFERENCE_DOC_DIR}" -exec rm -R {} \;
+find . -maxdepth 1 -type d ! -name .git ! -name . ! -name "${REFERENCE_DOC_DIR}" -exec rm -R {} \;
 
 cd ..
 
