@@ -1,0 +1,16 @@
+npm-publish-scripts
+
+Usage:
+    npm-publish-scripts [command] [options]
+
+Commands:
+
+    init-project
+    serve-doc-site [<path of project>]
+    publish-release <patch | minor | major> [<stable | beta | alpha>]
+    publish-docs [<path to build reference docs into>]
+
+Options
+
+    -h --help       Show this help text.
+    -v --version    Show current version of npm-publish-scripts

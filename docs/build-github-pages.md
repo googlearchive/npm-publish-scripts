@@ -24,8 +24,8 @@ Then create a `docs/_config.yml` file and paste in the following:
 
 ```
 source:       .
-layouts_dir: ./jekyll-theme/_layouts/
-includes_dir: ./jekyll-theme/_includes/
+layouts_dir: ./themes/jekyll/_layouts/
+includes_dir: ./themes/jekyll/_includes/
 ```
 
 Then add a new NPM run script:

@@ -1,36 +1,44 @@
 {
   "name": "npm-publish-scripts",
-  "version": "2.1.4",
   "description": "A simple set of scripts to help when publishing to NPM from a Github Repo",
-  "scripts": {
-    "build": "gulp build",
-    "build-docs": "echo No Docs.",
-    "test": "echo No Tests.",
-    "publish-release": "./src/publish-release.sh",
-    "publish-docs": "./src/publish-docs.sh"
-  },
-  "repository": "GoogleChrome/npm-publish-scripts",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/GoogleChrome/npm-publish-scripts/issues"
-  },
-  "homepage": "https://googlechrome.github.io/npm-publish-scripts/",
-  "devDependencies": {
-    "cssnano": "^3.7.4",
-    "del": "^2.2.2",
-    "gulp": "github:gulpjs/gulp#4.0",
-    "gulp-cssimport": "^3.1.0",
-    "gulp-postcss": "^6.2.0",
-    "jsdoc": "^3.4.1",
-    "postcss-cssnext": "^2.8.0",
-    "semver": "^5.3.0"
-  },
+  "version": "2.1.4",
   "bin": {
-    "npm-publish-scripts": "./src/bin/cli.js",
+    "npm-publish-scripts": "./src/node/bin/cli.js",
     "publish-docs.sh": "./src/publish-docs.sh",
     "publish-release.sh": "./src/publish-release.sh"
   },
+  "bugs": {
+    "url": "https://github.com/GoogleChrome/npm-publish-scripts/issues"
+  },
+  "dependencies": {
+    "fs-extra": "^0.30.0",
+    "semver": "^5.3.0",
+    "tmp": "0.0.29",
+    "jsdoc": "^3.4.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "cssnano": "^3.7.4",
+    "del": "^2.2.2",
+    "eslint": "^3.8.1",
+    "eslint-config-google": "^0.7.0",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-cssimport": "^3.1.0",
+    "gulp-postcss": "^6.2.0",
+    "mocha": "^3.1.2",
+    "postcss-cssnext": "^2.8.0"
+  },
   "files": [
     "build/"
-  ]
+  ],
+  "homepage": "https://googlechrome.github.io/npm-publish-scripts/",
+  "license": "Apache-2.0",
+  "repository": "GoogleChrome/npm-publish-scripts",
+  "scripts": {
+    "build": "gulp build",
+    "build-docs": "echo No Docs.",
+    "publish-docs": "./src/publish-docs.sh",
+    "publish-release": "./src/publish-release.sh",
+    "test": "echo No Tests."
+  }
 }
