@@ -73,7 +73,7 @@ if [ ! -z "$1" ]; then
   DOC_LOCATION="${REFERENCE_DOC_LOCATION}/$1"
   echo ""
   echo ""
-  echo "Build the docs"
+  echo "Build the reference docs"
   echo ""
   npm run build-docs $DOC_LOCATION
 fi

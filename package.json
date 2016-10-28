@@ -26,8 +26,9 @@
     "semver": "^5.3.0"
   },
   "bin": {
-    "publish-docs.sh": "./build/publish-docs.sh",
-    "publish-release.sh": "./build/publish-release.sh"
+    "npm-publish-scripts": "./src/bin/cli.js",
+    "publish-docs.sh": "./src/publish-docs.sh",
+    "publish-release.sh": "./src/publish-release.sh"
   },
   "files": [
     "build/"
