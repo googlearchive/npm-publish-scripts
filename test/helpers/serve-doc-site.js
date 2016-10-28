@@ -19,6 +19,6 @@
  * This is just a simple script that will run the serve-doc-site command.
  * It's in a seperate file so that the process can be forked.
  */
-const CLI = require('../../src/cli/index.js');
+const CLI = require('../../src/node/cli/index.js');
 
 new CLI().argv(['serve-doc-site']);

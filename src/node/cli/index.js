@@ -25,6 +25,7 @@ const spawnSync = require('child_process').spawnSync;
 
 const exitLifeCycle = require('./exit-lifecycle');
 const logHelper = require('./log-helper');
+const packageInfo = require('../../../package.json');
 
 /**
  * The module that performs the logic of the CLI.
@@ -69,7 +70,7 @@ class NPMPublishScriptCLI {
     }
 
     if (args.v || args.version) {
-      logHelper.info(require('../../package.json').version);
+      logHelper.info(packageInfo.version);
       handled = true;
     }
 
@@ -161,6 +162,7 @@ class NPMPublishScriptCLI {
       );
 
       // 5   Generate Jekyll docs list
+
 
       // 2.2   Build reference docs
       try {

@@ -18,7 +18,7 @@
 const path = require('path');
 const fs = require('fs');
 const spawn = require('child_process').spawn;
-const CLI = require('../src/cli/index.js');
+const CLI = require('../src/node/cli/index.js');
 
 require('chai').should();
 
@@ -27,15 +27,16 @@ describe('Test Command Line Interface', function() {
   const originalLog = console.log;
   const originalError = console.error;
 
+  let globalDocProcess = null;
   let globalExitCode = -1;
   let globalServiceName = null;
   let globalLogs = [];
 
   const startLogCapture = () => {
-    console.log = string => {
+    console.log = (string) => {
       globalLogs.push(string);
     };
-    console.error = string => {
+    console.error = (string) => {
       globalLogs.push(string);
     };
   };
@@ -46,7 +47,7 @@ describe('Test Command Line Interface', function() {
   };
 
   before(function() {
-    process.exit = code => {
+    process.exit = (code) => {
       globalExitCode = code;
     };
   });
@@ -61,12 +62,28 @@ describe('Test Command Line Interface', function() {
   });
 
   afterEach(function() {
+    this.timeout(10000);
+
     if (globalServiceName) {
       new CLI().argv(['stop', globalServiceName]);
       globalServiceName = null;
     }
 
     endLogCapture();
+
+    if (globalDocProcess) {
+      return new Promise((resolve, reject) => {
+        globalDocProcess.on('close', (code) => {
+          globalDocProcess = null;
+          resolve();
+        });
+
+        globalDocProcess.kill('SIGINT');
+      })
+      .then(() => {
+        globalDocProcess = null;
+      });
+    }
   });
 
   it('should be able to find the cli from package.json', function() {
@@ -78,7 +95,7 @@ describe('Test Command Line Interface', function() {
   it('should show help text and exit with bad code', function() {
     startLogCapture();
 
-    new CLI().argv([])
+    new CLI().argv([]);
 
     globalExitCode.should.equal(1);
 
@@ -89,7 +106,7 @@ describe('Test Command Line Interface', function() {
     startLogCapture();
 
     const inputs = ['-h', '--help'];
-    inputs.forEach(input => {
+    inputs.forEach((input) => {
       new CLI().argv([input]);
     });
 
@@ -98,25 +115,25 @@ describe('Test Command Line Interface', function() {
     endLogCapture();
 
     const helpText = fs.readFileSync(
-      path.join(__dirname, '..', 'src', 'cli', 'cli-help.txt'), 'utf8');
-    globalLogs.forEach(log => {
-      log.should.equal(helpText);
-    })
+      path.join(__dirname, '..', 'src', 'node', 'cli', 'cli-help.txt'), 'utf8');
+    globalLogs.forEach((log) => {
+      log.indexOf(helpText).should.not.equal(-1);
+    });
   });
 
   it('should show version number', function() {
     startLogCapture();
 
     const inputs = ['-v', '--version'];
-    inputs.forEach(input => {
+    inputs.forEach((input) => {
       new CLI().argv([input]);
     });
     globalExitCode.should.equal(0);
 
     const version = require('../package.json').version;
     globalLogs.length.should.equal(inputs.length);
-    globalLogs.forEach(log => {
-      log.should.equal(version);
+    globalLogs.forEach((log) => {
+      log.indexOf(version).should.not.equal(-1);
     });
 
     endLogCapture();
@@ -132,27 +149,34 @@ describe('Test Command Line Interface', function() {
 
     globalExitCode.should.equal(1);
 
-    globalLogs[0].should.equal(`Invlaid command given '${invalidCommand}'`);
+    console.log(
+      );
+
+    (globalLogs[0].indexOf(`Invlaid command given '${invalidCommand}'`))
+      .should.not.equal(-1);
   });
 
   it('should serve the doc site', function() {
+    // Building JSDoc + Jekyll may take some time.
+    this.timeout(4000);
+
     return new Promise((resolve, reject) => {
-      const serveDocProcess = spawn('node', [
-        path.join(__dirname, 'helpers', 'serve-doc-site.js')
+      globalDocProcess = spawn('node', [
+        path.join(__dirname, 'helpers', 'serve-doc-site.js'),
       ]);
 
-      serveDocProcess.stdout.on('data', (data) => {
+      globalDocProcess.stdout.on('data', (data) => {
         console.log(`stdout: ${data}`);
       });
 
-      serveDocProcess.stderr.on('data', (data) => {
+      globalDocProcess.stderr.on('data', (data) => {
         console.log(`stderr: ${data}`);
       });
 
-      serveDocProcess.on('close', (code) => {
-        console.log(`child process exited with code ${code}`);
+      globalDocProcess.on('close', (code) => {
+        globalDocProcess = null;
         resolve();
       });
     });
-  })
+  });
 });
