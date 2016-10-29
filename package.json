@@ -26,6 +26,7 @@
     "gulp-cssimport": "^3.1.0",
     "gulp-postcss": "^6.2.0",
     "mocha": "^3.1.2",
+    "node-fetch": "^1.6.3",
     "postcss-cssnext": "^2.8.0"
   },
   "files": [
