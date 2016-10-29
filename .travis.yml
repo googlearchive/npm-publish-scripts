@@ -14,8 +14,13 @@ node_js:
   - '6'
   - '7'
 
+rvm:
+  - 2.2.0
+
 install:
   - npm install
+  - gem install bundler
+  - rvm . do bundle install
 
 # Read more here: https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
 before_script:
