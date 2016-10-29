@@ -18,6 +18,8 @@
 const path = require('path');
 const fs = require('fs');
 const spawn = require('child_process').spawn;
+const fetch = require('node-fetch');
+
 const CLI = require('../src/node/cli/index.js');
 
 require('chai').should();
@@ -158,25 +160,52 @@ describe('Test Command Line Interface', function() {
 
   it('should serve the doc site', function() {
     // Building JSDoc + Jekyll may take some time.
-    this.timeout(4000);
+    this.timeout(10000);
+
+    globalDocProcess = spawn('node', [
+      path.join(__dirname, 'helpers', 'serve-doc-site.js'),
+    ]);
+
+    globalDocProcess.stdout.on('data', (data) => {
+      console.log(`stdout: ${data}`);
+    });
+
+    globalDocProcess.stderr.on('data', (data) => {
+      console.log(`stderr: ${data}`);
+    });
+
+    globalDocProcess.on('close', (code) => {
+      globalDocProcess = null;
+    });
+
+    const attemptToGetSite = () => {
+      return fetch('http://localhost:4000')
+      .then((response) => {
+        if (response.status !== 200) {
+          return false;
+        }
+
+        return true;
+      }, () => {
+        return false;
+      });
+    };
+
+    const waitForValidResponse = (cb) => {
+      return attemptToGetSite()
+      .then((wasValid) => {
+        if (wasValid) {
+          cb();
+        } else {
+          setTimeout(() => {
+            waitForValidResponse(cb);
+          }, 1000);
+        }
+      });
+    };
 
     return new Promise((resolve, reject) => {
-      globalDocProcess = spawn('node', [
-        path.join(__dirname, 'helpers', 'serve-doc-site.js'),
-      ]);
-
-      globalDocProcess.stdout.on('data', (data) => {
-        console.log(`stdout: ${data}`);
-      });
-
-      globalDocProcess.stderr.on('data', (data) => {
-        console.log(`stderr: ${data}`);
-      });
-
-      globalDocProcess.on('close', (code) => {
-        globalDocProcess = null;
-        resolve();
-      });
+      waitForValidResponse(resolve);
     });
   });
 });

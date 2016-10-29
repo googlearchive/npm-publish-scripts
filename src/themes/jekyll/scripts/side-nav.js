@@ -15,17 +15,25 @@
  * limitations under the License.
  */
 
+/* eslint-env browser */
+
 'use strict';
 
+/**
+ * Implements a sliding side navigation.
+ */
 class SideNav {
-  constructor () {
+  /**
+   * Create a new side nav.
+   */
+  constructor() {
     this.showButtonEl = document.querySelector('.js-menu-show');
     this.hideButtonEl = document.querySelector('.js-menu-hide');
     this.sideNavEl = document.querySelector('.js-side-nav');
     this.sideNavContainerEl = document.querySelector('.js-side-nav-container');
     // Control whether the container's children can be focused
     // Set initial state to inert since the drawer is offscreen
-    this.detabinator = new Detabinator(this.sideNavContainerEl);
+    this.detabinator = new window.Detabinator(this.sideNavContainerEl);
     this.detabinator.inert = true;
 
     this.showSideNav = this.showSideNav.bind(this);
@@ -45,34 +53,48 @@ class SideNav {
     this.addEventListeners();
   }
 
-  // apply passive event listening if it's supported
-  applyPassive () {
+  /**
+   * apply passive event listening if it's supported
+   * @return {Boolean} Returns whether passive events are supported.
+   */
+  applyPassive() {
     if (this.supportsPassive !== undefined) {
       return this.supportsPassive ? {passive: true} : false;
     }
     // feature detect
     let isSupported = false;
     try {
-      document.addEventListener('test', null, {get passive () {
+      document.addEventListener('test', null, {get passive() {
         isSupported = true;
       }});
-    } catch (e) { }
+    } catch (e) {
+      // NOOP
+    }
     this.supportsPassive = isSupported;
     return this.applyPassive();
   }
 
-  addEventListeners () {
+  /**
+   * Add event listeners that perform the slide of the nav drawer
+   */
+  addEventListeners() {
     this.showButtonEl.addEventListener('click', this.showSideNav);
     this.hideButtonEl.addEventListener('click', this.hideSideNav);
     this.sideNavEl.addEventListener('click', this.hideSideNav);
     this.sideNavContainerEl.addEventListener('click', this.blockClicks);
 
-    this.sideNavEl.addEventListener('touchstart', this.onTouchStart, this.applyPassive());
-    this.sideNavEl.addEventListener('touchmove', this.onTouchMove, this.applyPassive());
+    this.sideNavEl.addEventListener('touchstart', this.onTouchStart,
+      this.applyPassive());
+    this.sideNavEl.addEventListener('touchmove', this.onTouchMove,
+      this.applyPassive());
     this.sideNavEl.addEventListener('touchend', this.onTouchEnd);
   }
 
-  onTouchStart (evt) {
+  /**
+   * Events to open / close the side nav.
+   * @param {Event} evt The start touch event.
+   */
+  onTouchStart(evt) {
     if (!this.sideNavEl.classList.contains('side-nav--visible'))
       return;
 
@@ -83,7 +105,11 @@ class SideNav {
     requestAnimationFrame(this.update);
   }
 
-  onTouchMove (evt) {
+  /**
+   * Events to open / close the side nav.
+   * @param {Event} evt The move touch event.
+   */
+  onTouchMove(evt) {
     if (!this.touchingSideNav)
       return;
 
@@ -95,7 +121,11 @@ class SideNav {
     }
   }
 
-  onTouchEnd (evt) {
+  /**
+   * The touch event listener
+   * @param {Event} evt The touch end event.
+   */
+  onTouchEnd(evt) {
     if (!this.touchingSideNav)
       return;
 
@@ -109,7 +139,10 @@ class SideNav {
     }
   }
 
-  update () {
+  /**
+   * Update the side nav animation.
+   */
+  update() {
     if (!this.touchingSideNav)
       return;
 
@@ -119,23 +152,36 @@ class SideNav {
     this.sideNavContainerEl.style.transform = `translateX(${translateX}px)`;
   }
 
-  blockClicks (evt) {
+  /**
+   * Block clicks
+   * @param {Event} evt Event to block.
+   */
+  blockClicks(evt) {
     evt.stopPropagation();
   }
 
-  onTransitionEnd (evt) {
+  /**
+   * @param {Event} evt The end of transition event.
+   */
+  onTransitionEnd(evt) {
     this.sideNavEl.classList.remove('side-nav--animatable');
     this.sideNavEl.removeEventListener('transitionend', this.onTransitionEnd);
   }
 
-  showSideNav () {
+  /**
+   * Opens the side nav.
+   */
+  showSideNav() {
     this.sideNavEl.classList.add('side-nav--animatable');
     this.sideNavEl.classList.add('side-nav--visible');
     this.detabinator.inert = false;
     this.sideNavEl.addEventListener('transitionend', this.onTransitionEnd);
   }
 
-  hideSideNav () {
+  /**
+   * Hide the side nav.
+   */
+  hideSideNav() {
     this.sideNavEl.classList.add('side-nav--animatable');
     this.sideNavEl.classList.remove('side-nav--visible');
     this.detabinator.inert = true;

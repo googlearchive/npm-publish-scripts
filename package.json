@@ -36,9 +36,7 @@
   "repository": "GoogleChrome/npm-publish-scripts",
   "scripts": {
     "build": "gulp build",
-    "build-docs": "echo No Docs.",
-    "publish-docs": "./src/publish-docs.sh",
-    "publish-release": "./src/publish-release.sh",
-    "test": "echo No Tests."
+    "lint": "eslint '.'",
+    "test": "npm run lint && gulp build && mocha"
   }
 }
