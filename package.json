@@ -12,9 +12,10 @@
   },
   "dependencies": {
     "fs-extra": "^0.30.0",
+    "jsdoc": "^3.4.1",
+    "minimist": "^1.2.0",
     "semver": "^5.3.0",
-    "tmp": "0.0.29",
-    "jsdoc": "^3.4.1"
+    "tmp": "0.0.29"
   },
   "devDependencies": {
     "chai": "^3.5.0",
