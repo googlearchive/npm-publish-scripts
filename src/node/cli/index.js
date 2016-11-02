@@ -129,6 +129,16 @@ class NPMPublishScriptCLI {
     );
 
     fse.copySync(
+      path.join(__dirname, '..', '..', 'defaults', 'Gemfile'),
+      path.join(process.cwd(), 'Gemfile')
+    );
+
+    fse.copySync(
+      path.join(__dirname, '..', '..', 'defaults', '.ruby-version'),
+      path.join(process.cwd(), '.ruby-version')
+    );
+
+    fse.copySync(
       path.join(__dirname, '..', '..', 'defaults', 'jsdoc.conf'),
       path.join(process.cwd(), 'jsdoc.conf')
     );
@@ -209,7 +219,7 @@ class NPMPublishScriptCLI {
           logHelper.error(jsdocProcess.error);
         }
       } catch (err) {
-        // NOOP
+        logHelper.info('Skipping JSDocs due to no jsdoc.conf');
       }
 
       logHelper.info('Starting Jekyll serve.');
@@ -228,6 +238,16 @@ class NPMPublishScriptCLI {
       this._servingDocInfo.jekyllProcess = spawn('bundle', params, {
         cwd: this._servingDocInfo.tmpObj.name,
         stdio: 'inherit',
+      });
+
+      this._servingDocInfo.jekyllProcess.on('error', function(err) {
+        logHelper.error('Unable to run Jekyll. Please ensure that you ' +
+          'run the followings commands:');
+        logHelper.error('');
+        logHelper.error('    gem install bundler');
+        logHelper.error('    rvm . do bundle install');
+        logHelper.error('');
+        logHelper.error(err);
       });
     } catch (err) {
       logHelper.error(err);

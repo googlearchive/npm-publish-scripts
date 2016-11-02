@@ -175,6 +175,15 @@ describe('Test Command Line Interface', function() {
       path.join(process.cwd(), 'docs', '_config.yml')
     );
     fse.ensureFileSync(
+      path.join(process.cwd(), 'docs', 'index.md')
+    );
+    fse.ensureFileSync(
+      path.join(process.cwd(), 'Gemfile')
+    );
+    fse.ensureFileSync(
+      path.join(process.cwd(), '.ruby-version')
+    );
+    fse.ensureFileSync(
       path.join(process.cwd(), 'jsdoc.conf')
     );
   });
