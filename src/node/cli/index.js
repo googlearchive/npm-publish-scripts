@@ -27,6 +27,8 @@ const exitLifeCycle = require('./exit-lifecycle');
 const logHelper = require('./log-helper');
 const packageInfo = require('../../../package.json');
 
+const REFERENCE_DOCS_DIR = 'reference-docs';
+
 /**
  * The module that performs the logic of the CLI.
  */
@@ -107,8 +109,7 @@ class NPMPublishScriptCLI {
         break;
       }
       case 'publish-docs': {
-        logHelper.error('This command is not implemented yet');
-        process.exit(1);
+        this.publishDocs();
         break;
       }
       default:
@@ -149,78 +150,36 @@ class NPMPublishScriptCLI {
    * serve and copies the appropriate files to demo the site.
    */
   serveSite() {
-    logHelper.info('Serving doc site.');
+    const docsPath = path.join(process.cwd(), 'docs');
+
+    try {
+      fs.accessSync(docsPath, fs.F_OK);
+    } catch (err) {
+      logHelper.info('Can\'t build and serve the site since there is ' +
+        'no docs directory.');
+      return;
+    }
+
     exitLifeCycle.addEventListener('exit', this.stopServingDocSite.bind(this));
 
     try {
-      const docsPath = path.join(process.cwd(), 'docs');
-
-      // Check for docs existance
-      fs.accessSync(docsPath, fs.F_OK);
-
-
       // Create temporary directory
       this._servingDocInfo = {
         tmpObj: tmp.dirSync({
-          dir: path.join(__dirname, '..', '..', '..'),
+          dir: process.cwd(),
         }),
       };
 
-      // Copy Jekyll gem
+      this.copyDocs(this._servingDocInfo.tmpObj.name);
+      this.updateJekyllTemplate(this._servingDocInfo.tmpObj.name);
+      this.buildJSDocs();
+      this.buildReferenceDocsList();
+
+      // Copy Jekyll gem - only needed for local build
       fse.copySync(
         path.join(__dirname, '..', '..', '..', 'Gemfile'),
         path.join(this._servingDocInfo.tmpObj.name, 'Gemfile')
       );
-
-      // 2.    Remove old files
-
-      // 3   Copy files from /docs/
-      fse.copySync(
-        docsPath,
-        this._servingDocInfo.tmpObj.name
-      );
-
-      // 4   Update Jekyll Template
-      fse.copySync(
-        path.join(__dirname, '..', '..', '..', 'build', 'themes', 'jekyll'),
-        path.join(this._servingDocInfo.tmpObj.name, 'themes', 'jekyll')
-      );
-
-      // 5   Generate Jekyll docs list
-
-
-      // 2.2   Build reference docs
-      try {
-        const jsdocConf = path.join(process.cwd(), 'jsdoc.conf');
-        fs.accessSync(jsdocConf, fs.F_OK);
-
-        logHelper.info('Building JSDocs');
-
-        const jsDocParams = [
-          '-c',
-          jsdocConf,
-          '-d',
-          path.join(
-            this._servingDocInfo.tmpObj.name, 'reference-docs', 'Example'
-          ),
-        ];
-
-        const jsdocProcess = spawnSync(
-          path.join(__dirname, '..', '..', '..',
-            'node_modules', '.bin', 'jsdoc'),
-          jsDocParams,
-          {
-            cwd: process.cwd(),
-            stdio: 'inherit',
-          }
-        );
-
-        if (jsdocProcess.error) {
-          logHelper.error(jsdocProcess.error);
-        }
-      } catch (err) {
-        logHelper.info('Skipping JSDocs due to no jsdoc.conf');
-      }
 
       logHelper.info('Starting Jekyll serve.');
 
@@ -239,7 +198,6 @@ class NPMPublishScriptCLI {
         cwd: this._servingDocInfo.tmpObj.name,
         stdio: 'inherit',
       });
-
       this._servingDocInfo.jekyllProcess.on('error', function(err) {
         logHelper.error('Unable to run Jekyll. Please ensure that you ' +
           'run the followings commands:');
@@ -248,10 +206,225 @@ class NPMPublishScriptCLI {
         logHelper.error('    rvm . do bundle install');
         logHelper.error('');
         logHelper.error(err);
+        process.exit(1);
       });
     } catch (err) {
       logHelper.error(err);
+      process.exit(1);
     }
+  }
+
+  /**
+   * Should get the latest docs from git-pages branch, update the entries
+   * build any reference docs and commit changes accordingly.
+   */
+  publishDocs() {
+    const githubPagesRoot = path.join(process.cwd(), 'gh-pages');
+
+    let ghPageDirExists = false;
+    try {
+      fs.accessSync(githubPagesRoot, fs.F_OK);
+      ghPageDirExists = true;
+    } catch (err) {
+      // NOOP
+    }
+
+    if (ghPageDirExists) {
+      logHelper.error('The directory \'gh-pages\' already exists.');
+      logHelper.error('Please delete it to publish docs.');
+      process.exit(1);
+    }
+
+    this.checkoutGithubPages(githubPagesRoot)
+    .then(() => {
+      return this.cleanupGithubPages(githubPagesRoot);
+    })
+    .then(() => {
+      this.copyDocs(githubPagesRoot);
+      this.updateJekyllTemplate(githubPagesRoot);
+      this.buildJSDocs();
+      this.buildReferenceDocsList();
+    })
+    .then(() => {
+      return this.pushChangesToGithub(githubPagesRoot);
+    })
+    .catch((err) => {
+      logHelper.error(err);
+
+      fse.removeSync(githubPagesRoot);
+      process.exit(1);
+    })
+    .then(() => {
+      fse.removeSync(githubPagesRoot);
+      process.exit(0);
+    });
+  }
+
+  /**
+   * Checkout the current projects github pages branch
+   * @param {string} newPath This should be the path to the root of
+   * the docs output (i.e. github pages or temp build directory).
+   * @return {Promise} Returns a promise that resolves once the github
+   * repo has been checked out.
+   */
+  checkoutGithubPages(newPath) {
+    return new Promise((resolve, reject) => {
+      const scriptPath = path.join(__dirname, 'shell-scripts',
+        'checkout-gh-pages.sh');
+      const gitCheckoutProcess = spawn(scriptPath, [newPath], {
+        stdio: 'inherit',
+      });
+
+      gitCheckoutProcess.on('close', function(code) {
+        if (code === 0) {
+          resolve();
+        } else {
+          reject(new Error(`Unexpected status code. [${code}]`));
+        }
+      });
+
+      gitCheckoutProcess.on('error', function(err) {
+        reject(err);
+      });
+    });
+  }
+
+  /**
+   * This method deletes any files that can be updated by
+   * npm-publish-scripts are documents that may be out of date with the
+   * master branch.
+   * @param {string} newPath This should be the path to the root of
+   * the docs output (i.e. github pages or temp build directory).
+   * @return {Promise} Returns a promise that resolves once the github
+   * repo has been checked out.
+   */
+  cleanupGithubPages(newPath) {
+    return new Promise((resolve, reject) => {
+      const scriptPath = path.join(__dirname, 'shell-scripts',
+        'remove-old-files.sh');
+      const cleanupProcess = spawn(scriptPath, [REFERENCE_DOCS_DIR], {
+        cwd: newPath,
+        stdio: 'inherit',
+      });
+
+      cleanupProcess.on('close', function(code) {
+        if (code === 0) {
+          resolve();
+        } else {
+          reject(new Error(`Unexpected status code. [${code}]`));
+        }
+      });
+
+      cleanupProcess.on('error', function(err) {
+        reject(err);
+      });
+    });
+  }
+
+  /**
+   * This method will push everything to Github on the gh-pages branch.
+   * @param {string} newPath This should be the path to the root of
+   * the docs output (i.e. github pages or temp build directory).
+   * @return {Promise} Returns a promise that resolves once the github
+   * repo has been pushed to.
+   */
+  pushChangesToGithub(newPath) {
+    return new Promise((resolve, reject) => {
+      const scriptPath = path.join(__dirname, 'shell-scripts',
+        'push-to-github.sh');
+      const pushProcess = spawn(scriptPath, [], {
+        cwd: newPath,
+        stdio: 'inherit',
+      });
+
+      pushProcess.on('close', function(code) {
+        if (code === 0) {
+          resolve();
+        } else {
+          reject(new Error(`Unexpected status code. [${code}]`));
+        }
+      });
+
+      pushProcess.on('error', function(err) {
+        reject(err);
+      });
+    });
+  }
+
+  /**
+   * Copyies over contents of /docs in a project to Github pages.
+   * @param {string} newPath This should be the path to the root of
+   * the docs output (i.e. github pages or temp build directory).
+   */
+  copyDocs(newPath) {
+    fse.copySync(
+      path.join(process.cwd(), 'docs'),
+      newPath
+    );
+  }
+
+  /**
+   * This method will remove any current jekyll files and copy over the
+   * new files.
+   * @param {string} newPath This should be the path to the root of
+   * the docs output (i.e. github pages or temp build directory).
+   */
+  updateJekyllTemplate(newPath) {
+    fse.copySync(
+      path.join(__dirname, '..', '..', '..', 'build', 'themes', 'jekyll'),
+      path.join(newPath, 'themes', 'jekyll')
+    );
+  }
+
+  /**
+   * Building the JSDocs for the current project
+   */
+  buildJSDocs() {
+    const jsdocConf = path.join(process.cwd(), 'jsdoc.conf');
+
+    try {
+      fs.accessSync(jsdocConf, fs.F_OK);
+    } catch (err) {
+      logHelper.info('Skipping JSDocs due to no jsdoc.conf');
+      return;
+    }
+
+    logHelper.info('Building JSDocs');
+
+    const jsDocParams = [
+      '-c',
+      jsdocConf,
+      '-d',
+      path.join(
+        this._servingDocInfo.tmpObj.name, 'reference-docs', 'Example'
+      ),
+    ];
+
+    const jsdocProcess = spawnSync(
+      path.join(__dirname, '..', '..', '..',
+        'node_modules', '.bin', 'jsdoc'),
+      jsDocParams,
+      {
+        cwd: process.cwd(),
+        stdio: 'inherit',
+      }
+    );
+
+    if (jsdocProcess.error) {
+      logHelper.error(jsdocProcess.error);
+    }
+  }
+
+  /**
+   * The way reference docs are surfaced to Jekyll are through a
+   * _data/ list that defines all the stable, beta and alpha reference
+   * docs.
+   *
+   * This method will build that list and make it available to the Jekyll
+   * theme.
+   */
+  buildReferenceDocsList() {
+
   }
 
   /**
@@ -270,20 +443,6 @@ class NPMPublishScriptCLI {
     if (this._servingDocInfo.tmpObj) {
       fse.removeSync(this._servingDocInfo.tmpObj.name);
     }
-  }
-
-  /**
-   * This method implements the 'publish-docs' command.
-   */
-  publishDocSite() {
-    // 1.    Clone github pages
-    // 2.    Remove old files
-    // 2.2   Build reference docs
-    // 3   Copy files from /docs/
-    // 4   Update Jekyll Template
-    // 5   Generate Jekyll docs list
-    // 6   Commit doc changes
-    // 7   Clean
   }
 }
 
