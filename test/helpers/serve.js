@@ -16,9 +16,9 @@
 'use strict';
 
 /**
- * This is just a simple script that will run the serve-doc-site command.
+ * This is just a simple script that will run the serve command.
  * It's in a seperate file so that the process can be forked.
  */
 const CLI = require('../../src/node/cli/index.js');
 
-new CLI().argv(['serve-doc-site']);
+new CLI().argv(['serve']);

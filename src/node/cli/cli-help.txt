@@ -5,8 +5,8 @@ Usage:
 
 Commands:
 
-    init-project
-    serve-doc-site [<path of project>]
+    init
+    serve [<path of project>]
     publish-release <patch | minor | major> [<stable | beta | alpha>]
     publish-docs [<path to build reference docs into>]
 

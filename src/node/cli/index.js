@@ -94,12 +94,11 @@ class NPMPublishScriptCLI {
    */
   handleCommand(command, args, flags) {
     switch (command) {
-      case 'init-project':
-        logHelper.error('This command is not implemented yet');
-        process.exit(1);
+      case 'init':
+        this.initProject();
         break;
-      case 'serve-doc-site': {
-        this.serveDocSite();
+      case 'serve': {
+        this.serveSite();
         break;
       }
       case 'publish-release': {
@@ -120,10 +119,26 @@ class NPMPublishScriptCLI {
   }
 
   /**
-   * This method implements the 'serve-doc-site' command and started jekyll
+   * This method will create the appropriate directories and files
+   * to initialise the project.
+   */
+  initProject() {
+    fse.copySync(
+      path.join(__dirname, '..', '..', 'defaults', 'docs'),
+      path.join(process.cwd(), 'docs')
+    );
+
+    fse.copySync(
+      path.join(__dirname, '..', '..', 'defaults', 'jsdoc.conf'),
+      path.join(process.cwd(), 'jsdoc.conf')
+    );
+  }
+
+  /**
+   * This method implements the 'serve' command and started jekyll
    * serve and copies the appropriate files to demo the site.
    */
-  serveDocSite() {
+  serveSite() {
     logHelper.info('Serving doc site.');
     exitLifeCycle.addEventListener('exit', this.stopServingDocSite.bind(this));
 

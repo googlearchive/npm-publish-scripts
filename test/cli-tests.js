@@ -17,6 +17,7 @@
 
 const path = require('path');
 const fs = require('fs');
+const fse = require('fs-extra');
 const spawn = require('child_process').spawn;
 const fetch = require('node-fetch');
 
@@ -33,6 +34,7 @@ describe('Test Command Line Interface', function() {
   let globalExitCode = -1;
   let globalServiceName = null;
   let globalLogs = [];
+  const testOutput = path.join(__dirname, 'test-output');
 
   const startLogCapture = () => {
     console.log = (string) => {
@@ -61,6 +63,8 @@ describe('Test Command Line Interface', function() {
   beforeEach(function() {
     globalLogs = [];
     globalExitCode = -1;
+
+    fse.mkdirpSync(testOutput);
   });
 
   afterEach(function() {
@@ -72,6 +76,10 @@ describe('Test Command Line Interface', function() {
     }
 
     endLogCapture();
+
+    fse.removeSync(testOutput);
+
+    process.chdir(path.join(__dirname, '..'));
 
     if (globalDocProcess) {
       return new Promise((resolve, reject) => {
@@ -151,11 +159,24 @@ describe('Test Command Line Interface', function() {
 
     globalExitCode.should.equal(1);
 
-    console.log(
-      );
-
     (globalLogs[0].indexOf(`Invlaid command given '${invalidCommand}'`))
       .should.not.equal(-1);
+  });
+
+  it('should copy files on initialising a project', function() {
+    process.chdir(testOutput);
+
+    new CLI().argv(['init']);
+
+    fse.ensureDir(
+      path.join(process.cwd(), 'docs')
+    );
+    fse.ensureFileSync(
+      path.join(process.cwd(), 'docs', '_config.yml')
+    );
+    fse.ensureFileSync(
+      path.join(process.cwd(), 'jsdoc.conf')
+    );
   });
 
   it('should serve the doc site', function() {
@@ -163,7 +184,7 @@ describe('Test Command Line Interface', function() {
     this.timeout(10000);
 
     globalDocProcess = spawn('node', [
-      path.join(__dirname, 'helpers', 'serve-doc-site.js'),
+      path.join(__dirname, 'helpers', 'serve.js'),
     ]);
 
     globalDocProcess.stdout.on('data', (data) => {
