@@ -15,31 +15,48 @@
  * limitations under the License.
  */
 
+/* eslint-env browser */
 
 /**
  * Usage:
  * const detabinator = new Detabinator(element);
- * detabinator.inert = true;  // Sets all focusable children of element to tabindex=-1
+ * detabinator.inert = true;  // Sets all focusable children of
+ * element to tabindex=-1
  * detabinator.inert = false; // Restores all focusable children of element
  * Limitations: Doesn't support Shadow DOM v0 :P
  */
-
 class Detabinator {
+  /**
+   * The element to enable / disable tabs.
+   * @param {DOMElement} element The element to detabinate.
+   */
   constructor(element) {
     if (!element) {
-      throw new Error('Missing required argument. new Detabinator needs an element reference');
+      throw new Error('Missing required argument. new Detabinator needs an ' +
+        'element reference');
     }
     this._inert = false;
-    this._focusableElementsString = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex], [contenteditable]';
+    this._focusableElementsString = 'a[href], area[href], ' +
+      'input:not([disabled]), select:not([disabled]), ' +
+      'textarea:not([disabled]), button:not([disabled]), ' +
+      'iframe, object, embed, [tabindex], [contenteditable]';
     this._focusableElements = Array.from(
       element.querySelectorAll(this._focusableElementsString)
     );
   }
 
+  /**
+   * Get the current inert state.
+   * @return {boolean} Whether the element is inert or not.
+   */
   get inert() {
     return this._inert;
   }
 
+  /**
+   * Set the inert state.
+   * @param  {Boolean} isInert The new inert state.
+   */
   set inert(isInert) {
     if (this._inert === isInert) {
       return;
@@ -59,7 +76,7 @@ class Detabinator {
         // If the child has a saved tabindex, restore it
         // Because the value could be 0, explicitly check that it's not false
         if (child.__savedTabindex === 0 || child.__savedTabindex) {
-          return child.setAttribute('tabindex', child.__savedTabindex);
+          child.setAttribute('tabindex', child.__savedTabindex);
         } else {
           // Remove tabindex from ANY REMAINING children
           child.removeAttribute('tabindex');
@@ -68,3 +85,5 @@ class Detabinator {
     });
   }
 }
+
+window.Detabinator = Detabinator;
