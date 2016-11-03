@@ -4,7 +4,6 @@
   "version": "2.1.4",
   "bin": {
     "npm-publish-scripts": "./src/node/bin/cli.js",
-    "publish-docs.sh": "./src/publish-docs.sh",
     "publish-release.sh": "./src/publish-release.sh"
   },
   "bugs": {
