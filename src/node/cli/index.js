@@ -39,15 +39,28 @@ class NPMPublishScriptCLI {
    * output of minimist module.
    * @param {object} argv This is the output minimist which parses the command
    * line arguments.
+   * @return {Promise} Returns a promise for the given task.
    */
   argv(argv) {
     const cliArgs = minimist(argv);
     if (cliArgs._.length > 0) {
       // We have a command
-      this.handleCommand(cliArgs._[0], cliArgs._.splice(1), cliArgs);
+      return this.handleCommand(cliArgs._[0], cliArgs._.splice(1), cliArgs)
+      .then(() => {
+        process.exit(0);
+      })
+      .catch(() => {
+        process.exit(1);
+      });
     } else {
       // we have a flag only request
-      this.handleFlag(cliArgs);
+      return this.handleFlag(cliArgs)
+      .then(() => {
+        process.exit(0);
+      })
+      .catch(() => {
+        process.exit(1);
+      });
     }
   }
 
@@ -64,6 +77,7 @@ class NPMPublishScriptCLI {
    * If there is no command given to the CLI then the flags will be passed
    * to this function in case a relevant action can be taken.
    * @param {object} args The available flags from the command line.
+   * @return {Promise} returns a promise once handled.
    */
   handleFlag(args) {
     let handled = false;
@@ -78,14 +92,12 @@ class NPMPublishScriptCLI {
     }
 
     if (handled) {
-      process.exit(0);
-      return;
+      return Promise.resolve();
     }
 
     // This is a fallback
     this.printHelpText();
-    process.exit(1);
-    return;
+    return Promise.reject();
   }
 
   /**
@@ -94,71 +106,76 @@ class NPMPublishScriptCLI {
    * @param {string} command The command name.
    * @param {object} args The arguments given to this command.
    * @param {object} flags The flags supplied with the command line.
+   * @return {Promise} A promise for the provided task.
    */
   handleCommand(command, args, flags) {
     switch (command) {
       case 'init':
-        this.initProject();
-        break;
+        return this.initProject();
       case 'serve': {
-        this.serveSite();
-        break;
+        return this.serveSite();
       }
       case 'publish-release': {
         logHelper.error('This command is not implemented yet');
-        process.exit(1);
-        break;
+        return Promise.reject();
       }
       case 'publish-docs': {
-        this.publishDocs();
-        break;
+        return this.publishDocs();
       }
       default:
         logHelper.error(`Invlaid command given '${command}'`);
-        process.exit(1);
-        break;
+        return Promise.reject();
     }
   }
 
   /**
    * This method will create the appropriate directories and files
    * to initialise the project.
+   * @return {Promise} Returns a promise once initialising is done.
    */
   initProject() {
-    const files = [
-      {
-        input: path.join(__dirname, '..', '..', 'defaults', 'docs'),
-        output: path.join(process.cwd(), 'docs'),
-      },
-      {
-        input: path.join(__dirname, '..', '..', 'defaults', 'Gemfile'),
-        output: path.join(process.cwd(), 'Gemfile'),
-      },
-      {
-        input: path.join(__dirname, '..', '..', 'defaults', '.ruby-version'),
-        output: path.join(process.cwd(), '.ruby-version'),
-      },
-      {
-        input: path.join(__dirname, '..', '..', 'defaults', 'jsdoc.conf'),
-        output: path.join(process.cwd(), 'jsdoc.conf'),
-      },
-    ];
+    try {
+      const files = [
+        {
+          input: path.join(__dirname, '..', '..', 'defaults', 'docs'),
+          output: path.join(process.cwd(), 'docs'),
+        },
+        {
+          input: path.join(__dirname, '..', '..', 'defaults', 'Gemfile'),
+          output: path.join(process.cwd(), 'Gemfile'),
+        },
+        {
+          input: path.join(__dirname, '..', '..', 'defaults', '.ruby-version'),
+          output: path.join(process.cwd(), '.ruby-version'),
+        },
+        {
+          input: path.join(__dirname, '..', '..', 'defaults', 'jsdoc.conf'),
+          output: path.join(process.cwd(), 'jsdoc.conf'),
+        },
+      ];
 
-    files.forEach((fileOptions) => {
-      try {
-        fs.accessSync(fileOptions.output, fs.F_OK);
-      } catch (err) {
-        fse.copySync(
-          fileOptions.input,
-          fileOptions.output
-        );
-      }
-    });
+      files.forEach((fileOptions) => {
+        try {
+          fs.accessSync(fileOptions.output, fs.F_OK);
+        } catch (err) {
+          fse.copySync(
+            fileOptions.input,
+            fileOptions.output
+          );
+        }
+      });
+
+      return Promise.resolve();
+    } catch (err) {
+      return Promise.reject(err);
+    }
   }
 
   /**
    * This method implements the 'serve' command and started jekyll
    * serve and copies the appropriate files to demo the site.
+   * @return {Promise} Returns a promise that resolves once serving has
+   * finished.
    */
   serveSite() {
     const docsPath = path.join(process.cwd(), 'docs');
@@ -166,69 +183,78 @@ class NPMPublishScriptCLI {
     try {
       fs.accessSync(docsPath, fs.F_OK);
     } catch (err) {
-      logHelper.info('Can\'t build and serve the site since there is ' +
+      logHelper.error('Can\'t build and serve the site since there is ' +
         'no docs directory.');
-      return;
+      return Promise.reject();
     }
 
-    exitLifeCycle.addEventListener('exit', this.stopServingDocSite.bind(this));
-
-    try {
-      // Create temporary directory
-      this._servingDocInfo = {
-        tmpObj: tmp.dirSync({
-          dir: process.cwd(),
-        }),
-      };
-    } catch (err) {
-      logHelper.error(err);
-      process.exit(1);
-    }
-
-    const tmpPath = this._servingDocInfo.tmpObj.name;
-    this.checkoutGithubPages(tmpPath)
-    .then(() => {
-      return this.cleanupGithubPages(tmpPath);
-    })
-    .then(() => {
-      this.copyDocs(tmpPath);
-      this.updateJekyllTemplate(tmpPath);
-      this.buildJSDocs(tmpPath);
-      this.buildReferenceDocsList(tmpPath);
-
-      // Copy Jekyll gem - only needed for local build
-      fse.copySync(
-        path.join(__dirname, '..', '..', '..', 'Gemfile'),
-        path.join(this._servingDocInfo.tmpObj.name, 'Gemfile')
-      );
-    })
-    .then(() => {
-      logHelper.info('Starting Jekyll serve.');
-
-      const jekyllCommand =
-        process.platform === 'win32' ? 'jekyll.bat' : 'jekyll';
-      const params = [
-        'exec',
-        jekyllCommand,
-        'serve',
-        '--trace',
-        '--config',
-        '_config.yml',
-      ];
-
-      this._servingDocInfo.jekyllProcess = spawn('bundle', params, {
-        cwd: this._servingDocInfo.tmpObj.name,
-        stdio: 'inherit',
+    return new Promise((resolve, reject) => {
+      exitLifeCycle.addEventListener('exit', () => {
+        try {
+          this.stopServingDocSite();
+        } catch (err) {
+          return reject(err);
+        }
+        resolve();
       });
-      this._servingDocInfo.jekyllProcess.on('error', function(err) {
-        logHelper.error('Unable to run Jekyll. Please ensure that you ' +
-          'run the followings commands:');
-        logHelper.error('');
-        logHelper.error('    gem install bundler');
-        logHelper.error('    rvm . do bundle install');
-        logHelper.error('');
+
+      try {
+        // Create temporary directory
+        this._servingDocInfo = {
+          tmpObj: tmp.dirSync({
+            dir: process.cwd(),
+          }),
+        };
+      } catch (err) {
         logHelper.error(err);
-        process.exit(1);
+        return Promise.reject(err);
+      }
+
+      const tmpPath = this._servingDocInfo.tmpObj.name;
+      return this.checkoutGithubPages(tmpPath)
+      .then(() => {
+        return this.cleanupGithubPages(tmpPath);
+      })
+      .then(() => {
+        this.copyDocs(tmpPath);
+        this.updateJekyllTemplate(tmpPath);
+        this.buildJSDocs(tmpPath);
+        this.buildReferenceDocsList(tmpPath);
+
+        // Copy Jekyll gem - only needed for local build
+        fse.copySync(
+          path.join(__dirname, '..', '..', '..', 'Gemfile'),
+          path.join(this._servingDocInfo.tmpObj.name, 'Gemfile')
+        );
+      })
+      .then(() => {
+        logHelper.info('Starting Jekyll serve.');
+
+        const jekyllCommand =
+          process.platform === 'win32' ? 'jekyll.bat' : 'jekyll';
+        const params = [
+          'exec',
+          jekyllCommand,
+          'serve',
+          '--trace',
+          '--config',
+          '_config.yml',
+        ];
+
+        this._servingDocInfo.jekyllProcess = spawn('bundle', params, {
+          cwd: this._servingDocInfo.tmpObj.name,
+          stdio: 'inherit',
+        });
+
+        this._servingDocInfo.jekyllProcess.on('error', (err) => {
+          logHelper.error('Unable to run Jekyll. Please ensure that you ' +
+            'run the followings commands:');
+          logHelper.error('');
+          logHelper.error('    gem install bundler');
+          logHelper.error('    rvm . do bundle install');
+          logHelper.error('');
+          logHelper.error(err);
+        });
       });
     });
   }
@@ -236,6 +262,7 @@ class NPMPublishScriptCLI {
   /**
    * Should get the latest docs from git-pages branch, update the entries
    * build any reference docs and commit changes accordingly.
+   * @return {Promise} Returns a promise which resolves the publish is complete.
    */
   publishDocs() {
     const githubPagesRoot = path.join(process.cwd(), 'gh-pages');
@@ -251,10 +278,10 @@ class NPMPublishScriptCLI {
     if (ghPageDirExists) {
       logHelper.error('The directory \'gh-pages\' already exists.');
       logHelper.error('Please delete it to publish docs.');
-      process.exit(1);
+      return Promise.reject();
     }
 
-    this.checkoutGithubPages(githubPagesRoot)
+    return this.checkoutGithubPages(githubPagesRoot)
     .then(() => {
       return this.cleanupGithubPages(githubPagesRoot);
     })
@@ -271,11 +298,10 @@ class NPMPublishScriptCLI {
       logHelper.error(err);
 
       fse.removeSync(githubPagesRoot);
-      process.exit(1);
+      throw err;
     })
     .then(() => {
       fse.removeSync(githubPagesRoot);
-      process.exit(0);
     });
   }
 

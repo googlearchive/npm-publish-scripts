@@ -20,5 +20,10 @@
  * It's in a seperate file so that the process can be forked.
  */
 const CLI = require('../../src/node/cli/index.js');
+const sinon = require('sinon');
 
-new CLI().argv(['serve']);
+const cli = new CLI();
+const checkoutStub = sinon.stub(cli, 'checkoutGithubPages');
+checkoutStub.returns(Promise.resolve());
+
+return cli.argv(['serve']);
