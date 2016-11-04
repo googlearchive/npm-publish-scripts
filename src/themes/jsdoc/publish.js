@@ -357,7 +357,9 @@ function buildNav(members) {
 
         members.globals.forEach(function(g) {
             if ( g.kind !== 'typedef' && !hasOwnProp.call(seen, g.longname) ) {
-                globalNav.push(linkto(g.longname, g.name));
+                globalNav.push({
+                  anchor: linkto(g.longname, g.name)
+                });
             }
             seen[g.longname] = true;
         });
@@ -414,19 +416,19 @@ exports.publish = function(taffyData, opts, tutorials) {
          doclet.attribs = '';
 
         if (doclet.examples) {
-            doclet.examples = doclet.examples.map(function(example) {
-                var caption, code;
+          doclet.examples = doclet.examples.map(function(example) {
+              var caption, code;
 
-                if (example.match(/^\s*<caption>([\s\S]+?)<\/caption>(\s*[\n\r])([\s\S]+)$/i)) {
-                    caption = RegExp.$1;
-                    code = RegExp.$3;
-                }
+              if (example.match(/^\s*<caption>([\s\S]+?)<\/caption>(\s*[\n\r])([\s\S]+)$/i)) {
+                  caption = RegExp.$1;
+                  code = RegExp.$3;
+              }
 
-                return {
-                    caption: caption || '',
-                    code: code || example
-                };
-            });
+              return {
+                  caption: caption || '',
+                  code: code || example
+              };
+          });
         }
         if (doclet.see) {
             doclet.see.forEach(function(seeItem, i) {
