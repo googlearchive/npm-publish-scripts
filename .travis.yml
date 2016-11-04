@@ -1,0 +1,38 @@
+sudo: required
+dist: trusty
+language: node_js
+cache:
+  directories:
+    - node_modules
+os:
+  - linux
+  - osx
+
+node_js:
+  - '4'
+  - '6'
+  - '7'
+
+before_install:
+  # Dirty hack for https://github.com/travis-ci/travis-ci/issues/5092
+  - PATH=`echo $PATH | sed "s/\.\/node_modules\/\.bin//g"`;
+
+  - rvm install 2.2.0
+  - rvm use 2.2.0
+
+  # Dirty hack for https://github.com/travis-ci/travis-ci/issues/5092
+  - export PATH=$PATH:./node_modules/.bin;
+
+install:
+  - npm install
+  - gem install bundler
+  - rvm . do bundle install
+
+# Read more here: https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
+#before_script:
+#  - "export DISPLAY=:99.0"
+#  - "sh -e /etc/init.d/xvfb start || echo \"Unable to start virtual display.\""
+#  - sleep 3 # give xvfb some time to start
+
+script:
+  - npm run test
