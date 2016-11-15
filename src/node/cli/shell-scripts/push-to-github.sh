@@ -1,3 +1,6 @@
+#!/bin/bash
+set -e
+
 # The curly braces act as a try / catch
 echo ""
 echo ""
