@@ -610,20 +610,24 @@ class NPMPublishScriptCLI {
           throw err;
         });
       })
-      .then(() => {
+      .then((newVersion) => {
+        let githubTag = newVersion;
+        if (publishDetails.tag !== 'stable') {
+          githubTag += `-${publishDetails.tag}`;
+        }
         return this.publishToNPM(publishDetails.tag)
         .catch((err) => {
           logHelper.error(`An error occured when publish to NPM with ` +
             `'npm publish'. '${err.message}'`);
           throw err;
-        });
-      })
-      .then(() => {
-        return this.pushGithubTag()
-        .catch((err) => {
-          logHelper.warn(`Unable to push the new Github Tags to remote repo. ` +
-            `'${err.message}'`);
-          throw err;
+        })
+        .then(() => {
+          return this.pushGithubTag(githubTag)
+          .catch((err) => {
+            logHelper.warn(`Unable to push the new Github Tags to remote ` +
+              `repo. '${err.message}'`);
+            throw err;
+          });
         });
       });
     });
@@ -859,6 +863,7 @@ class NPMPublishScriptCLI {
     return new Promise((resolve, reject) => {
       let newVersion = '';
       const cliArgs = [
+        '--no-git-tag-version',
         'version',
         versionBump,
       ];
@@ -926,13 +931,14 @@ class NPMPublishScriptCLI {
 
   /**
    * Push the Github tag to the remote repo.
+   * @param {string} tag The tag to assign to the git.
    * @return {Promise} Resolves once tags have been pushed.
    */
-  pushGithubTag() {
+  pushGithubTag(tag) {
     return new Promise((resolve, reject) => {
       const scriptPath = path.join(__dirname, 'shell-scripts',
         'push-git-tags.sh');
-      const pushGitTags = spawn(scriptPath, [], {
+      const pushGitTags = spawn(scriptPath, [tag], {
         cwd: process.cwd(),
         stdio: 'inherit',
       });
