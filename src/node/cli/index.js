@@ -903,6 +903,8 @@ class NPMPublishScriptCLI {
         cliArgs.push(tag);
       }
 
+      console.log('npm publish CLI ARGS: ', cliArgs);
+
       const npmPublishProcess = spawn('npm', cliArgs, {
         cwd: process.cwd(),
         stdio: 'inherit',
