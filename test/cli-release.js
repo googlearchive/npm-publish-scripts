@@ -362,6 +362,8 @@ describe('Test CLI - publish-release', function() {
   });
 
   it('should run the build and test steps if defined.', function() {
+    this.timeout(4000);
+
     process.chdir(testOutput);
     const buildFilename = 'build.txt';
     const testFilename = 'test.txt';
@@ -537,6 +539,8 @@ describe('Test CLI - publish-release', function() {
   });
 
   it('should bump the version correctly', function() {
+    this.timeout(4000);
+
     process.chdir(testOutput);
     const packageDetails = {
       name: 'example-name',
@@ -550,6 +554,7 @@ describe('Test CLI - publish-release', function() {
 
     const CLI = require('../src/node/cli/index.js');
     const cli = new CLI();
+
     return cli.updatePackageVersion('patch')
     .then((newVersion) => {
       newVersion.should.equal('v0.0.1');
