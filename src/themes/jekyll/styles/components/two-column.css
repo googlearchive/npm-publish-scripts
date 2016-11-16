@@ -1,0 +1,19 @@
+.two-column {
+  display: flex;
+  flex-direction: row;
+  border-bottom-style: solid;
+  border-width: 1px;
+  border-color: var(--border-color);
+}
+
+.two-column__section {
+  width: 0;
+  flex: 1;
+  padding: calc(var(--grid) * 8);
+}
+
+.two-column__section:first-child {
+  border-right-style: solid;
+  border-width: 1px;
+  border-color: var(--border-color);
+}

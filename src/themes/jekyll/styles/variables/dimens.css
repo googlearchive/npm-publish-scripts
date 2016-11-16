@@ -1,11 +1,3 @@
 :root {
-  --padding: 16px;
-  --vertical-padding: calc(var(--padding) * 2);
-  --horizontal-padding: calc(var(--padding) * 2.5);
-
-  --menu-button-height: 64px;
-  --menu-button-svg-size: 24px;
-
-  --page-header-height: calc(var(--padding) * 4);
-  --site-header-height: calc(var(--padding) * 18);
+  --grid: 8px;
 }

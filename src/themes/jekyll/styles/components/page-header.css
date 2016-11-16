@@ -1,37 +1,18 @@
 @import "../variables/dimens.css";
+@import "../variables/colors.css";
 
 .page-header {
-  height: var(--page-header-height);
-
-  display: flex;
-  flex-direction: row;
-
-  background-color: #37474f;
-  color: white;
-
-  padding: 0;
+  background-color: var(--primary-highlight-color);
+  color: var(--primary-highlight-color__inverse);
+  padding: calc(var(--grid) * 15) calc(var(--grid) * 8);
 }
 
-.page-header .menu-btn {
-  width: var(--menu-button-height);
-  height: var(--menu-button-height);
-  min-width: auto;
-  background: none;
-  border: none;
-
-  padding: calc(calc(var(--menu-button-height) - var(--menu-button-svg-size)) / 2);
+.page-header__inner-section {
+  width: 50%;
 }
 
-.page-header .menu-btn svg {
-  width: var(--menu-button-svg-size);
-  height: var(--menu-button-svg-size);
-}
-
-.page-header h1 {
-  width: 100%;
-  font-size: 13px;
-  line-height: var(--page-header-height);
-
+.page-header__inner-section h1 {
+  color: var(--primary-highlight-color__inverse);
+  font-size: calc(var(--grid) * 9);
   margin: 0;
-  padding-right: var(--horizontal-padding);
 }

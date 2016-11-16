@@ -1,7 +1,9 @@
 :root {
-  --primary-font-color: #757575;
-  --primary-link-color: #37474f;
-  --button-text-color: #fff;
-  --callout: #37474f;
-  --callout-text-color: #fff;
+  --primary-highlight-color: #2979ff;
+  --primary-highlight-color__inverse: #ffffff;
+
+  --primary-font-color: rgba(0, 0, 0, 0.87);
+  --border-color: rgba(0, 0, 0, 0.12);
+  --code-bg: #ECEFF1;
+  --code-font-color: #000000;
 }
