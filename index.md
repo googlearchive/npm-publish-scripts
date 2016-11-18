@@ -1,28 +1,45 @@
 ---
 layout: index
-title: "Local Development"
-navigation_weight: 0
+title: "Developing the Theme"
+navigation_weight: -1
+left_column: |
+  # Left
+
+  This is an example of a two column section
+
+  1. List item 1.
+  1. List item 2.
+  1. List item 3.
+
+  This would normally include why someone should use a project.
+right_column: |
+  # Right
+
+  This right section would normally include why someone should install a project.
 ---
-{% capture why_text %}
-# Why
 
-This is an example why sections
+# Building the Theme
 
-1. List item 1.
-1. List item 2.
-1. List item 3.
+This page exists so that when working on the theme, you can simply run Jekyll at the root of the project. This means Jekyll can manage it's own lifecycle and watching of the file system.
 
-If your project suffers from human errors when releasing, has build files in the
-master branch or you simply want reference docs, then this module may be useful.
-{% endcapture %}
+This also allows up some room to test the styles.
 
-{% capture install_text %}
-# Install
+## Headings
 
-This module contains shell scripts and themes for Jekyll and JSDoc.
-Simple install via NPM like so:
+For example we can test out what each heading would look like next paragraphs of text.
 
-    npm install npm-publish-scripts --save-dev
-{% endcapture %}
+### Heading the Third
 
-{% include components/two-column.html left=why_text right=install_text %}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+
+#### Heading the Fourth
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+
+##### Heading the Fifth
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+
+###### Heading the Sixth
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.

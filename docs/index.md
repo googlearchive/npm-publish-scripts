@@ -1,27 +1,27 @@
 ---
 layout: index
-title: "NPM Publish Scripts"
+title: "Usage"
 navigation_weight: 0
+left_column: |
+  # Why
+
+  There are a few reasons why this project exists:
+
+  1. To give a common way to release versions of projects on NPM.
+  1. To offer a consistent look and feel for GitHub pages.
+  1. Encourage a more structured way of documenting projects.
+
+  If your project suffers from human errors when releasing, has build files
+  in the master branch or you simply want reference docs, then this
+  module may be useful.
+right_column: |
+  # Install
+
+  This module contains shell scripts and themes for Jekyll and JSDoc.
+  Simple install via NPM like so:
+
+      npm install npm-publish-scripts -g
 ---
-
-# Why
-
-There are a few reasons why this project exists:
-
-1. To give a common way to release versions of projects on NPM.
-1. To offer a consistent look and feel for GitHub pages.
-1. Encourage a more structured way of documenting projects.
-
-If your project suffers from human errors when releasing, has build files
-in the master branch or you simply want reference docs, then this
-module may be useful.
-
-# Install
-
-This module contains shell scripts and themes for Jekyll and JSDoc.
-Simple install via NPM like so:
-
-    npm install npm-publish-scripts --save-dev
 
 # Usage
 

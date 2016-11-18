@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   border-bottom-style: solid;
-  border-width: 1px;
+  border-width: var(--layout-border-width);
   border-color: var(--border-color);
 }
 
@@ -14,6 +14,6 @@
 
 .two-column__section:first-child {
   border-right-style: solid;
-  border-width: 1px;
+  border-width: var(--layout-border-width);
   border-color: var(--border-color);
 }

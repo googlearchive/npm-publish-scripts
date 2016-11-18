@@ -1,0 +1,33 @@
+@import "../variables/dimens.css";
+@import "../variables/colors.css";
+
+nav {
+  padding: calc(var(--grid) * 8);
+  border-right-style: solid;
+  border-color: var(--border-color);
+  border-width: var(--layout-border-width);
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding-left: calc(var(--grid) * 3);
+}
+
+nav ul li {
+  line-height: calc(var(--grid) * 6);
+}
+
+nav ul li a {
+  text-decoration: none;
+}
+
+nav > ul {
+  margin: 0;
+  padding: 0;
+}
+
+nav .current-page a {
+  color: rgba(0, 0, 0, 0.26);
+}

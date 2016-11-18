@@ -6,10 +6,16 @@ layout: default
 {% include components/top-bar.html %}
 {% include components/page-header.html title=project_title subtitle=project_tagline %}
 
-{% include components/nav-drawer.html %}
-
-<main>
-  {{ content }}
-</main>
+{% if page.left_column != nil or page.right_column != nil %}
+  {% include components/two-column.html left=page.left_column right=page.right_column %}
+{% endif %}
+<section class="nav-content">
+  <nav>
+    {% include components/navigation.html context="/" %}
+  </nav>
+  <main>
+    {{ content }}
+  </main>
+</section>
 
 {% include components/footer.html made_by='variables.project_owner' made_by_url='varaibles.project_owner_url' %}

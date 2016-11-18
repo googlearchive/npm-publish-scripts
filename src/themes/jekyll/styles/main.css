@@ -3,9 +3,14 @@
 @import "./variables/dimens.css";
 @import "./variables/colors.css";
 
+@import "./components/svg-btn.css";
 @import "./components/top-bar.css";
 @import "./components/page-header.css";
 @import "./components/two-column.css";
+@import "./components/google-dev-logo.css";
+@import "./components/footer.css";
+@import "./components/nav-content.css";
+@import "./components/navigation.css";
 
 html, body {
   width:100%;
@@ -24,13 +29,22 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Roboto Mono', monospace;
   margin: 0;
+  font-weight: normal;
+  color: var(--primary-highlight-color);
 }
 
 h1 {
   font-size: 1.5rem;
-  font-weight: normal;
-  color: var(--primary-highlight-color);
   margin-bottom: calc(var(--grid) * 4);
+}
+
+h2 {
+  font-size: 1.3rem;
+  margin-bottom: calc(var(--grid) * 4);
+}
+
+h6 {
+  font-size: 0.9rem;
 }
 
 pre {
@@ -43,4 +57,12 @@ pre, code {
   font-family: 'Roboto Mono', monospace;
   color: --code-font-color;
   font-size: 0.9rem;
+}
+
+main {
+  padding: calc(var(--grid) * 8)
+}
+
+a {
+  color: var(--primary-highlight-color);
 }
