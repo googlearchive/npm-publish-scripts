@@ -1,11 +1,23 @@
 @import "../variables/dimens.css";
 
 .google-dev-logo {
-  display: inline-block;
-  height: calc(var(--grid) * 3);
-  padding: calc(var(--grid) * 7) calc(var(--grid) * 8);
+  height: calc(var(--grid) * 2);
+  padding: calc(var(--grid) * 3) calc(var(--grid) * 4);
 }
 
 .google-dev-logo svg {
-  height: calc(var(--grid) * 3);
+  width: auto;
+  height: calc(var(--grid) * 2);
+}
+
+@media (min-width: 600px) {
+  .google-dev-logo {
+    display: inline-block;
+    height: calc(var(--grid) * 3);
+    padding: calc(var(--grid) * 7) calc(var(--grid) * 8);
+  }
+
+  .google-dev-logo svg {
+    height: calc(var(--grid) * 3);
+  }
 }

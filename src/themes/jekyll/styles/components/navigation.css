@@ -1,11 +1,23 @@
 @import "../variables/dimens.css";
+@import "../variables/z-index.css";
 @import "../variables/colors.css";
 
 nav {
-  padding: calc(var(--grid) * 8);
-  border-right-style: solid;
-  border-color: var(--border-color);
-  border-width: var(--layout-border-width);
+  display: block;
+  min-width: 320px;
+  width: 80%;
+  height: 100%;
+
+  position: fixed;
+  top: 0;
+  left: -85%;
+
+  background-color: var(--nav-bg-color);
+  padding: calc(var(--grid) * 4);
+  box-sizing: border-box;
+  box-shadow: 0 0 calc(var(--grid) * 2) black;
+
+  z-index: var(--nav-z-index);
 }
 
 nav ul {
@@ -15,11 +27,18 @@ nav ul {
   padding-left: calc(var(--grid) * 3);
 }
 
+nav ul li::before {
+  content: none;
+}
+
 nav ul li {
   line-height: calc(var(--grid) * 6);
+  margin: 0;
 }
 
 nav ul li a {
+  display: inline-block;
+  width: 100%;
   text-decoration: none;
 }
 
@@ -30,4 +49,19 @@ nav > ul {
 
 nav .current-page a {
   color: rgba(0, 0, 0, 0.26);
+}
+
+@media (min-width: 600px) {
+  nav {
+    position: relative;
+    min-width: auto;
+    height: auto;
+    left: 0;
+    top: 0;
+    padding: calc(var(--grid) * 8);
+    border-right-style: solid;
+    border-color: var(--border-color);
+    border-width: var(--layout-border-width);
+    box-shadow: none;
+  }
 }

@@ -7,9 +7,13 @@ footer {
   align-items: center;
   justify-content: space-between;
 
-  height: calc(var(--grid) * 17.5);
-
   border-top-style: solid;
   border-width: var(--layout-border-width);
   border-color: var(--border-color);
+}
+
+@media (min-width: 600px) {
+  footer {
+    height: calc(var(--grid) * 17.5);
+  }
 }

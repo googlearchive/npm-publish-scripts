@@ -2,8 +2,11 @@
   --primary-highlight-color: #2979ff;
   --primary-highlight-color__inverse: #ffffff;
 
+  --nav-bg-color: #ffffff;
+
   --primary-font-color: rgba(0, 0, 0, 0.87);
   --border-color: rgba(0, 0, 0, 0.12);
+
   --code-bg: #ECEFF1;
   --code-font-color: #000000;
 }

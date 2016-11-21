@@ -35,16 +35,33 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: 1.5rem;
-  margin-bottom: calc(var(--grid) * 4);
+  margin: calc(var(--grid) * 4) 0;
 }
 
 h2 {
   font-size: 1.3rem;
-  margin-bottom: calc(var(--grid) * 4);
+  margin: calc(var(--grid) * 4) 0;
 }
 
-h6 {
-  font-size: 0.9rem;
+h3 {
+  margin: calc(var(--grid) * 4) 0 var(--grid) 0;
+}
+
+h4, h5, h6 {
+  margin: calc(var(--grid) * 4) 0 calc(var(--grid) / 2) 0;
+}
+
+h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, h6:first-child {
+  margin-top: 0;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: var(--grid);
+}
+
+img {
+  max-width: 100%;
 }
 
 pre {
@@ -60,9 +77,86 @@ pre, code {
 }
 
 main {
-  padding: calc(var(--grid) * 8)
+  padding: calc(var(--grid) * 4);
 }
 
 a {
   color: var(--primary-highlight-color);
+}
+
+ul, ol {
+  margin: calc(var(--grid) * 2) 0;
+  padding-left: var(--list-item-marker-margin-s);
+  list-style-type: none;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin: 0;
+}
+
+ul li, ol li {
+  min-height: var(--list-item-marker-size-s);
+  margin: var(--grid) 0;
+  line-height: 1rem;
+}
+
+ol li {
+  counter-increment: step-counter;
+}
+
+ul li:before, ol li:before {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: var(--list-item-marker-size-s);
+  height: var(--list-item-marker-size-s);
+  margin-left: calc(((-1 * var(--list-item-marker-margin-s)) / 2) - (var(--list-item-marker-size-s) / 2));
+  line-height: 1rem;
+}
+
+ul li:before {
+  content: '-';
+  color: var(--primary-highlight-color);
+  font-weight: bolder;
+  font-size: calc(var(--grid) * 3);
+}
+
+ol li:before {
+  content: counter(step-counter);
+  background-color: var(--primary-highlight-color);
+  color: white;
+  border-radius: 100%;
+  font-size: 0.6rem;
+}
+
+@media (min-width: 600px) {
+  main {
+    padding: calc(var(--grid) * 8);
+  }
+
+  ul, ol {
+    padding-left: var(--list-item-marker-margin-l);
+  }
+
+  ul li, ol li {
+    min-height: var(--list-item-marker-size-l);
+    margin: var(--grid) 0;
+    line-height: var(--list-item-marker-size-l);
+  }
+
+  ul li:before {
+    font-size: calc(var(--grid) * 5);
+  }
+
+  ul li:before, ol li:before {
+    width: var(--list-item-marker-size-l);
+    height: var(--list-item-marker-size-l);
+    margin-left: calc(((-1 * var(--list-item-marker-margin-l)) / 2) - (var(--list-item-marker-size-l) / 2));
+    line-height: var(--list-item-marker-size-l);
+  }
+
+  ol li:before {
+    font-size: 0.75rem;
+  }
 }

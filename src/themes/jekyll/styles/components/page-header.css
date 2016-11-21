@@ -4,15 +4,38 @@
 .page-header {
   background-color: var(--primary-highlight-color);
   color: var(--primary-highlight-color__inverse);
-  padding: calc(var(--grid) * 15) calc(var(--grid) * 8);
+  padding: calc(var(--grid) * 8) calc(var(--grid) * 4);
 }
 
 .page-header__inner-section {
-  width: 50%;
+  width: 100%;
 }
 
 .page-header__inner-section h1 {
   color: var(--primary-highlight-color__inverse);
-  font-size: calc(var(--grid) * 9);
+  font-size: calc(var(--grid) * 4);
   margin: 0;
+}
+
+.page-header__inner-section p {
+  margin: 0;
+  margin-top: var(--grid);
+}
+
+@media (min-width: 600px) {
+  .page-header {
+    background-color: var(--primary-highlight-color);
+    color: var(--primary-highlight-color__inverse);
+    padding: calc(var(--grid) * 15) calc(var(--grid) * 8);
+  }
+
+  .page-header__inner-section {
+    width: 60%;
+  }
+
+  .page-header__inner-section h1 {
+    color: var(--primary-highlight-color__inverse);
+    font-size: calc(var(--grid) * 9);
+    margin: 0;
+  }
 }
