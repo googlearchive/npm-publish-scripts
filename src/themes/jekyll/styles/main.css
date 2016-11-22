@@ -82,6 +82,7 @@ main {
 
 a {
   color: var(--primary-highlight-color);
+  text-decoration: none;
 }
 
 ul, ol {
@@ -95,9 +96,13 @@ ul ul, ul ol, ol ol, ol ul {
 }
 
 ul li, ol li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  position: relative;
   min-height: var(--list-item-marker-size-s);
-  margin: var(--grid) 0;
-  line-height: 1rem;
+  margin: calc(var(--grid) * 2) 0;
 }
 
 ol li {
@@ -105,21 +110,26 @@ ol li {
 }
 
 ul li:before, ol li:before {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: absolute;
+  display: block;
   width: var(--list-item-marker-size-s);
   height: var(--list-item-marker-size-s);
-  margin-left: calc(((-1 * var(--list-item-marker-margin-s)) / 2) - (var(--list-item-marker-size-s) / 2));
-  line-height: 1rem;
+  text-align: center;
+  vertical-align: middle;
+  box-sizing: border-box;
+
+  top: 0;
+  margin-left: calc(((var(--list-item-marker-size-s) - var(--list-item-marker-margin-s)) / 2) - var(--list-item-marker-size-s));
 }
 
 ul li:before {
   content: '-';
   color: var(--primary-highlight-color);
   font-weight: bolder;
+
   font-size: calc(var(--grid) * 3);
+  line-height: var(--list-item-marker-size-s);
+  margin-top: -2px;
 }
 
 ol li:before {
@@ -127,7 +137,10 @@ ol li:before {
   background-color: var(--primary-highlight-color);
   color: white;
   border-radius: 100%;
-  font-size: 0.6rem;
+
+  font-size: calc(var(--grid) * 2);
+  line-height: var(--list-item-marker-size-s);
+  padding-top: 1px;
 }
 
 @media (min-width: 600px) {
@@ -147,16 +160,17 @@ ol li:before {
 
   ul li:before {
     font-size: calc(var(--grid) * 5);
+    line-height: calc(var(--grid) * 5);
   }
 
   ul li:before, ol li:before {
     width: var(--list-item-marker-size-l);
     height: var(--list-item-marker-size-l);
     margin-left: calc(((-1 * var(--list-item-marker-margin-l)) / 2) - (var(--list-item-marker-size-l) / 2));
-    line-height: var(--list-item-marker-size-l);
   }
 
   ol li:before {
-    font-size: 0.75rem;
+    font-size: 1rem;
+    line-height: 1rem;
   }
 }

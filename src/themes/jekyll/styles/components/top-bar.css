@@ -5,3 +5,9 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
+@media (min-width: 600px) {
+  .menu-btn {
+    display: none;
+  }
+}

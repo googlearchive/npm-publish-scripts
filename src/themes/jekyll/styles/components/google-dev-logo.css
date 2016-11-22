@@ -1,13 +1,13 @@
 @import "../variables/dimens.css";
 
 .google-dev-logo {
-  height: calc(var(--grid) * 2);
+  display: inline-block;
   padding: calc(var(--grid) * 3) calc(var(--grid) * 4);
 }
 
 .google-dev-logo svg {
-  width: auto;
-  height: calc(var(--grid) * 2);
+  width: 100%;
+  height: auto;
 }
 
 @media (min-width: 600px) {

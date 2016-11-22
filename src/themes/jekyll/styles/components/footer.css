@@ -12,6 +12,10 @@ footer {
   border-color: var(--border-color);
 }
 
+.footer__right-section {
+  flex: 1;
+}
+
 @media (min-width: 600px) {
   footer {
     height: calc(var(--grid) * 17.5);
