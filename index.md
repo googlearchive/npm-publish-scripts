@@ -50,36 +50,72 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi.
 
 # These are lists
 
-Aren't they pretty.
+These are some example lists.
+
+Unordered:
 
 - Item 1
 - Item 2
-    - Nest Item 2.1
-    - Nest Item 2.2
-    - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
 - Item 3
-    - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
-        - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
-            - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
-        - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
-    - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
 
-Time for a numbered list now.
+Ordered
 
 1. Item 1
 1. Item 2
-    1. Nest Item 2.1
-    1. Nest Item 2.2
-    1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
 1. Item 3
-    1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
-        1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
-            1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
-        1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
-    1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+These are nested / mixed lists.
+
+- Item 1
+  - Item 1.1
+  - Item 1.2
+  - Item 1.3
+- Item 2
+  1. Item 2.1
+  1. Item 2.2
+  1. Item 2.3
+- Item 3
+  - Item 3.1
+    - Item 3.1.1
+    - Item 3.1.2
+    - Item 3.1.3
+  - Item 3.2
+    1. Item 3.2.1
+    1. Item 3.2.2
+    1. Item 3.2.3
+  - Item 3.3
+
+Now single level with long text - first unordered.
+
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+
+Now ordered.
+
+1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+
+Now long nested text with mixing
+
+1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+  1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+  1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+    - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+    - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+  1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+
+
+Now the inverse.
+
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+  - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+  - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+      1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+      1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+    - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+
+Closing Paragraph. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.

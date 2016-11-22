@@ -16,7 +16,7 @@
   border-color: var(--border-color);
 }
 
-@media (min-width: 600px) {
+@media (min-width: 900px) {
   .two-column {
     flex-direction: row;
   }

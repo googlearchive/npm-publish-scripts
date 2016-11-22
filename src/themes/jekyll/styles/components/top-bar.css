@@ -6,7 +6,7 @@
   justify-content: space-between;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 900px) {
   .menu-btn {
     display: none;
   }

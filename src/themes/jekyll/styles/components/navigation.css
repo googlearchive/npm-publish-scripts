@@ -19,7 +19,7 @@ nav {
 
   transition: transform var(--nav-animation-duration) ease-in-out;
   will-change: transform;
-  
+
   z-index: var(--nav-z-index);
 }
 
@@ -78,7 +78,7 @@ nav .current-page a {
   touch-action: none;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 900px) {
   nav {
     position: relative;
     min-width: auto;

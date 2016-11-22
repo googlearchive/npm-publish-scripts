@@ -22,7 +22,7 @@
   margin-top: var(--grid);
 }
 
-@media (min-width: 600px) {
+@media (min-width: 900px) {
   .page-header {
     background-color: var(--primary-highlight-color);
     color: var(--primary-highlight-color__inverse);

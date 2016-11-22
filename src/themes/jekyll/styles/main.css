@@ -3,6 +3,8 @@
 @import "./variables/dimens.css";
 @import "./variables/colors.css";
 
+@import "./elements/lists.css";
+
 @import "./components/svg-btn.css";
 @import "./components/top-bar.css";
 @import "./components/page-header.css";
@@ -83,94 +85,4 @@ main {
 a {
   color: var(--primary-highlight-color);
   text-decoration: none;
-}
-
-ul, ol {
-  margin: calc(var(--grid) * 2) 0;
-  padding-left: var(--list-item-marker-margin-s);
-  list-style-type: none;
-}
-
-ul ul, ul ol, ol ol, ol ul {
-  margin: 0;
-}
-
-ul li, ol li {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  position: relative;
-  min-height: var(--list-item-marker-size-s);
-  margin: calc(var(--grid) * 2) 0;
-}
-
-ol li {
-  counter-increment: step-counter;
-}
-
-ul li:before, ol li:before {
-  position: absolute;
-  display: block;
-  width: var(--list-item-marker-size-s);
-  height: var(--list-item-marker-size-s);
-  text-align: center;
-  vertical-align: middle;
-  box-sizing: border-box;
-
-  top: 0;
-  margin-left: calc(((var(--list-item-marker-size-s) - var(--list-item-marker-margin-s)) / 2) - var(--list-item-marker-size-s));
-}
-
-ul li:before {
-  content: '-';
-  color: var(--primary-highlight-color);
-  font-weight: bolder;
-
-  font-size: calc(var(--grid) * 3);
-  line-height: var(--list-item-marker-size-s);
-  margin-top: -2px;
-}
-
-ol li:before {
-  content: counter(step-counter);
-  background-color: var(--primary-highlight-color);
-  color: white;
-  border-radius: 100%;
-
-  font-size: calc(var(--grid) * 2);
-  line-height: var(--list-item-marker-size-s);
-  padding-top: 1px;
-}
-
-@media (min-width: 600px) {
-  main {
-    padding: calc(var(--grid) * 8);
-  }
-
-  ul, ol {
-    padding-left: var(--list-item-marker-margin-l);
-  }
-
-  ul li, ol li {
-    min-height: var(--list-item-marker-size-l);
-    margin: var(--grid) 0;
-    line-height: var(--list-item-marker-size-l);
-  }
-
-  ul li:before {
-    font-size: calc(var(--grid) * 5);
-    line-height: calc(var(--grid) * 5);
-  }
-
-  ul li:before, ol li:before {
-    width: var(--list-item-marker-size-l);
-    height: var(--list-item-marker-size-l);
-    margin-left: calc(((-1 * var(--list-item-marker-margin-l)) / 2) - (var(--list-item-marker-size-l) / 2));
-  }
-
-  ol li:before {
-    font-size: 1rem;
-    line-height: 1rem;
-  }
 }

@@ -4,8 +4,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: calc(var(--grid) * 8);
-  height: calc(var(--grid) * 8);
+  width: var(--svg-btn-size-s);
+  height: var(--svg-btn-size-s);
   background: none;
   border: none;
   padding: 0;
@@ -18,9 +18,9 @@
   height: calc(var(--grid) * 3);
 }
 
-@media (min-width: 600px) {
+@media (min-width: 900px) {
   .svg-btn {
-    width: calc(var(--grid) * 11);
-    height: calc(var(--grid) * 11);
+    width: var(--svg-btn-size-l);
+    height: var(--svg-btn-size-l);
   }
 }
