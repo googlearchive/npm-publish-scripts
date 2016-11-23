@@ -10,6 +10,10 @@
   padding: calc(var(--grid) * 4);
 }
 
+.two-column__section *:last-child {
+  margin-bottom: 0;
+}
+
 .two-column__section:first-child {
   border-bottom-style: solid;
   border-width: var(--layout-border-width);

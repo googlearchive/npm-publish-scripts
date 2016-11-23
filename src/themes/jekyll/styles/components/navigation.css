@@ -6,7 +6,7 @@ nav {
   display: block;
   width: 85%;
   height: 100%;
-
+  max-width: 360px;
   position: fixed;
   top: 0;
   left: 0;
@@ -47,7 +47,7 @@ nav ul li {
 nav ul li a {
   display: block;
   text-decoration: none;
-  padding: calc(var(--grid) * 2) calc(var(--grid) * 4);
+  padding: calc(var(--grid) * 1.5) calc(var(--grid) * 4);
 }
 
 nav > ul {

@@ -2,13 +2,16 @@
   --grid: 8px;
   --layout-border-width: 1px;
 
+  --primary-font-size: 16;
+  --primary-line-height: 24;
+
   --svg-btn-size-s: calc(var(--grid) * 8);
   --svg-btn-size-l: calc(var(--grid) * 11);
 
   --list-item-line-height: 1rem;
-  --list-item-marker-size-s: 1.5rem;
+  --list-item-marker-size-s: calc((36 / var(--primary-font-size)) * 1rem);
   --list-item-marker-size-l: 1.5rem;
-  --list-item-marker-margin-s: calc(var(--grid) * 6);
+  --list-item-marker-margin-s: calc(var(--list-item-marker-size-s) + 1rem);
   --list-item-marker-margin-l: calc(var(--grid) * 6);
 
   --nav-animation-duration: 0.3s;

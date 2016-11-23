@@ -12,14 +12,16 @@
 }
 
 .page-header__inner-section h1 {
+  font-size: 3rem;
+  line-height: 5rem;
+
   color: var(--primary-highlight-color__inverse);
-  font-size: calc(var(--grid) * 4);
   margin: 0;
+  margin-bottom: var(--grid);
 }
 
 .page-header__inner-section p {
   margin: 0;
-  margin-top: var(--grid);
 }
 
 @media (min-width: 900px) {
@@ -34,8 +36,7 @@
   }
 
   .page-header__inner-section h1 {
-    color: var(--primary-highlight-color__inverse);
-    font-size: calc(var(--grid) * 9);
-    margin: 0;
+    font-size: 5.14rem;
+    line-height: 6.78rem;
   }
 }

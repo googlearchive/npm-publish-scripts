@@ -24,6 +24,10 @@ This page exists so that when working on the theme, you can simply run Jekyll at
 
 This also allows up some room to test the styles.
 
+# Headings (This is H1)
+
+The very first title on this page is slightly bigger than the other h1's.
+
 ## Headings (This is H2)
 
 For example we can test out what each heading would look like next paragraphs of text.
@@ -52,17 +56,37 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi.
 
 These are some example lists.
 
-Unordered:
+<strong>Unordered</strong>:
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
 
 - Item 1
 - Item 2
 - Item 3
 
-Ordered
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
+
+<strong>Ordered</strong>:
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
 
 1. Item 1
 1. Item 2
 1. Item 3
+1. Item 3
+1. Item 3
+1. Item 3
+1. Item 3
+1. Item 3
+1. Item 3
+1. Item 3
+1. Item 3
+1. Item 3
+1. Item 3
+1. Item 3
+1. Item 3
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet augue mi. Vestibulum porta orci eget auctor fringilla. Nulla turpis turpis, vestibulum sit amet imperdiet eu, scelerisque at metus. Mauris id tortor nisi. Vestibulum ultrices congue arcu vitae pulvinar. Aliquam dictum non turpis non dignissim. Pellentesque ante ex, semper a metus et, porttitor luctus velit.
 
 These are nested / mixed lists.
 
