@@ -13,7 +13,7 @@ pre, code, pre[class*="language-"], code[class*="language-"] {
 }
 
 pre, pre[class*="language-"] {
-  padding: var(--padding);
+  padding: var(--grid);
 }
 
 code, code[class*="language-"] {

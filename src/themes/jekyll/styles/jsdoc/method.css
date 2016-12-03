@@ -2,17 +2,17 @@
 @import "../variables/colors.css";
 
 .jsdoc-method p {
-      margin-bottom: calc(var(--vertical-padding) / 4);
+  margin-bottom: var(--grid);
 }
 
 .jsdoc-params-heading, .jsdoc-returns-heading {
   margin: 0;
-  padding: calc(var(--padding)/2);;
+  padding: var(--grid);
 
-  background-color: var(--callout);
-  color: var(--callout-text-color);
+  /**background-color: var(--callout);
+  color: var(--callout-text-color);**/
 }
 
 .jsdoc-method {
-  margin-bottom: calc(var(--padding) * 4);
+  margin-bottom: calc(var(--grid) * 4);
 }

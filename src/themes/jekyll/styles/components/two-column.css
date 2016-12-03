@@ -1,3 +1,6 @@
+@import "../variables/dimens.css";
+@import "../variables/colors.css";
+
 .two-column {
   display: flex;
   flex-direction: column;
