@@ -15,4 +15,6 @@
   --list-item-marker-margin-l: calc(var(--grid) * 6);
 
   --nav-animation-duration: 0.3s;
+
+  --max-content-width: calc(var(--grid) * 150);
 }

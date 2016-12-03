@@ -70,7 +70,7 @@ p {
 
 ul, ol {
   margin: calc((var(--primary-line-height) / var(--primary-font-size)) * 1rem) 0;
-  padding-left: calc((20 / var(--primary-font-size)) * 1rem);
+  padding-left: calc((40 / var(--primary-font-size)) * 1rem);
 }
 
 img {

@@ -1,7 +1,12 @@
+@import "../variables/dimens.css";
+
 @media (min-width: 900px) {
   .nav-content {
     display:flex;
     flex-direction:row;
+    max-width: var(--max-content-width);
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .nav-content nav {

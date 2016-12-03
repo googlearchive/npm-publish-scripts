@@ -32,10 +32,13 @@
   }
 
   .page-header__inner-section {
-    width: 60%;
+    max-width: var(--max-content-width);
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .page-header__inner-section h1 {
+    width: 60%;
     font-size: 5.14rem;
     line-height: 6.78rem;
   }
