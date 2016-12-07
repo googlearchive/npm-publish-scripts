@@ -9,4 +9,6 @@
 
   --code-bg: #ECEFF1;
   --code-font-color: #000000;
+
+  --jsdoc-method-this-color: var(--primary-font-color);
 }

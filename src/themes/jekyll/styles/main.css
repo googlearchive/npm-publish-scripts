@@ -103,6 +103,11 @@ a {
   text-decoration: none;
 }
 
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
 @media (min-width: 900px) {
   main {
     padding: calc(var(--grid) * 8);

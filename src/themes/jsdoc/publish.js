@@ -138,7 +138,7 @@ function addNonParamAttributes(items) {
 function addSignatureParams(f) {
     var params = f.params ? addParamAttributes(f.params) : [];
 
-    f.signature = util.format( '%s(%s)', (f.signature || ''), params.join(', ') );
+    f.signature = util.format( '%s(<span class="signature-args">%s</span>)', (f.signature || ''), params.join(', ') );
 }
 
 function addSignatureReturns(f) {
@@ -166,7 +166,7 @@ function addSignatureReturns(f) {
         returnTypes = addNonParamAttributes(f.returns);
     }
     if (returnTypes.length) {
-        returnTypesString = util.format( ' &rarr; %s{%s}', attribsString, returnTypes.join('|') );
+        returnTypesString = util.format( ' <span class="return-arrow">&rarr;</span> %s%s', attribsString, returnTypes.join('|') );
     }
 
     f.signature = '<span class="signature">' + (f.signature || '') + '</span>' +

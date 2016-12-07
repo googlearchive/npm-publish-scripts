@@ -1,18 +1,61 @@
 @import "../variables/dimens.css";
 @import "../variables/colors.css";
 
-.jsdoc-method p {
-  margin-bottom: var(--grid);
+.method-name {
+  cursor: pointer;
 }
 
-.jsdoc-params-heading, .jsdoc-returns-heading {
-  margin: 0;
-  padding: var(--grid);
-
-  /**background-color: var(--callout);
-  color: var(--callout-text-color);**/
+.method-type-function {
+  border-bottom-style: solid;
+  border-width: var(--layout-border-width);
+  border-color: var(--border-color);
+  padding-bottom: calc(var(--grid) * 3);
+  padding-top: calc(var(--grid) * 3);
 }
 
-.jsdoc-method {
-  margin-bottom: calc(var(--grid) * 4);
+.method-type-function:last-child {
+  border-bottom-style: none;
+}
+
+.method-name .this {
+  font-style: italic;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.method-name .return-arrow {
+  color: var(--primary-font-color);
+}
+
+.method-name .signature-args, .method-info-table td.name {
+  color: var(--primary-highlight-color);
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.method-info-table td .param-type {
+  color: var(--primary-highlight-color);
+}
+
+.method-info-table, .method-info-table th, .method-info-table td  {
+  text-align: left;
+  vertical-align: top;
+  padding: 0;
+}
+
+.method-info-table th, .method-info-table td {
+  padding-right: calc(var(--grid) * 2);
+}
+
+.method-info-table td:last-child {
+  padding-right: 0;
+}
+
+.method-info-table .param-desc *:last-child {
+  margin-bottom: 0;
+}
+
+.method-collapse.is-closed {
+  height: 0;
+  overflow: hidden;
 }

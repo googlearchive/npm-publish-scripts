@@ -28,6 +28,12 @@ const chalk = require('chalk');
  */
 class LogHelper {
   /**
+   * Hello World = testing.
+   */
+  constructor() {
+
+  }
+  /**
    * Print a warning message to the console (Colored yellow).
    * @param {string} msg Message to print to the console
    */
