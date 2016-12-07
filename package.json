@@ -3,8 +3,7 @@
   "description": "A simple set of scripts to help when publishing to NPM from a Github Repo",
   "version": "3.0.0",
   "bin": {
-    "npm-publish-scripts": "./src/node/bin/cli.js",
-    "publish-release.sh": "./src/publish-release.sh"
+    "npm-publish-scripts": "./src/node/bin/cli.js"
   },
   "bugs": {
     "url": "https://github.com/GoogleChrome/npm-publish-scripts/issues"
@@ -41,6 +40,7 @@
   "license": "Apache-2.0",
   "repository": "GoogleChrome/npm-publish-scripts",
   "scripts": {
+    "build-ref-docs": "jsdoc -c ./jsdoc.conf -d docs/reference-docs/",
     "build": "gulp build",
     "lint": "eslint '.'",
     "test": "npm run lint && gulp build && mocha"

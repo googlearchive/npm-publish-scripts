@@ -1,7 +1,7 @@
 'use strict';
 
-var doop = require('jsdoc/util/doop');
-var env = require('jsdoc/env');
+/** var doop = require('jsdoc/util/doop');
+const env = require('jsdoc/env');
 var fs = require('jsdoc/fs');
 var helper = require('jsdoc/util/templateHelper');
 var logger = require('jsdoc/util/logger');
@@ -196,16 +196,6 @@ function shortenPaths(files, commonPrefix) {
     return files;
 }
 
-function getPathFromDoclet(doclet) {
-    if (!doclet.meta) {
-        return null;
-    }
-
-    return doclet.meta.path && doclet.meta.path !== 'null' ?
-        path.join(doclet.meta.path, doclet.meta.filename) :
-        doclet.meta.filename;
-}
-
 function generate(title, docs, filename, resolveLinks) {
     resolveLinks = resolveLinks === false ? false : true;
 
@@ -246,7 +236,7 @@ function generateSourceFiles(sourceFiles, encoding) {
         generate('Source: ' + sourceFiles[file].shortened, [source], sourceOutfile,
             false);
     });
-}
+}**/
 
 /**
  * Look for classes or functions with the same name as modules (which indicates that the module
@@ -259,7 +249,7 @@ function generateSourceFiles(sourceFiles, encoding) {
  * check.
  * @param {Array.<module:jsdoc/doclet.Doclet>} modules - The array of module doclets to search.
  */
-function attachModuleSymbols(doclets, modules) {
+/**function attachModuleSymbols(doclets, modules) {
     var symbols = {};
 
     // build a lookup table
@@ -322,7 +312,7 @@ function linktoTutorial(longName, name) {
 
 function linktoExternal(longName, name) {
     return linkto(longName, name.replace(/(^"|"$)/g, ''));
-}
+}**/
 
 /**
  * Create the navigation sidebar.
@@ -338,7 +328,7 @@ function linktoExternal(longName, name) {
  * @param {array<object>} members.interfaces
  * @return {string} The HTML for the navigation sidebar.
  */
-function buildNav(members) {
+/**function buildNav(members) {
     var nav = {};
     var seen = {};
     var seenTutorials = {};
@@ -373,14 +363,14 @@ function buildNav(members) {
     }
 
     return nav;
-}
+}**/
 
 /**
     @param {TAFFY} taffyData See <http://taffydb.com/>.
     @param {object} opts
     @param {Tutorial} tutorials
  */
-exports.publish = function(taffyData, opts, tutorials) {
+/**exports.publish = function(taffyData, opts, tutorials) {
     data = taffyData;
 
     var conf = env.conf.templates || {};
@@ -456,16 +446,6 @@ exports.publish = function(taffyData, opts, tutorials) {
         outdir = path.join( outdir, packageInfo.name, (packageInfo.version || '') );
     }
     fs.mkPath(outdir);
-
-    // copy the template's static files to outdir
-    // var fromDir = path.join(templatePath, 'static');
-    // var staticFiles = fs.ls(fromDir, 3);
-
-    //staticFiles.forEach(function(fileName) {
-    //    var toDir = fs.toDir( fileName.replace(fromDir, outdir) );
-    //    fs.mkPath(toDir);
-    //    fs.copyFileSync(fileName, toDir);
-    //});
 
     // copy user-specified static files to outdir
     var staticFilePaths;
@@ -648,4 +628,78 @@ exports.publish = function(taffyData, opts, tutorials) {
         });
     }
     saveChildren(tutorials);
+};
+**/
+
+const jsdocTemplateHelper = require('jsdoc/util/templateHelper');
+const jsdocEnv = require('jsdoc/env');
+const jsdocFS = require('jsdoc/fs');
+const jsdocPath = require('jsdoc/path');
+
+const getPathFromDoclet = (doclet) => {
+  return doclet.meta.path && doclet.meta.path !== 'null' ?
+    jsdocPath.join(doclet.meta.path, doclet.meta.filename) :
+    doclet.meta.filename;
+}
+
+const getSourceFileMap = (data) => {
+  // build a list of source files
+  let sourceFiles = {};
+  data.each((doclet) => {
+    if (!doclet.meta) {
+      return;
+    }
+
+    const sourcePath = getPathFromDoclet(doclet);
+    sourceFiles[sourcePath] = {
+      resolved: sourcePath,
+      shortened: null
+    };
+  });
+  return sourceFiles;
+}
+
+/**
+ * Create the destination path
+ */
+const mkDestinationDir = () => {
+  const outdir = jsdocPath.normalize(jsdocEnv.opts.destination);
+  if (!outdir) {
+    throw new Error('Destination not defined.');
+  }
+
+  jsdocFS.mkPath(outdir);
+};
+
+const setShortenedPath = (sourceFiles, commonPrefix) => {
+  Object.keys(sourceFiles).forEach((sourceFileKey) => {
+    const sourceFile = sourceFiles[sourceFileKey];
+    sourceFile.shortened = sourceFile.resolved.replace(commonPrefix, '');
+    // always use forward slashes
+    sourceFile.shortened = sourceFile.shortened.replace(/\\/g, '/');
+  });
+
+  return sourceFiles;
+}
+
+const registerLinks = (data) => {
+  data.each((doclet) => {
+    const url = jsdocTemplateHelper.createLink(doclet);
+    jsdocTemplateHelper.registerLink(doclet.longname, url);
+  });
+}
+
+exports.publish = (taffyData, config) => {
+  console.log('JSDoc time to publish.');
+  const data = taffyData();
+
+  mkDestinationDir();
+
+  let sourceFileMap = getSourceFileMap(data);
+
+  // Figure out the correct value of shortened
+  const commonPathPrefix = jsdocPath.commonPrefix(Object.keys(sourceFileMap));
+  sourceFileMap = setShortenedPath(sourceFileMap, commonPathPrefix);
+
+  registerLinks(data);
 };
