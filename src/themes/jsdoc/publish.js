@@ -1,7 +1,9 @@
 'use strict';
 
-/** var doop = require('jsdoc/util/doop');
-const env = require('jsdoc/env');
+const customPublish = require('./customised-publish');
+
+var doop = require('jsdoc/util/doop');
+var env = require('jsdoc/env');
 var fs = require('jsdoc/fs');
 var helper = require('jsdoc/util/templateHelper');
 var logger = require('jsdoc/util/logger');
@@ -14,7 +16,6 @@ var htmlsafe = helper.htmlsafe;
 var linkto = helper.linkto;
 var resolveAuthorLinks = helper.resolveAuthorLinks;
 var scopeToPunc = helper.scopeToPunc;
-var hasOwnProp = Object.prototype.hasOwnProperty;
 
 var data;
 var view;
@@ -107,7 +108,7 @@ function buildItemTypeStrings(item) {
 
     if (item && item.type && item.type.names) {
         item.type.names.forEach(function(name) {
-            types.push( linkto(name, htmlsafe(name)) );
+            types.push( helper.linkto(name, htmlsafe(name)) );
         });
     }
 
@@ -196,6 +197,16 @@ function shortenPaths(files, commonPrefix) {
     return files;
 }
 
+function getPathFromDoclet(doclet) {
+    if (!doclet.meta) {
+        return null;
+    }
+
+    return doclet.meta.path && doclet.meta.path !== 'null' ?
+        path.join(doclet.meta.path, doclet.meta.filename) :
+        doclet.meta.filename;
+}
+
 function generate(title, docs, filename, resolveLinks) {
     resolveLinks = resolveLinks === false ? false : true;
 
@@ -205,8 +216,8 @@ function generate(title, docs, filename, resolveLinks) {
         docs: docs
     };
 
-    var outpath = path.join(outdir, filename),
-        html = view.render('container.tmpl', docData);
+    var outpath = path.join(outdir, filename);
+    var html = view.render('container.tmpl', docData);
 
     if (resolveLinks) {
         html = helper.resolveLinks(html); // turn {@link foo} into <a href="foodoc.html">foo</a>
@@ -236,7 +247,7 @@ function generateSourceFiles(sourceFiles, encoding) {
         generate('Source: ' + sourceFiles[file].shortened, [source], sourceOutfile,
             false);
     });
-}**/
+}
 
 /**
  * Look for classes or functions with the same name as modules (which indicates that the module
@@ -249,7 +260,7 @@ function generateSourceFiles(sourceFiles, encoding) {
  * check.
  * @param {Array.<module:jsdoc/doclet.Doclet>} modules - The array of module doclets to search.
  */
-/**function attachModuleSymbols(doclets, modules) {
+function attachModuleSymbols(doclets, modules) {
     var symbols = {};
 
     // build a lookup table
@@ -279,98 +290,12 @@ function generateSourceFiles(sourceFiles, encoding) {
     });
 }
 
-function buildMemberNav(items, itemsSeen, linktoFn) {
-    var nav = [];
-
-    if (items.length) {
-        items.forEach(function(item) {
-            var itemNav = {};
-
-            if ( !hasOwnProp.call(item, 'longname') ) {
-                itemNav.anchor = linktoFn('', item.name);
-            } else if ( !hasOwnProp.call(itemsSeen, item.longname) ) {
-                var displayName;
-                if (env.conf.templates.default.useLongnameInNav) {
-                    displayName = item.longname;
-                } else {
-                    displayName = item.name;
-                }
-                itemNav.anchor = linktoFn(item.longname, displayName.replace(/\b(module|event):/g, ''));
-                itemsSeen[displayName] = true;
-            }
-
-            nav.push(itemNav);
-        });
-    }
-
-    return nav;
-}
-
-function linktoTutorial(longName, name) {
-    return tutoriallink(name);
-}
-
-function linktoExternal(longName, name) {
-    return linkto(longName, name.replace(/(^"|"$)/g, ''));
-}**/
-
-/**
- * Create the navigation sidebar.
- * @param {object} members The members that will be used to create the sidebar.
- * @param {array<object>} members.classes
- * @param {array<object>} members.externals
- * @param {array<object>} members.globals
- * @param {array<object>} members.mixins
- * @param {array<object>} members.modules
- * @param {array<object>} members.namespaces
- * @param {array<object>} members.tutorials
- * @param {array<object>} members.events
- * @param {array<object>} members.interfaces
- * @return {string} The HTML for the navigation sidebar.
- */
-/**function buildNav(members) {
-    var nav = {};
-    var seen = {};
-    var seenTutorials = {};
-
-    nav['Modules'] = buildMemberNav(members.modules, {}, linkto);
-    nav['Externals'] = buildMemberNav(members.externals, seen, linktoExternal);
-    nav['Classes'] = buildMemberNav(members.classes, seen, linkto);
-    nav['Events'] = buildMemberNav(members.events, seen, linkto);
-    nav['Namespaces'] = buildMemberNav(members.namespaces, seen, linkto);
-    nav['Mixins'] = buildMemberNav(members.mixins, seen, linkto);
-    nav['Tutorials'] = buildMemberNav(members.tutorials, seenTutorials, linktoTutorial);
-    nav['Interfaces'] = buildMemberNav(members.interfaces, seen, linkto);
-
-    if (members.globals.length) {
-        var globalNav = [];
-
-        members.globals.forEach(function(g) {
-            if ( g.kind !== 'typedef' && !hasOwnProp.call(seen, g.longname) ) {
-              globalNav.push({
-                anchor: linkto(g.longname, g.name)
-              });
-            }
-            seen[g.longname] = true;
-        });
-
-        if (globalNav.length === 0) {
-            // turn the heading into a link so you can actually get to the global page
-            // nav += '<h3>' + linkto('global', 'Global') + '</h3>';
-        } else {
-            nav['Global'] = globalNav;
-        }
-    }
-
-    return nav;
-}**/
-
 /**
     @param {TAFFY} taffyData See <http://taffydb.com/>.
     @param {object} opts
     @param {Tutorial} tutorials
  */
-/**exports.publish = function(taffyData, opts, tutorials) {
+exports.publish = function(taffyData, opts, tutorials) {
     data = taffyData;
 
     var conf = env.conf.templates || {};
@@ -447,8 +372,18 @@ function linktoExternal(longName, name) {
     }
     fs.mkPath(outdir);
 
+    // copy the template's static files to outdir
+    // var fromDir = path.join(templatePath, 'static');
+    // var staticFiles = fs.ls(fromDir, 3);
+    //
+    // staticFiles.forEach(function(fileName) {
+    //     var toDir = fs.toDir( fileName.replace(fromDir, outdir) );
+    //     fs.mkPath(toDir);
+    //     fs.copyFileSync(fileName, toDir);
+    // });
+
     // copy user-specified static files to outdir
-    var staticFilePaths;
+    /** var staticFilePaths;
     var staticFileFilter;
     var staticFileScanner;
     if (conf.default.staticFiles) {
@@ -473,7 +408,7 @@ function linktoExternal(longName, name) {
                 fs.copyFileSync(fileName, toDir);
             });
         });
-    }
+    }**/
 
     if (sourceFilePaths.length) {
         sourceFiles = shortenPaths( sourceFiles, path.commonPrefix(sourceFilePaths) );
@@ -542,7 +477,7 @@ function linktoExternal(longName, name) {
     view.outputSourceFiles = outputSourceFiles;
 
     // once for all
-    view.nav = buildNav(members);
+    view.nav = customPublish.buildNav(members);
     attachModuleSymbols( find({ longname: {left: 'module:'} }), members.modules );
 
     // generate the pretty-printed source files first so other pages can link to them
@@ -628,78 +563,4 @@ function linktoExternal(longName, name) {
         });
     }
     saveChildren(tutorials);
-};
-**/
-
-const jsdocTemplateHelper = require('jsdoc/util/templateHelper');
-const jsdocEnv = require('jsdoc/env');
-const jsdocFS = require('jsdoc/fs');
-const jsdocPath = require('jsdoc/path');
-
-const getPathFromDoclet = (doclet) => {
-  return doclet.meta.path && doclet.meta.path !== 'null' ?
-    jsdocPath.join(doclet.meta.path, doclet.meta.filename) :
-    doclet.meta.filename;
-}
-
-const getSourceFileMap = (data) => {
-  // build a list of source files
-  let sourceFiles = {};
-  data.each((doclet) => {
-    if (!doclet.meta) {
-      return;
-    }
-
-    const sourcePath = getPathFromDoclet(doclet);
-    sourceFiles[sourcePath] = {
-      resolved: sourcePath,
-      shortened: null
-    };
-  });
-  return sourceFiles;
-}
-
-/**
- * Create the destination path
- */
-const mkDestinationDir = () => {
-  const outdir = jsdocPath.normalize(jsdocEnv.opts.destination);
-  if (!outdir) {
-    throw new Error('Destination not defined.');
-  }
-
-  jsdocFS.mkPath(outdir);
-};
-
-const setShortenedPath = (sourceFiles, commonPrefix) => {
-  Object.keys(sourceFiles).forEach((sourceFileKey) => {
-    const sourceFile = sourceFiles[sourceFileKey];
-    sourceFile.shortened = sourceFile.resolved.replace(commonPrefix, '');
-    // always use forward slashes
-    sourceFile.shortened = sourceFile.shortened.replace(/\\/g, '/');
-  });
-
-  return sourceFiles;
-}
-
-const registerLinks = (data) => {
-  data.each((doclet) => {
-    const url = jsdocTemplateHelper.createLink(doclet);
-    jsdocTemplateHelper.registerLink(doclet.longname, url);
-  });
-}
-
-exports.publish = (taffyData, config) => {
-  console.log('JSDoc time to publish.');
-  const data = taffyData();
-
-  mkDestinationDir();
-
-  let sourceFileMap = getSourceFileMap(data);
-
-  // Figure out the correct value of shortened
-  const commonPathPrefix = jsdocPath.commonPrefix(Object.keys(sourceFileMap));
-  sourceFileMap = setShortenedPath(sourceFileMap, commonPathPrefix);
-
-  registerLinks(data);
 };

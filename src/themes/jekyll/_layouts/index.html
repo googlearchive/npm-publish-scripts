@@ -9,6 +9,7 @@ layout: default
 {% if page.left_column != nil or page.right_column != nil %}
   {% include components/two-column.html left=page.left_column right=page.right_column %}
 {% endif %}
+
 <section class="nav-content">
   <nav class="js-nav-drawer">
     {% include components/navigation.html context="/" %}
