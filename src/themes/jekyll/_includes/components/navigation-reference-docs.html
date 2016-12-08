@@ -1,16 +1,20 @@
-<ul>
+{% if site.data.releases and site.data.releases.stable and site.data.releases.stable.latest %}
+
+{% assign desiredPath = site.data.releases.stable.latest | append: '/index.html' %}
+{% assign desiredPage = nil %}
+
 {% for singlePage in site.pages %}
-  {% if singlePage.jsdocNav == nil %}
-    {% continue %}
+  {% assign comparingPath = '/' | append: singlePage.path %}
+  {% if comparingPath == desiredPath %}
+    {% assign desiredPage = singlePage %}
   {% endif %}
+{% endfor %}
 
-  {% if singlePage.name != 'index.html' %}
-    {% continue %}
-  {% endif %}
+{% if desiredPage and desiredPage.jsdocNav %}
+<ul>
+  <li class="heading {% if page.url contains singlePage.url %}current-section{% endif %} {% if page.url == singlePage.url %}current-page{% endif %}">Reference Docs</li>
 
-  <li class="heading {% if page.url contains singlePage.url %}current-section{% endif %} {% if page.url == singlePage.url %}current-page{% endif %}">{{ singlePage.title }}</li>
-
-  {% for navGroupHash in singlePage.jsdocNav %}
+  {% for navGroupHash in desiredPage.jsdocNav %}
     {% for navGroup in navGroupHash %}
     <li class="subheading">{{ navGroup[0] }}</li>
       {% for navGroupItem in navGroup[1] %}
@@ -18,5 +22,7 @@
       {% endfor %}
     {% endfor %}
   {% endfor %}
-{% endfor %}
+
 </ul>
+{% endif %}
+{% endif %}

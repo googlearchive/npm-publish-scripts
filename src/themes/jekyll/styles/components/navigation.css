@@ -19,6 +19,7 @@ nav {
   transition: transform var(--nav-animation-duration) ease-in-out;
   will-change: transform;
 
+  overflow-y: auto;
   z-index: var(--nav-z-index);
 }
 
