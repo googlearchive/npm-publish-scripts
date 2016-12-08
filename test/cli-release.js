@@ -552,6 +552,7 @@ describe('Test CLI - publish-release', function() {
 
     const CLI = require('../src/node/cli/index.js');
     const cli = new CLI();
+
     return cli.updatePackageVersion('patch')
     .then((newVersion) => {
       newVersion.should.equal('v0.0.1');
