@@ -26,6 +26,8 @@ const strings = require('../src/node/cli/strings');
 require('chai').should();
 
 describe('Test CLI - publish-release', function() {
+  this.timeout(5 * 1000);
+
   const originalExit = process.exit;
   const originalLog = console.log;
   const originalWarn = console.warn;
