@@ -5,19 +5,22 @@
   cursor: pointer;
 }
 
+.method-entry {
+  padding-bottom: calc(var(--grid) * 3);
+  padding-top: calc(var(--grid) * 3);
+}
+
 .method-type-function {
   border-bottom-style: solid;
   border-width: var(--layout-border-width);
   border-color: var(--border-color);
-  padding-bottom: calc(var(--grid) * 3);
-  padding-top: calc(var(--grid) * 3);
 }
 
 .method-type-function:last-child {
   border-bottom-style: none;
 }
 
-.method-name .this {
+.method-name .this, .method-info-table .param-attributes {
   font-style: italic;
   font-size: 0.8rem;
   opacity: 0.7;
@@ -58,4 +61,8 @@
 .method-collapse.is-closed {
   height: 0;
   overflow: hidden;
+}
+
+.is-jsdoc-page .subsection-title {
+  margin-bottom: 0;
 }

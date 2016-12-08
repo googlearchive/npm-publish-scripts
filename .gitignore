@@ -5,4 +5,4 @@ _site/
 .sass-cache/
 test/output/
 build/
-docs/reference-docs/
+reference-docs/

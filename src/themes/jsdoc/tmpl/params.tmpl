@@ -68,25 +68,25 @@
             <?js if (param.type && param.type.names) {?>
                 <?js= self.partial('type.tmpl', param.type.names) ?>
             <?js } ?>
-            </td>
 
             <?js if (params.hasAttributes) {?>
-                <td class="attributes">
-                <?js if (param.optional) { ?>
-                    &lt;optional><br>
-                <?js } ?>
+                <?js
+                const attributes = [];
+                ?>
+                <?js if (param.optional) {
+                    attributes.push('Optional');
+                } ?>
 
-                <?js if (param.nullable) { ?>
-                    &lt;nullable><br>
-                <?js } ?>
+                <?js if (param.nullable) {
+                    attributes.push('Nullable');
+                } ?>
 
-                <?js if (param.variable) { ?>
-                    &lt;repeatable><br>
-                <?js } ?>
-                </td>
-            <?js } else { ?>
-              <td></td>
-            <?js }?>
+                <?js if (param.variable) {
+                    attributes.push('Repeatable');
+                } ?>
+                <span class="param-attributes">(<?js= attributes.join(', ') ?>)</span>
+            <?js } ?>
+            </td>
 
             <?js if (params.hasDefault) {?>
                 <td class="default">

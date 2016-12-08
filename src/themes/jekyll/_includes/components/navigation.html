@@ -23,8 +23,10 @@ First we need to get the list of directories for the current depth
   {% endif %}
 
   {% assign pageDepth = singlePage.path | split: "/" | size | minus: 1 %}
-  {% if singlePage.name == "index.md" and pageDepth > 0 %}
+  {% if singlePage.name == "index.md" or singlePage.name == "index.html" %}
+    {% if pageDepth > 0 %}
     {% assign pageDepth = pageDepth | minus: 1 %}
+    {% endif %}
   {% endif %}
 
   {% if singlePage.url != currentContext %}
@@ -67,28 +69,11 @@ First we need to get the list of directories for the current depth
       {% endif %}
     {% endif %}
 
+
     {% assign newDepth = currentPathDepth | plus: 1 %}
     {% include components/navigation.html context=singlePage.url depth=newDepth %}
+    {% assign currentPathDepth = currentPathDepth | minus: 1 %}
   {% endif %}
 {% endfor %}
-
-{% if page.jsdocNav %}
-  <li>
-    <ul>
-      {% for navGroupHash in page.jsdocNav %}
-      {% for navGroup in navGroupHash %}
-      <li class="subheading">{{ navGroup[0] }}</li>
-      <li>
-        <ul>
-          {% for navGroupItem in navGroup[1] %}
-          <li>{{ navGroupItem }}</li>
-          {% endfor %}
-        </ul>
-      </li>
-      {% endfor %}
-      {% endfor %}
-    </ul>
-  </li>
-{% endif %}
 </ul>
 {% comment %}<li class="{% if page.url contains entry.url %}active{% endif %}">{% endcomment %}

@@ -40,7 +40,7 @@
   "license": "Apache-2.0",
   "repository": "GoogleChrome/npm-publish-scripts",
   "scripts": {
-    "build-ref-docs": "jsdoc -c ./jsdoc.conf -d docs/reference-docs/",
+    "build-ref-docs": "jsdoc -c ./jsdoc.conf -d reference-docs/",
     "build": "gulp build",
     "lint": "eslint '.'",
     "test": "npm run lint && gulp build && mocha"

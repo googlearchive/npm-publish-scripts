@@ -67,7 +67,8 @@ function needsSignature(doclet) {
 function getSignatureAttributes(item) {
     var attributes = [];
 
-    if (item.optional) {
+    // This adds strings into the method signatures. Looks confusing.
+    /** if (item.optional) {
         attributes.push('opt');
     }
 
@@ -76,7 +77,7 @@ function getSignatureAttributes(item) {
     }
     else if (item.nullable === false) {
         attributes.push('non-null');
-    }
+    }**/
 
     return attributes;
 }
@@ -90,7 +91,7 @@ function updateItemName(item) {
     }
 
     if (attributes && attributes.length) {
-        itemName = util.format( '%s<span class="signature-attributes">%s</span>', itemName,
+        itemName = util.format( '%s <span class="signature-attributes">%s</span>', itemName,
             attributes.join(', ') );
     }
 
@@ -491,7 +492,7 @@ exports.publish = function(taffyData, opts, tutorials) {
     var files = find({kind: 'file'}),
         packages = find({kind: 'package'});
 
-    generate('Home',
+    generate('Reference Docs',
         packages.concat(
             [{kind: 'mainpage', readme: opts.readme, longname: (opts.mainpagetitle) ? opts.mainpagetitle : 'Main Page'}]
         ).concat(files),

@@ -1,0 +1,22 @@
+<ul>
+{% for singlePage in site.pages %}
+  {% if singlePage.jsdocNav == nil %}
+    {% continue %}
+  {% endif %}
+
+  {% if singlePage.name != 'index.html' %}
+    {% continue %}
+  {% endif %}
+
+  <li class="heading {% if page.url contains singlePage.url %}current-section{% endif %} {% if page.url == singlePage.url %}current-page{% endif %}">{{ singlePage.title }}</li>
+
+  {% for navGroupHash in singlePage.jsdocNav %}
+    {% for navGroup in navGroupHash %}
+    <li class="subheading">{{ navGroup[0] }}</li>
+      {% for navGroupItem in navGroup[1] %}
+      <li>{{ navGroupItem }}</li>
+      {% endfor %}
+    {% endfor %}
+  {% endfor %}
+{% endfor %}
+</ul>
