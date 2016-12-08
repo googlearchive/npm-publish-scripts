@@ -1,11 +1,20 @@
 :root {
-  --padding: 16px;
-  --vertical-padding: calc(var(--padding) * 2);
-  --horizontal-padding: calc(var(--padding) * 2.5);
+  --grid: 8px;
+  --layout-border-width: 1px;
 
-  --menu-button-height: 64px;
-  --menu-button-svg-size: 24px;
+  --primary-font-size: 16;
+  --primary-line-height: 24;
 
-  --page-header-height: calc(var(--padding) * 4);
-  --site-header-height: calc(var(--padding) * 18);
+  --svg-btn-size-s: calc(var(--grid) * 8);
+  --svg-btn-size-l: calc(var(--grid) * 11);
+
+  --list-item-line-height: 1rem;
+  --list-item-marker-size-s: calc((36 / var(--primary-font-size)) * 1rem);
+  --list-item-marker-size-l: 1.5rem;
+  --list-item-marker-margin-s: calc(var(--list-item-marker-size-s) + 1rem);
+  --list-item-marker-margin-l: calc(var(--grid) * 6);
+
+  --nav-animation-duration: 0.3s;
+
+  --max-content-width: calc(var(--grid) * 150);
 }

@@ -1,3 +1,5 @@
 src/themes/jsdoc/
 third_party/
 build/
+node_modules/
+_site/

@@ -1,0 +1,40 @@
+@import "../variables/dimens.css";
+@import "../variables/colors.css";
+
+.two-column {
+  display: flex;
+  flex-direction: column;
+  border-bottom-style: solid;
+  border-width: var(--layout-border-width);
+  border-color: var(--border-color);
+}
+
+.two-column__section {
+  padding: calc(var(--grid) * 4);
+}
+
+.two-column__section *:last-child {
+  margin-bottom: 0;
+}
+
+.two-column__section:first-child {
+  border-bottom-style: solid;
+  border-width: var(--layout-border-width);
+  border-color: var(--border-color);
+}
+
+@media (min-width: 900px) {
+  .two-column {
+    flex-direction: row;
+  }
+
+  .two-column__section {
+    width: 0;
+    flex: 1;
+    padding: calc(var(--grid) * 8);
+  }
+
+  .two-column__section:first-child {
+    border-right-style: solid;
+  }
+}

@@ -1,37 +1,45 @@
 @import "../variables/dimens.css";
+@import "../variables/colors.css";
 
 .page-header {
-  height: var(--page-header-height);
-
-  display: flex;
-  flex-direction: row;
-
-  background-color: #37474f;
-  color: white;
-
-  padding: 0;
+  background-color: var(--primary-highlight-color);
+  color: var(--primary-highlight-color__inverse);
+  padding: calc(var(--grid) * 8) calc(var(--grid) * 4);
 }
 
-.page-header .menu-btn {
-  width: var(--menu-button-height);
-  height: var(--menu-button-height);
-  min-width: auto;
-  background: none;
-  border: none;
-
-  padding: calc(calc(var(--menu-button-height) - var(--menu-button-svg-size)) / 2);
-}
-
-.page-header .menu-btn svg {
-  width: var(--menu-button-svg-size);
-  height: var(--menu-button-svg-size);
-}
-
-.page-header h1 {
+.page-header__inner-section {
   width: 100%;
-  font-size: 13px;
-  line-height: var(--page-header-height);
+}
 
+.page-header__inner-section h1 {
+  font-size: 3rem;
+  line-height: 5rem;
+
+  color: var(--primary-highlight-color__inverse);
   margin: 0;
-  padding-right: var(--horizontal-padding);
+  margin-bottom: var(--grid);
+}
+
+.page-header__inner-section p {
+  margin: 0;
+}
+
+@media (min-width: 900px) {
+  .page-header {
+    background-color: var(--primary-highlight-color);
+    color: var(--primary-highlight-color__inverse);
+    padding: calc(var(--grid) * 15) calc(var(--grid) * 8);
+  }
+
+  .page-header__inner-section {
+    max-width: var(--max-content-width);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .page-header__inner-section h1 {
+    width: 60%;
+    font-size: 5.14rem;
+    line-height: 6.78rem;
+  }
 }

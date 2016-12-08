@@ -1,5 +1,7 @@
 'use strict';
 
+const customPublish = require('./customised-publish');
+
 var doop = require('jsdoc/util/doop');
 var env = require('jsdoc/env');
 var fs = require('jsdoc/fs');
@@ -14,7 +16,6 @@ var htmlsafe = helper.htmlsafe;
 var linkto = helper.linkto;
 var resolveAuthorLinks = helper.resolveAuthorLinks;
 var scopeToPunc = helper.scopeToPunc;
-var hasOwnProp = Object.prototype.hasOwnProperty;
 
 var data;
 var view;
@@ -66,7 +67,8 @@ function needsSignature(doclet) {
 function getSignatureAttributes(item) {
     var attributes = [];
 
-    if (item.optional) {
+    // This adds strings into the method signatures. Looks confusing.
+    /** if (item.optional) {
         attributes.push('opt');
     }
 
@@ -75,7 +77,7 @@ function getSignatureAttributes(item) {
     }
     else if (item.nullable === false) {
         attributes.push('non-null');
-    }
+    }**/
 
     return attributes;
 }
@@ -89,7 +91,7 @@ function updateItemName(item) {
     }
 
     if (attributes && attributes.length) {
-        itemName = util.format( '%s<span class="signature-attributes">%s</span>', itemName,
+        itemName = util.format( '%s <span class="signature-attributes">%s</span>', itemName,
             attributes.join(', ') );
     }
 
@@ -107,7 +109,7 @@ function buildItemTypeStrings(item) {
 
     if (item && item.type && item.type.names) {
         item.type.names.forEach(function(name) {
-            types.push( linkto(name, htmlsafe(name)) );
+            types.push( helper.linkto(name, htmlsafe(name)) );
         });
     }
 
@@ -137,7 +139,7 @@ function addNonParamAttributes(items) {
 function addSignatureParams(f) {
     var params = f.params ? addParamAttributes(f.params) : [];
 
-    f.signature = util.format( '%s(%s)', (f.signature || ''), params.join(', ') );
+    f.signature = util.format( '%s(<span class="signature-args">%s</span>)', (f.signature || ''), params.join(', ') );
 }
 
 function addSignatureReturns(f) {
@@ -165,7 +167,7 @@ function addSignatureReturns(f) {
         returnTypes = addNonParamAttributes(f.returns);
     }
     if (returnTypes.length) {
-        returnTypesString = util.format( ' &rarr; %s{%s}', attribsString, returnTypes.join('|') );
+        returnTypesString = util.format( ' <span class="return-arrow">&rarr;</span> %s%s', attribsString, returnTypes.join('|') );
     }
 
     f.signature = '<span class="signature">' + (f.signature || '') + '</span>' +
@@ -215,8 +217,8 @@ function generate(title, docs, filename, resolveLinks) {
         docs: docs
     };
 
-    var outpath = path.join(outdir, filename),
-        html = view.render('container.tmpl', docData);
+    var outpath = path.join(outdir, filename);
+    var html = view.render('container.tmpl', docData);
 
     if (resolveLinks) {
         html = helper.resolveLinks(html); // turn {@link foo} into <a href="foodoc.html">foo</a>
@@ -287,92 +289,6 @@ function attachModuleSymbols(doclets, modules) {
                 });
         }
     });
-}
-
-function buildMemberNav(items, itemsSeen, linktoFn) {
-    var nav = [];
-
-    if (items.length) {
-        items.forEach(function(item) {
-            var itemNav = {};
-
-            if ( !hasOwnProp.call(item, 'longname') ) {
-                itemNav.anchor = linktoFn('', item.name);
-            } else if ( !hasOwnProp.call(itemsSeen, item.longname) ) {
-                var displayName;
-                if (env.conf.templates.default.useLongnameInNav) {
-                    displayName = item.longname;
-                } else {
-                    displayName = item.name;
-                }
-                itemNav.anchor = linktoFn(item.longname, displayName.replace(/\b(module|event):/g, ''));
-                itemsSeen[displayName] = true;
-            }
-
-            nav.push(itemNav);
-        });
-    }
-
-    return nav;
-}
-
-function linktoTutorial(longName, name) {
-    return tutoriallink(name);
-}
-
-function linktoExternal(longName, name) {
-    return linkto(longName, name.replace(/(^"|"$)/g, ''));
-}
-
-/**
- * Create the navigation sidebar.
- * @param {object} members The members that will be used to create the sidebar.
- * @param {array<object>} members.classes
- * @param {array<object>} members.externals
- * @param {array<object>} members.globals
- * @param {array<object>} members.mixins
- * @param {array<object>} members.modules
- * @param {array<object>} members.namespaces
- * @param {array<object>} members.tutorials
- * @param {array<object>} members.events
- * @param {array<object>} members.interfaces
- * @return {string} The HTML for the navigation sidebar.
- */
-function buildNav(members) {
-    var nav = {};
-    var seen = {};
-    var seenTutorials = {};
-
-    nav['Modules'] = buildMemberNav(members.modules, {}, linkto);
-    nav['Externals'] = buildMemberNav(members.externals, seen, linktoExternal);
-    nav['Classes'] = buildMemberNav(members.classes, seen, linkto);
-    nav['Events'] = buildMemberNav(members.events, seen, linkto);
-    nav['Namespaces'] = buildMemberNav(members.namespaces, seen, linkto);
-    nav['Mixins'] = buildMemberNav(members.mixins, seen, linkto);
-    nav['Tutorials'] = buildMemberNav(members.tutorials, seenTutorials, linktoTutorial);
-    nav['Interfaces'] = buildMemberNav(members.interfaces, seen, linkto);
-
-    if (members.globals.length) {
-        var globalNav = [];
-
-        members.globals.forEach(function(g) {
-            if ( g.kind !== 'typedef' && !hasOwnProp.call(seen, g.longname) ) {
-              globalNav.push({
-                anchor: linkto(g.longname, g.name)
-              });
-            }
-            seen[g.longname] = true;
-        });
-
-        if (globalNav.length === 0) {
-            // turn the heading into a link so you can actually get to the global page
-            // nav += '<h3>' + linkto('global', 'Global') + '</h3>';
-        } else {
-            nav['Global'] = globalNav;
-        }
-    }
-
-    return nav;
 }
 
 /**
@@ -460,15 +376,15 @@ exports.publish = function(taffyData, opts, tutorials) {
     // copy the template's static files to outdir
     // var fromDir = path.join(templatePath, 'static');
     // var staticFiles = fs.ls(fromDir, 3);
-
-    //staticFiles.forEach(function(fileName) {
-    //    var toDir = fs.toDir( fileName.replace(fromDir, outdir) );
-    //    fs.mkPath(toDir);
-    //    fs.copyFileSync(fileName, toDir);
-    //});
+    //
+    // staticFiles.forEach(function(fileName) {
+    //     var toDir = fs.toDir( fileName.replace(fromDir, outdir) );
+    //     fs.mkPath(toDir);
+    //     fs.copyFileSync(fileName, toDir);
+    // });
 
     // copy user-specified static files to outdir
-    var staticFilePaths;
+    /** var staticFilePaths;
     var staticFileFilter;
     var staticFileScanner;
     if (conf.default.staticFiles) {
@@ -493,7 +409,7 @@ exports.publish = function(taffyData, opts, tutorials) {
                 fs.copyFileSync(fileName, toDir);
             });
         });
-    }
+    }**/
 
     if (sourceFilePaths.length) {
         sourceFiles = shortenPaths( sourceFiles, path.commonPrefix(sourceFilePaths) );
@@ -562,7 +478,7 @@ exports.publish = function(taffyData, opts, tutorials) {
     view.outputSourceFiles = outputSourceFiles;
 
     // once for all
-    view.nav = buildNav(members);
+    view.nav = customPublish.buildNav(members);
     attachModuleSymbols( find({ longname: {left: 'module:'} }), members.modules );
 
     // generate the pretty-printed source files first so other pages can link to them
@@ -576,7 +492,7 @@ exports.publish = function(taffyData, opts, tutorials) {
     var files = find({kind: 'file'}),
         packages = find({kind: 'package'});
 
-    generate('Home',
+    generate('Reference Docs',
         packages.concat(
             [{kind: 'mainpage', readme: opts.readme, longname: (opts.mainpagetitle) ? opts.mainpagetitle : 'Main Page'}]
         ).concat(files),

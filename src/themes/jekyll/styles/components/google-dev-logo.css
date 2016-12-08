@@ -1,0 +1,21 @@
+@import "../variables/dimens.css";
+
+.google-dev-logo {
+  display: inline-block;
+  height: var(--svg-btn-size-s);
+  padding: calc(var(--grid) * 3) calc(var(--grid) * 4);
+  box-sizing: border-box;
+}
+
+.google-dev-logo svg {
+  width: auto;
+  height: 100%;
+}
+
+@media (min-width: 900px) {
+  .google-dev-logo {
+    display: inline-block;
+    height: var(--svg-btn-size-l);
+    padding: calc(var(--grid) * 4) calc(var(--grid) * 5);
+  }
+}

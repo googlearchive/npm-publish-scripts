@@ -26,6 +26,8 @@ const strings = require('../src/node/cli/strings');
 require('chai').should();
 
 describe('Test CLI - publish-release', function() {
+  this.timeout(5 * 1000);
+
   const originalExit = process.exit;
   const originalLog = console.log;
   const originalWarn = console.warn;
@@ -362,8 +364,6 @@ describe('Test CLI - publish-release', function() {
   });
 
   it('should run the build and test steps if defined.', function() {
-    this.timeout(4000);
-
     process.chdir(testOutput);
     const buildFilename = 'build.txt';
     const testFilename = 'test.txt';
@@ -539,8 +539,6 @@ describe('Test CLI - publish-release', function() {
   });
 
   it('should bump the version correctly', function() {
-    this.timeout(4000);
-
     process.chdir(testOutput);
     const packageDetails = {
       name: 'example-name',

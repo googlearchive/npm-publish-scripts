@@ -150,6 +150,10 @@ class NPMPublishScriptCLI {
           output: path.join(process.cwd(), 'docs'),
         },
         {
+          input: path.join(__dirname, '..', '..', 'defaults', '_config.yml'),
+          output: path.join(process.cwd(), '_config.yml'),
+        },
+        {
           input: path.join(__dirname, '..', '..', 'defaults', 'Gemfile'),
           output: path.join(process.cwd(), 'Gemfile'),
         },

@@ -1,0 +1,133 @@
+@import "../variables/dimens.css";
+@import "../variables/z-index.css";
+@import "../variables/colors.css";
+
+nav {
+  display: block;
+  width: 85%;
+  height: 100%;
+  max-width: 360px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translateX(-100%);
+
+  background-color: var(--nav-bg-color);
+  box-sizing: border-box;
+  box-shadow: 0 0 calc(var(--grid) * 2) rgba(0,0,0,0);
+
+  transition: transform var(--nav-animation-duration) ease-in-out;
+  will-change: transform;
+
+  overflow-y: auto;
+  z-index: var(--nav-z-index);
+}
+
+nav.is-open {
+  box-shadow: 0 0 calc(var(--grid) * 2) rgba(0,0,0,0.8);
+  left: 0;
+  transform: translateX(0);
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding-left: calc(var(--grid) * 3);
+}
+
+nav > ul:first-child {
+  padding-top: calc(var(--grid) * 4);
+}
+
+nav > ul:last-child {
+  padding-bottom: calc(var(--grid) * 4);
+}
+
+nav ul li::before {
+  content: none;
+}
+
+nav ul li {
+  margin: 0;
+}
+
+nav ul li a, nav ul li.subheading, nav ul li.heading {
+  display: block;
+  text-decoration: none;
+  padding: calc(var(--grid) * 1.5) calc(var(--grid) * 4);
+}
+
+nav ul li.heading {
+
+}
+
+nav ul li.subheading {
+  font-style: italic;
+  padding-bottom: 0;
+  opacity: 0.7;
+}
+
+nav > ul {
+  margin: 0;
+  padding: 0;
+  padding-top: calc(var(--grid) * 3);
+  padding-bottom: calc(var(--grid) * 3);
+  border-bottom-style: solid;
+  border-width: var(--layout-border-width);
+  border-color: var(--border-color);
+}
+
+nav .current-page a {
+  color: rgba(0, 0, 0, 0.26);
+}
+
+.nav-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  transition: opacity var(--nav-animation-duration) ease-in-out;
+  z-index: var(--nav-backdrop-z-index);
+  pointer-events: none;
+}
+
+.nav-backdrop.is-open {
+  opacity: 1;
+  pointer-events: all;
+  touch-action: none;
+}
+
+@media (min-width: 900px) {
+  nav {
+    position: relative;
+    min-width: auto;
+    height: auto;
+    border-right-style: solid;
+    border-color: var(--border-color);
+    border-width: var(--layout-border-width);
+    box-shadow: none;
+    transition: none;
+    transform: translateX(0);
+  }
+
+  nav > ul {
+    padding-top: calc(var(--grid) * 3);
+    padding-bottom: calc(var(--grid) * 3);
+  }
+
+  nav > ul:first-child {
+    padding-top: calc(var(--grid) * 8);
+  }
+
+  nav > ul:last-child {
+    padding-bottom: calc(var(--grid) * 8);
+  }
+
+  .nav-backdrop.isOpen, .nav-backdrop {
+    display: none;
+  }
+}

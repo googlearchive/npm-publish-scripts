@@ -1,35 +1,13 @@
 <?js
-var returns = obj || {};
+var data = obj || {};
+if (data.description) {
 ?>
 
-<table class="params">
-    <thead>
-    <tr>
-        <th>Type</th>
+<?js if (data.type && data.type.names) {?>
+<?js= this.partial('type.tmpl', data.type.names) ?>
+<?js } ?>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <?js
-        var self = this;
-        returns.forEach(function(returnValue) {
-            if (!returnValue) { return; }
-    ?>
-
-        <tr>
-            <td class="type">
-            <?js if (returnValue.type && returnValue.type.names) {?>
-                <?js= self.partial('type.tmpl', returnValue.type.names) ?>
-            <?js } ?>
-            </td>
-
-            <td class="description last">
-              <?js= returnValue.description ?>
-            </td>
-        </tr>
-
-    <?js }); ?>
-    </tbody>
-</table>
+<div class="param-desc">
+    <?js= description ?>
+</div>
+<?js } ?>

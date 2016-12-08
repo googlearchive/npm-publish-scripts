@@ -1,0 +1,9 @@
+source:       .
+layouts_dir: ./src/themes/jekyll/_layouts/
+includes_dir: ./src/themes/jekyll/_includes/
+theme_location: /src
+
+exclude: ["src/themes/jsdoc/", "build/"]
+
+# This adds github pages data
+gems: ['jekyll-github-metadata']

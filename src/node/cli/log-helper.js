@@ -23,8 +23,16 @@ const chalk = require('chalk');
  * Log helper is just a wrapper around the console to print slightly
  * nicer / colored messages and could be extended to filter based on log
  * level.
+ *
+ * This is also the only file that disables the no-console rule.
  */
 class LogHelper {
+  /**
+   * Hello World = testing.
+   */
+  constructor() {
+
+  }
   /**
    * Print a warning message to the console (Colored yellow).
    * @param {string} msg Message to print to the console

@@ -1,0 +1,13 @@
+@import "../variables/dimens.css";
+
+.top-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@media (min-width: 900px) {
+  .menu-btn {
+    display: none;
+  }
+}
