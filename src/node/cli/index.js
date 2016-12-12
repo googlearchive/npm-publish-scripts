@@ -436,6 +436,8 @@ class NPMPublishScriptCLI {
    * Building the JSDocs for the current project
    * @param {string} newPath This should be the path to the root of
    * the docs output (i.e. github pages or temp build directory).
+   * @return {Promise} that resolves once the docs have been built if requested
+   * by the developer.
    */
   buildJSDocs(newPath) {
     const jsdocConf = path.join(process.cwd(), 'jsdoc.conf');
@@ -449,28 +451,60 @@ class NPMPublishScriptCLI {
 
     logHelper.info('Building JSDocs');
 
-    const jsDocParams = [
-      '-c',
-      jsdocConf,
-      '-d',
-      path.join(
-        newPath, REFERENCE_DOCS_DIR, 'Example'
-      ),
-    ];
-
-    const jsdocProcess = spawnSync(
-      path.join(__dirname, '..', '..', '..',
-        'node_modules', '.bin', 'jsdoc'),
-      jsDocParams,
-      {
-        cwd: process.cwd(),
-        stdio: 'inherit',
+    return inquirer.prompt(
+      [
+        {
+          type: 'confirm',
+          name: 'buildNewDocs',
+          message: 'Would you like to build new JSDocs? (Otherwise we\'ll ' +
+            'just update the theme for Github Pages.)',
+        },
+        {
+          type: 'list',
+          name: 'tag',
+          message: 'Is this release of docs a stable, beta or alpha release?',
+          choices: ['stable', 'beta', 'alpha'],
+          when: (results) => {
+            return results.buildNewDocs;
+          },
+        },
+        {
+          name: 'verion',
+          message: 'What is the tag for this set of docs? (i.e. v1.0.0)',
+          when: (results) => {
+            return results.buildNewDocs;
+          },
+        },
+      ]
+    )
+    .then((results) => {
+      if (results.buildNewDocs === false) {
+        return;
       }
-    );
 
-    if (jsdocProcess.error) {
-      logHelper.error(jsdocProcess.error);
-    }
+      const jsDocParams = [
+        '-c',
+        jsdocConf,
+        '-d',
+        path.join(
+          newPath, REFERENCE_DOCS_DIR, results.tag, results.version
+        ),
+      ];
+
+      const jsdocProcess = spawnSync(
+        path.join(__dirname, '..', '..', '..',
+          'node_modules', '.bin', 'jsdoc'),
+        jsDocParams,
+        {
+          cwd: process.cwd(),
+          stdio: 'inherit',
+        }
+      );
+
+      if (jsdocProcess.error) {
+        logHelper.error(jsdocProcess.error);
+      }
+    });
   }
 
   /**
