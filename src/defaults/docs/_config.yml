@@ -1,4 +1,4 @@
-source:       .
+source: .
 layouts_dir: ./themes/jekyll/_layouts/
 includes_dir: ./themes/jekyll/_includes/
 
