@@ -7,7 +7,7 @@ Commands:
 
     init
     serve [<path of project>]
-    publish-release <patch | minor | major> [<stable | beta | alpha>]
+    publish-release [<patch | minor | major>] [<stable | beta | alpha>]
     publish-docs [<path to build reference docs into>]
 
 Options
