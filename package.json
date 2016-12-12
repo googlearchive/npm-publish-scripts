@@ -1,9 +1,9 @@
 {
   "name": "npm-publish-scripts",
   "description": "A simple set of scripts to help when publishing to NPM from a Github Repo",
-  "version": "3.0.0",
+  "version": "3.0.2",
   "bin": {
-    "npm-publish-scripts": "./src/node/bin/cli.js"
+    "npm-publish-scripts": "./build/node/bin/cli.js"
   },
   "bugs": {
     "url": "https://github.com/GoogleChrome/npm-publish-scripts/issues"
