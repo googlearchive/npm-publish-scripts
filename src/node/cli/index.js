@@ -25,6 +25,7 @@ const spawnSync = require('child_process').spawnSync;
 const semver = require('semver');
 const inquirer = require('inquirer');
 const gitBranch = require('git-branch');
+const updateNotifier = require('update-notifier');
 
 const exitLifeCycle = require('./exit-lifecycle');
 const logHelper = require('./log-helper');
@@ -42,6 +43,8 @@ class NPMPublishScriptCLI {
    */
   constructor() {
     this._spawnedProcesses = [];
+    const notifier = updateNotifier({pkg: packageInfo});
+    notifier.notify();
   }
 
   /**
@@ -227,7 +230,6 @@ class NPMPublishScriptCLI {
       .then(() => {
         this.copyDocs(tmpPath);
         this.updateJekyllTemplate(tmpPath);
-        this.buildJSDocs(tmpPath);
         this.buildReferenceDocsList(tmpPath);
 
         // Copy Jekyll gem - only needed for local build
@@ -299,7 +301,11 @@ class NPMPublishScriptCLI {
     .then(() => {
       this.copyDocs(githubPagesRoot);
       this.updateJekyllTemplate(githubPagesRoot);
-      this.buildJSDocs(githubPagesRoot);
+    })
+    .then(() => {
+      return this.buildJSDocs(githubPagesRoot);
+    })
+    .then(() => {
       this.buildReferenceDocsList(githubPagesRoot);
     })
     .then(() => {
