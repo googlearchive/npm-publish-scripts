@@ -108,6 +108,15 @@ table {
   border-spacing: 0;
 }
 
+blockquote {
+  margin: 0;
+  padding: var(--grid) calc(var(--grid) * 2);
+  
+  border-left-style: solid;
+  border-left-width: var(--layout-border-width);
+  border-left-color: var(--primary-highlight-color);
+}
+
 @media (min-width: 900px) {
   main {
     padding: calc(var(--grid) * 8);
