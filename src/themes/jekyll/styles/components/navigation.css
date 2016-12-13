@@ -73,9 +73,6 @@ nav > ul {
   padding: 0;
   padding-top: calc(var(--grid) * 3);
   padding-bottom: calc(var(--grid) * 3);
-  border-bottom-style: solid;
-  border-width: var(--layout-border-width);
-  border-color: var(--border-color);
 }
 
 nav .current-page a {
