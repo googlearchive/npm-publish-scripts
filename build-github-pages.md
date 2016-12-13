@@ -6,80 +6,75 @@ navigation_weight: 2
 
 # Building a Github Pages Site
 
-To publish markdown files to Github Pages using this theme, create a folder
-called `docs` at the root of your projects **master** branch and create
-a `docs/index.md` adding the following contents:
+To get started with a Github Pages site you can use the `init` command to
+add the required fields to build the site and configure it to use the correct
+theme.
+
+    npm-publish-scripts init
+
+With this you should be set to use Jekyll. To test your site locally you'll
+need the appropriate dependencies configured.
+
+    rvm install 2.2.0
+    rvm use 2.2.0
+    gem install bundler
+    rvm . do bundle install
+
+The above commands install the correct version of Ruby and use it for this
+project using [RVM](https://rvm.io/). Bundler is used to then manage
+dependencies.
+
+With this done, you should be able to serve your site as if it were on Github
+pages like so:
+
+    npm-publish-scripts serve
+
+At this point, unless you have anything in a docs directory, your site will
+be empty, so let's look at adding an index page.
+
+## Writing Content
+
+To add pages to your Github Pages site, create a directory `docs` at the root
+of your project and add markdown files here, to start with make a file
+`docs/index.md` and add the following:
 
 ```markdown
 ---
 layout: index
-title: "My Project Title"
+title: "Usage"
 navigation_weight: 0
+left_column: |
+  # Why
+
+  Why should someone care about your module?
+
+  1. Is it awesome?
+  1. Is it useful?
+
+  Any closing comments or remarks?
+right_column: |
+  # Install
+
+  To install my module, do the following:
+
+      npm install my-module -g
 ---
 
 # Hello World
 ```
 
-Then create a `docs/_config.yml` file and paste in the following:
+Now you can run the `serve` command again and view your new page.
 
-```
-source:       .
-layouts_dir: ./themes/jekyll/_layouts/
-includes_dir: ./themes/jekyll/_includes/
-```
+    npm-publish-scripts serve
 
-Then add a new NPM run script:
+## Publish to Github
 
-```json
-"publish-docs": "publish-docs.sh"
-```
+When you are ready to push your changes to Github, we need to first enable
+Github Pages on your repo.
 
-## Updating the Theme
+On `github.com`, Go to `Settings > Github Pages > Source` and select
+'gh-pages branch'.
 
-Run `npm run publish-docs` when you wish to update the docs theme,
-update versioned docs.
+Then run the following command to push the latest changes:
 
-Try running it now and you should see `docs/jekyll-theme` appear.
-
-You can add the following to your `travis.yml` to make sure that
-any changes to the project result in the docs being up to date.
-
-    script:
-      - if [[ "$TRAVIS_BRANCH" = "master" && "$TRAVIS_OS_NAME" = "linux" && "$TRAVIS_PULL_REQUEST" = "false" ]]; then
-          npm run publish-docs;
-        fi
-
-## Configuring Github Pages
-
-The final stpe is to enable Github Pages.
-
-Go to `Settings > Github Pages > Source` and select
-'Master Branch /docs Folder'.
-
-Then you should have the docs live on your Github Pages URL.
-
-# Publishing Versioned Reference Docs
-
-If you have reference docs that you'd like to publish on a new release
-and publish on your Github Pages start by adding an NPM run script
-`build-docs` that takes the path to build into as the final option.
-
-```json
-"build-docs": "jsdoc -c ./jsdoc.conf -d "
-```
-
-In this example we are using JSDoc and using `-d` as the final option so
-when it's run out docs are build into the correct directory.
-
-Test it out like so:
-
-    npm run build-docs ./test-docs
-
-You should have a directory `test-docs` with your reference docs.
-
-Once this is working, `publish-release.sh` will call `publish-docs.sh`
-whenever a new version is published to npm and `publish-docs.sh` will
-call your `build-docs` script and make sure the reference docs are
-added to the available doc versions.
-
-To use the JSDoc theme, see [Using the JSDoc Theme](./use-jsdoc-theme).
+    npm-publish-scripts publish-docs

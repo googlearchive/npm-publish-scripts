@@ -1,32 +1,38 @@
 ---
 layout: index
-title: "Use the JSDoc Theme"
+title: "Publishing JSDocs"
 navigation_weight: 3
 ---
 
-# Use the JSDoc Theme
+# Publishing JSDocs
 
-If you want to use the JSDoc theme with your reference documentation,
-all you need to do is tell JSDoc to use this directory for the template:
+If you want to publish API docs you can use the JSDoc theme.
 
-    node_modules/npm-publish-scripts/build/jsdoc-theme/
+Create a `jsdoc.conf` file at the root of your project and add the following
+content:
 
-An example JSDoc config file to use this theme looks like this:
+    {
+      "source": {
+        "include": [
+          "./src/node"
+        ]
+      },
+      "templates": {
+        "default": {
+          "outputSourceFiles": false
+        }
+      },
+      "opts": {
+        "template": "./build/themes/jsdoc",
+        "recurse": true
+      },
+      "markdown": {
+        "idInHeadings": true
+      },
+      "plugins": ["plugins/markdown"]
+    }
 
-```json
-{
-  "source": {
-    "include": [
-      "./src",
-      "./docs/index.md"
-    ]
-  },
-  "opts": {
-    "template": "./node_modules/npm-publish-scripts/build/jsdoc-theme/",
-    "recurse": true
-  },
-  "markdown": {
-    "idInHeadings": true
-  }
-}
-```
+After this, the next time run the `publish-docs` command, you'll be asked
+if you want to build JSDocs as well, select yes and follow the instructions.
+
+    npm-publish-scripts publish-docs
