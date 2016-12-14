@@ -223,13 +223,15 @@ class NPMPublishScriptCLI {
       }
 
       const tmpPath = this._servingDocInfo.tmpObj.name;
-      return this.checkoutGithubPages(tmpPath)
-      .then(() => {
-        return this.cleanupGithubPages(tmpPath);
-      })
+      return Promise.resolve()
       .then(() => {
         this.copyDocs(tmpPath);
         this.updateJekyllTemplate(tmpPath);
+      })
+      .then(() => {
+        return this.buildJSDocs(tmpPath, 'stable', 'v0.0.0');
+      })
+      .then(() => {
         this.buildReferenceDocsList(tmpPath);
 
         // Copy Jekyll gem - only needed for local build
@@ -442,10 +444,12 @@ class NPMPublishScriptCLI {
    * Building the JSDocs for the current project
    * @param {string} newPath This should be the path to the root of
    * the docs output (i.e. github pages or temp build directory).
+   * @param {string} tag The tag stable, beta or alpha for docs.
+   * @param {string} version The version string for the directories.
    * @return {Promise} that resolves once the docs have been built if requested
    * by the developer.
    */
-  buildJSDocs(newPath) {
+  buildJSDocs(newPath, tag, version) {
     const jsdocConf = path.join(process.cwd(), 'jsdoc.conf');
 
     try {
@@ -457,33 +461,42 @@ class NPMPublishScriptCLI {
 
     logHelper.info('Building JSDocs');
 
-    return inquirer.prompt(
-      [
-        {
-          type: 'confirm',
-          name: 'buildNewDocs',
-          message: 'Would you like to build new JSDocs? (Otherwise we\'ll ' +
-            'just update the theme for Github Pages.)',
-        },
-        {
-          type: 'list',
-          name: 'tag',
-          message: 'Is this release of docs a stable, beta or alpha release?',
-          choices: ['stable', 'beta', 'alpha'],
-          when: (results) => {
-            return results.buildNewDocs;
+    let detailsPromise;
+    if (tag && version) {
+      detailsPromise = Promise.resolve({
+        tag,
+        version,
+      });
+    } else {
+      detailsPromise = inquirer.prompt(
+        [
+          {
+            type: 'confirm',
+            name: 'buildNewDocs',
+            message: 'Would you like to build new JSDocs? (Otherwise we\'ll ' +
+              'just update the theme for Github Pages.)',
           },
-        },
-        {
-          name: 'verion',
-          message: 'What is the tag for this set of docs? (i.e. v1.0.0)',
-          when: (results) => {
-            return results.buildNewDocs;
+          {
+            type: 'list',
+            name: 'tag',
+            message: 'Is this release of docs a stable, beta or alpha release?',
+            choices: ['stable', 'beta', 'alpha'],
+            when: (results) => {
+              return results.buildNewDocs;
+            },
           },
-        },
-      ]
-    )
-    .then((results) => {
+          {
+            name: 'verion',
+            message: 'What is the tag for this set of docs? (i.e. v1.0.0)',
+            when: (results) => {
+              return results.buildNewDocs;
+            },
+          },
+        ]
+      );
+    }
+
+    return detailsPromise.then((results) => {
       if (results.buildNewDocs === false) {
         return;
       }
