@@ -5,7 +5,7 @@ const linktoTutorial = (longName, name) => {
 };
 
 const linktoExternal = (longName, name) => {
-    return linkto(longName, name.replace(/(^"|"$)/g, ''));
+    return helper.linkto(longName, name.replace(/(^"|"$)/g, ''));
 };
 
 const buildMemberNav = (items, itemsSeen, linktoFn) => {

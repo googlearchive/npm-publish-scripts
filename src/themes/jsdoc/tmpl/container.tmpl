@@ -19,10 +19,7 @@
 
 
     <?js if (!doc.longname || doc.kind !== 'module') { ?>
-        <h2><?js if (doc.ancestors && doc.ancestors.length) { ?>
-            <span class="ancestors"><?js= doc.ancestors.join('') ?></span><?js
-         }
-        ?><?js= doc.name ?><?js
+        <h2><?js= doc.name ?><?js
          if (doc.variation) { ?>
             <sup class="variation"><?js= doc.variation ?></sup>
         <?js } ?></h2>
@@ -49,6 +46,11 @@
       <?js if (doc.description) { ?>
         <h2 class="subsection-title">Constructor</h2>
         <?js= self.partial('method.tmpl', doc) ?>
+      <?js } ?>
+
+      <?js if (doc.examples && doc.examples.length) { ?>
+          <h3>Example<?js= doc.examples.length > 1? 's':'' ?></h3>
+          <?js= self.partial('examples.tmpl', doc.examples) ?>
       <?js } ?>
     <?js } else { ?>
         <?js if (doc.description) { ?>

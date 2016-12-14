@@ -332,19 +332,19 @@ exports.publish = function(taffyData, opts, tutorials) {
          doclet.attribs = '';
 
         if (doclet.examples) {
-            doclet.examples = doclet.examples.map(function(example) {
-                var caption, code;
+          doclet.examples = doclet.examples.map(function(example) {
+            var caption, code;
 
-                if (example.match(/^\s*<caption>([\s\S]+?)<\/caption>(\s*[\n\r])([\s\S]+)$/i)) {
-                    caption = RegExp.$1;
-                    code = RegExp.$3;
-                }
+            if (example.match(/^\s*<caption>([\s\S]+?)<\/caption>(\s*[\n\r])([\s\S]+)$/i)) {
+              caption = RegExp.$1;
+              code = RegExp.$3;
+            }
 
-                return {
-                    caption: caption || '',
-                    code: code || example
-                };
-            });
+            return {
+              caption: caption || '',
+              code: code || example
+            };
+          });
         }
         if (doclet.see) {
             doclet.see.forEach(function(seeItem, i) {
@@ -449,7 +449,6 @@ exports.publish = function(taffyData, opts, tutorials) {
     // do this after the urls have all been generated
     data().each(function(doclet) {
         doclet.ancestors = getAncestorLinks(doclet);
-
         if (doclet.kind === 'member') {
             addSignatureTypes(doclet);
             addAttribs(doclet);

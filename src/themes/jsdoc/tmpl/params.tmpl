@@ -84,7 +84,13 @@
                 <?js if (param.variable) {
                     attributes.push('Repeatable');
                 } ?>
-                <span class="param-attributes">(<?js= attributes.join(', ') ?>)</span>
+                <?js
+                if (attributes.length > 0) {
+                  ?>
+                  <span class="param-attributes">(<?js= attributes.join(', ') ?>)</span>
+                  <?js
+                }
+                ?>
             <?js } ?>
             </td>
 

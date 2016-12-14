@@ -502,8 +502,8 @@ class NPMPublishScriptCLI {
       }
 
       const jsDocParams = [
-        '-c',
-        jsdocConf,
+        '-c', jsdocConf,
+        '--template', path.join(__dirname, '..', '..', 'themes', 'jsdoc'),
         '-d',
         path.join(
           newPath, REFERENCE_DOCS_DIR, results.tag, results.version
