@@ -20,7 +20,7 @@
   border-bottom-style: none;
 }
 
-.method-name .this, .method-info-table .param-attributes {
+.method-name .this, .method-info-table .param-attributes, .extends {
   font-style: italic;
   font-size: 0.8rem;
   opacity: 0.7;

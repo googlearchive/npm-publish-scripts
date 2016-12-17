@@ -17,7 +17,6 @@ const buildMemberNav = (items, itemsSeen, linktoFn) => {
       const itemNav = {};
       if ( !item.hasOwnProperty('longname') ) {
         itemNav.anchor = linktoFn('', item.name);
-        itemNav.anchor = itemNav.anchor.split('\">').join('#main\">');
       } else if ( !itemsSeen.hasOwnProperty(item.longname) ) {
         var displayName;
         if (env.conf.templates.default.useLongnameInNav) {
@@ -26,7 +25,6 @@ const buildMemberNav = (items, itemsSeen, linktoFn) => {
           displayName = item.name;
         }
         itemNav.anchor = linktoFn(item.longname, displayName.replace(/\b(module|event):/g, ''));
-        itemNav.anchor = itemNav.anchor.split('\">').join('#main\">');
         itemsSeen[item.longname] = true;
       }
 
@@ -54,7 +52,7 @@ const buildNav = (members) => {
     members.globals.forEach(function(g) {
       if ( g.kind !== 'typedef' && !seen.hasOwnProperty(g.longname) ) {
         globalNav.push({
-          anchor: helper.linkto(g.longname, g.name).split('\">').join('#main\">')
+          anchor: helper.linkto(g.longname, g.name)
         });
       }
       seen[g.longname] = true;

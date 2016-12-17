@@ -224,6 +224,15 @@ function generate(title, docs, filename, resolveLinks) {
         html = helper.resolveLinks(html); // turn {@link foo} into <a href="foodoc.html">foo</a>
     }
 
+    const anchorRegex = new RegExp(/\<a href=\"([^"]*)\"[^\>]*\>/g);
+    let result;
+    while (result = anchorRegex.exec(html)) {
+      var url = result[1];
+      if (url.indexOf('http') !== 0 && url.indexOf('#') === -1) {
+        html = html.replace(result[0], '<a href="' + result[1] + '#main">');
+      }
+    }
+
     fs.writeFileSync(outpath, html, 'utf8');
 }
 

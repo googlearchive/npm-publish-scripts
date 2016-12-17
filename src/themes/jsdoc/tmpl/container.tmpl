@@ -19,7 +19,8 @@
 
 
     <?js if (!doc.longname || doc.kind !== 'module') { ?>
-        <h2><?js= doc.name ?><?js
+        <h2><?js= doc.name ?><?js if (doc.augments && doc.augments.length) { ?> <span class="extends">extends</span> <?js= doc.augments.map((a) => self.linkto(a, a)).join(', ') ?></span>
+        <?js } ?><?js
          if (doc.variation) { ?>
             <sup class="variation"><?js= doc.variation ?></sup>
         <?js } ?></h2>
@@ -63,12 +64,6 @@
             <h3>Example<?js= doc.examples.length > 1? 's':'' ?></h3>
             <?js= self.partial('examples.tmpl', doc.examples) ?>
         <?js } ?>
-    <?js } ?>
-
-    <?js if (doc.augments && doc.augments.length) { ?>
-        <h2 class="subsection-title">Extends</h2>
-
-        <?js= self.partial('augments.tmpl', doc) ?>
     <?js } ?>
 
     <?js if (doc.requires && doc.requires.length) { ?>
