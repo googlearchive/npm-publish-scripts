@@ -277,9 +277,11 @@ class NPMPublishScriptCLI {
   /**
    * Should get the latest docs from git-pages branch, update the entries
    * build any reference docs and commit changes accordingly.
+   * @param {String} [tag] Tag for JSDocs.
+   * @param {String} [newVersion] Version name for JSDocs.
    * @return {Promise} Returns a promise which resolves the publish is complete.
    */
-  publishDocs() {
+  publishDocs(tag, newVersion) {
     const githubPagesRoot = path.join(process.cwd(), 'gh-pages');
 
     let ghPageDirExists = false;
@@ -305,7 +307,7 @@ class NPMPublishScriptCLI {
       this.updateJekyllTemplate(githubPagesRoot);
     })
     .then(() => {
-      return this.buildJSDocs(githubPagesRoot);
+      return this.buildJSDocs(githubPagesRoot, tag, newVersion);
     })
     .then(() => {
       this.buildReferenceDocsList(githubPagesRoot);
@@ -681,6 +683,9 @@ class NPMPublishScriptCLI {
               `repo. '${err.message}'`);
             throw err;
           });
+        })
+        .then(() => {
+          return this.publishDocs(publishDetails.tag, newVersion);
         });
       });
     });
@@ -910,7 +915,7 @@ class NPMPublishScriptCLI {
   /**
    * Bumps the current version with npm bump.
    * @param {string} versionBump This should be 'patch', 'minor' or 'major'
-   * @return {Promise} Resolves once the new version has been bumped.
+   * @return {Promise<String>} Resolves once the new version has been bumped.
    */
   updatePackageVersion(versionBump) {
     return new Promise((resolve, reject) => {
