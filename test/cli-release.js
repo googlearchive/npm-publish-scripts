@@ -749,7 +749,76 @@ describe('Test CLI - publish-release', function() {
     });
   });
 
-  it('should handle failing git tag push', function() {
+  it('should handle failing doc publish', function() {
+    process.chdir(testOutput);
+    const packageDetails = {
+      name: 'example-name',
+      scripts: {
+        test: `echo "Log from test npm script."`,
+      },
+    };
+
+    fse.writeJsonSync(path.join(testOutput, 'package.json'), packageDetails);
+
+    const errorMessage = 'Injected Git Tag Push Error.';
+    const CLI = require('../src/node/cli/index.js');
+    const cli = new CLI();
+
+    const branchNameStub = sinon.stub(cli, 'confirmExpectedGitBranch', () => {
+      return Promise.resolve();
+    });
+    globalStubs.push(branchNameStub);
+
+    const publishDetailsStub = sinon.stub(cli, 'getPublishDetails', () => {
+      return Promise.resolve({version: 'patch',
+        tag: 'stable'});
+    });
+    globalStubs.push(publishDetailsStub);
+
+    const loginToNPMStub = sinon.stub(cli, 'loginToNPM', () => {
+      return Promise.resolve();
+    });
+    globalStubs.push(loginToNPMStub);
+
+
+    const confirmPublishStub = sinon.stub(cli, 'confirmNewPackageVersion', () => {
+      return Promise.resolve();
+    });
+    globalStubs.push(confirmPublishStub);
+
+    const updateVersionStub = sinon.stub(cli, 'updatePackageVersion', () => {
+      return Promise.resolve('v1.0.0');
+    });
+    globalStubs.push(updateVersionStub);
+
+    const publishToNPMStub = sinon.stub(cli, 'publishToNPM', () => {
+      return Promise.resolve();
+    });
+    globalStubs.push(publishToNPMStub);
+
+    const gitTagPushStub = sinon.stub(cli, 'pushGithubTag', () => {
+      return Promise.resolve();
+    });
+    globalStubs.push(gitTagPushStub);
+
+    const publishDocsStub = sinon.stub(cli, 'publishDocs', () => {
+      return Promise.reject(new Error(errorMessage));
+    });
+    globalStubs.push(publishDocsStub);
+
+    startLogCapture();
+    return cli.argv(['publish-release'])
+    .then(() => {
+      endLogCapture();
+
+      globalExitCode.should.equal(1);
+
+      // Assume that publish-docs tests will cover logging. For sake of this
+      // injected error - log nothing.
+    });
+  });
+
+  it('should handle successful publish', function() {
     process.chdir(testOutput);
     const packageDetails = {
       name: 'example-name',
@@ -799,6 +868,11 @@ describe('Test CLI - publish-release', function() {
       return Promise.resolve();
     });
     globalStubs.push(gitTagPushStub);
+
+    const publishDocsStub = sinon.stub(cli, 'publishDocs', () => {
+      return Promise.resolve();
+    });
+    globalStubs.push(publishDocsStub);
 
     startLogCapture();
     return cli.argv(['publish-release'])

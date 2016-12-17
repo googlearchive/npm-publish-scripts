@@ -323,6 +323,10 @@ class NPMPublishScriptCLI {
     })
     .then(() => {
       fse.removeSync(githubPagesRoot);
+    })
+    .catch((err) => {
+      logHelper.warn(`Unable to publish docs. '${err.message}'`);
+      throw err;
     });
   }
 
