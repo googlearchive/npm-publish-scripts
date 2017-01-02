@@ -492,7 +492,7 @@ class NPMPublishScriptCLI {
             },
           },
           {
-            name: 'verion',
+            name: 'version',
             message: 'What is the tag for this set of docs? (i.e. v1.0.0)',
             when: (results) => {
               return results.buildNewDocs;
