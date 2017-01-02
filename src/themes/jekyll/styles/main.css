@@ -12,6 +12,7 @@
 @import "./components/nav-content.css";
 @import "./components/navigation.css";
 @import "./components/heading-list.css";
+@import "./components/code-styles.css";
 
 html {
   height: 100%;
@@ -77,11 +78,18 @@ img {
   max-width: 100%;
 }
 
+pre, .highlighter-rouge {
+  margin: calc((32 / var(--primary-font-size)) * 1rem) 0;
+}
+
+.highlighter-rouge > pre {
+  margin: 0;
+}
+
 pre {
   background-color: var(--code-bg);
   padding: calc(var(--grid) * 2.5);
   overflow: auto;
-  margin: calc((32 / var(--primary-font-size)) * 1rem) 0;
 }
 
 pre, code {
@@ -111,7 +119,7 @@ table {
 blockquote {
   margin: 0;
   padding: var(--grid) calc(var(--grid) * 2);
-  
+
   border-left-style: solid;
   border-left-width: var(--layout-border-width);
   border-left-color: var(--primary-highlight-color);
