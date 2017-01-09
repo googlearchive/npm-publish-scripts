@@ -2,13 +2,15 @@
 var data = obj;
 var self = this;
 ?>
-<div class="method-entry method-type-<?js= data.kind ?>">
+
+<div class="collapsing-entry method-type-<?js= data.kind ?> <?js if (data.kind === 'class') { ?>start-open<?js } ?>">
+
 <?js if (data.kind !== 'module') { ?>
-    <h4 class="method-name" id="<?js= id ?>"><?js= data.attribs + (kind === 'class' ? 'new ' : '<span class="this">this.</span>') +
+    <h4 class="js-collapse-title" id="<?js= id ?>"><?js= data.attribs + (kind === 'class' ? 'new ' : '<span class="this">this.</span>') +
     name + (data.signature || '') ?></h4>
 <?js } ?>
 
-<div class="method-collapse js-method-collapse">
+<div class="collapse-details js-collapse-details">
 
 <?js if (data.kind !== 'module') { ?>
   <?js if (data.summary) { ?>

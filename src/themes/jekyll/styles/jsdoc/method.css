@@ -1,26 +1,24 @@
 @import "../variables/dimens.css";
 @import "../variables/colors.css";
 
-.method-name {
+.collapsing-entry h4{
   cursor: pointer;
 }
 
-.method-entry {
+.collapsing-entry {
   padding-bottom: calc(var(--grid) * 3);
   padding-top: calc(var(--grid) * 3);
-}
 
-.method-type-function {
   border-bottom-style: solid;
   border-width: var(--layout-border-width);
   border-color: var(--border-color);
 }
 
-.method-type-function:last-child {
+.collapsing-entry:last-child {
   border-bottom-style: none;
 }
 
-.method-name .this, .method-info-table .param-attributes, .extends {
+span.this, .method-info-table .param-attributes, .extends {
   font-style: italic;
   font-size: 0.8rem;
   opacity: 0.7;
@@ -58,7 +56,7 @@
   margin-bottom: 0;
 }
 
-.method-collapse.is-closed {
+.collapse-details.is-closed {
   height: 0;
   overflow: hidden;
 }

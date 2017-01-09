@@ -185,7 +185,9 @@ function addAttribs(f) {
     var attribs = helper.getAttribs(f);
     var attribsString = buildAttribsString(attribs);
 
-    f.attribs = util.format('<span class="type-signature">%s</span>', attribsString);
+    if (attribsString && attribsString.length > 0) {
+      f.attribs = util.format('<span class="type-signature">%s</span>', attribsString);
+    }
 }
 
 function shortenPaths(files, commonPrefix) {
