@@ -22,7 +22,7 @@ var self = this;
   </div>
 <?js } ?>
 
-<?js if (data.examples && examples.length) { ?>
+<?js if (data.kind !== 'class' && data.examples && examples.length) { ?>
     <h5>Example<?js= examples.length > 1? 's':'' ?></h5>
     <?js= this.partial('examples.tmpl', examples) ?>
 <?js } ?>

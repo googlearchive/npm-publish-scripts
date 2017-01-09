@@ -64,3 +64,10 @@ span.this, .method-info-table .param-attributes, .extends {
 .is-jsdoc-page .subsection-title {
   margin-bottom: 0;
 }
+
+.code-caption {
+  margin-top: 2rem;
+  margin-bottom: -2rem;
+  font-style: italic;
+  font-size: 0.8rem;
+}

@@ -44,6 +44,11 @@
             <?js= self.partial('method.tmpl', module) ?>
         <?js }) ?>
     <?js } else if (doc.kind === 'class') { ?>
+      <?js if (doc.examples && doc.examples.length) { ?>
+          <h3>Example<?js= doc.examples.length > 1? 's':'' ?></h3>
+          <?js= self.partial('examples.tmpl', doc.examples) ?>
+      <?js } ?>
+
       <?js if (doc.description) { ?>
         <h2 class="subsection-title">Constructor</h2>
 
@@ -52,10 +57,6 @@
         </div>
       <?js } ?>
 
-      <?js if (doc.examples && doc.examples.length) { ?>
-          <h3>Example<?js= doc.examples.length > 1? 's':'' ?></h3>
-          <?js= self.partial('examples.tmpl', doc.examples) ?>
-      <?js } ?>
     <?js } else { ?>
         <?js if (doc.description) { ?>
             <div class="description"><?js= doc.description ?></div>
