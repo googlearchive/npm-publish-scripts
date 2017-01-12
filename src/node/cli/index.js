@@ -18,7 +18,7 @@
 const fs = require('fs');
 const path = require('path');
 const minimist = require('minimist');
-const tmp = require('tmp');
+const chokidar = require('chokidar');
 const fse = require('fs-extra');
 const spawn = require('child_process').spawn;
 const spawnSync = require('child_process').spawnSync;
@@ -200,45 +200,84 @@ class NPMPublishScriptCLI {
       return Promise.reject();
     }
 
+    const filesRemove = [];
+    const fileWatchers = [];
+
     return new Promise((resolve, reject) => {
       exitLifeCycle.addEventListener('exit', () => {
         try {
-          this.stopServingDocSite();
+          this.stopServingDocSite(filesRemove, fileWatchers);
         } catch (err) {
           return reject(err);
         }
         resolve();
       });
 
+      const docsPath = path.join(process.cwd(), 'docs');
       try {
-        // Create temporary directory
-        this._servingDocInfo = {
-          tmpObj: tmp.dirSync({
-            dir: process.cwd(),
-          }),
-        };
+        // Check ./docs exists
+        const stats = fs.statSync(docsPath);
+        if (!stats.isDirectory()) {
+          throw new Error('./docs is a file, not a directory.');
+        }
       } catch (err) {
+        logHelper.error('Please ensure the docs directory exists in your ' +
+          'current directory.');
         logHelper.error(err);
         return Promise.reject(err);
       }
 
-      const tmpPath = this._servingDocInfo.tmpObj.name;
       return Promise.resolve()
       .then(() => {
-        this.copyDocs(tmpPath);
-        this.updateJekyllTemplate(tmpPath);
+        filesRemove.push(path.join(docsPath, 'themes'));
+        this.updateJekyllTemplate(docsPath);
       })
       .then(() => {
-        return this.buildJSDocs(tmpPath, 'stable', 'v0.0.0');
+        const jsdocConf = path.join(process.cwd(), 'jsdoc.conf');
+        let jsdocConfContents = null;
+        try {
+          jsdocConfContents = JSON.parse(fs.readFileSync(jsdocConf, fs.F_OK));
+        } catch (err) {
+          logHelper.info('Skipping JSDocs due to no jsdoc.conf');
+          return;
+        }
+
+        if (!jsdocConfContents) {
+          logHelper.info('Skipping JSDocs - Unable to read and parse ' +
+            'jsdoc.conf');
+          return;
+        }
+
+        filesRemove.push(path.join(docsPath, 'reference-docs'));
+
+        const jsdocPaths = jsdocConfContents.source.include;
+        const watcherGlobs = [];
+        jsdocPaths.forEach((jsdocIncludePath) => {
+          const watchPath = path.join(process.cwd(), jsdocIncludePath);
+          watcherGlobs.push(watchPath + '/**/*');
+        });
+
+        const watcher = chokidar.watch(watcherGlobs, {
+          recursive: true,
+        });
+        watcher.on('change', () => {
+          return this.buildJSDocs(docsPath, 'stable', 'v0.0.0');
+        });
+        fileWatchers.push(watcher);
+
+        return this.buildJSDocs(docsPath, 'stable', 'v0.0.0');
       })
       .then(() => {
-        this.buildReferenceDocsList(tmpPath);
+        filesRemove.push(path.join(docsPath, '_data'));
+        this.buildReferenceDocsList(docsPath);
 
         // Copy Jekyll gem - only needed for local build
         fse.copySync(
           path.join(__dirname, '..', '..', '..', 'Gemfile'),
-          path.join(this._servingDocInfo.tmpObj.name, 'Gemfile')
+          path.join(docsPath, 'Gemfile')
         );
+
+        filesRemove.push(path.join(docsPath, 'Gemfile'));
       })
       .then(() => {
         logHelper.info('Starting Jekyll serve.');
@@ -255,7 +294,7 @@ class NPMPublishScriptCLI {
         ];
 
         const jekyllProcess = spawn('bundle', params, {
-          cwd: this._servingDocInfo.tmpObj.name,
+          cwd: docsPath,
           stdio: 'inherit',
         });
 
@@ -268,6 +307,8 @@ class NPMPublishScriptCLI {
           logHelper.error('');
           logHelper.error(err);
         });
+
+        filesRemove.push(path.join(docsPath, '_site'));
 
         this._spawnedProcesses.push(jekyllProcess);
       });
@@ -630,16 +671,28 @@ class NPMPublishScriptCLI {
 
   /**
    * This method stops any currently running processes.
+   * @param {Array<String>} filesToRemove Files / Directories to delete after
+   * killing jekyll process.
+   * @param {Array<Watcher>} fileWatchers An array of watchers to close.
    */
-  stopServingDocSite() {
+  stopServingDocSite(filesToRemove, fileWatchers) {
     logHelper.info('Stopping Jekyll serve.');
 
     this._spawnedProcesses.forEach((spawnedProcess) => {
       spawnedProcess.kill('SIGHUP');
     });
 
-    if (this._servingDocInfo.tmpObj) {
-      fse.removeSync(this._servingDocInfo.tmpObj.name);
+    logHelper.error('Perform tidy up');
+    if (filesToRemove && filesToRemove.length > 0) {
+      filesToRemove.forEach((file) => {
+        fse.removeSync(file);
+      });
+    }
+
+    if (fileWatchers && fileWatchers.length > 0) {
+      fileWatchers.forEach((watcher) => {
+        watcher.close();
+      });
     }
   }
 
