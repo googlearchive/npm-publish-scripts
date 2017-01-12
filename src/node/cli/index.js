@@ -18,7 +18,7 @@
 const fs = require('fs');
 const path = require('path');
 const minimist = require('minimist');
-const tmp = require('tmp');
+const chokidar = require('chokidar');
 const fse = require('fs-extra');
 const spawn = require('child_process').spawn;
 const spawnSync = require('child_process').spawnSync;
@@ -201,11 +201,12 @@ class NPMPublishScriptCLI {
     }
 
     const filesRemove = [];
+    const fileWatchers = [];
 
     return new Promise((resolve, reject) => {
       exitLifeCycle.addEventListener('exit', () => {
         try {
-          this.stopServingDocSite(filesRemove);
+          this.stopServingDocSite(filesRemove, fileWatchers);
         } catch (err) {
           return reject(err);
         }
@@ -232,7 +233,38 @@ class NPMPublishScriptCLI {
         this.updateJekyllTemplate(docsPath);
       })
       .then(() => {
+        const jsdocConf = path.join(process.cwd(), 'jsdoc.conf');
+        let jsdocConfContents = null;
+        try {
+          jsdocConfContents = JSON.parse(fs.readFileSync(jsdocConf, fs.F_OK));
+        } catch (err) {
+          logHelper.info('Skipping JSDocs due to no jsdoc.conf');
+          return;
+        }
+
+        if (!jsdocConfContents) {
+          logHelper.info('Skipping JSDocs - Unable to read and parse ' +
+            'jsdoc.conf');
+          return;
+        }
+
         filesRemove.push(path.join(docsPath, 'reference-docs'));
+
+        const jsdocPaths = jsdocConfContents.source.include;
+        const watcherGlobs = [];
+        jsdocPaths.forEach((jsdocIncludePath) => {
+          const watchPath = path.join(process.cwd(), jsdocIncludePath);
+          watcherGlobs.push(watchPath + '/**/*');
+        });
+
+        const watcher = chokidar.watch(watcherGlobs, {
+          recursive: true,
+        });
+        watcher.on('change', () => {
+          return this.buildJSDocs(docsPath, 'stable', 'v0.0.0');
+        });
+        fileWatchers.push(watcher);
+
         return this.buildJSDocs(docsPath, 'stable', 'v0.0.0');
       })
       .then(() => {
@@ -639,8 +671,11 @@ class NPMPublishScriptCLI {
 
   /**
    * This method stops any currently running processes.
+   * @param {Array<String>} filesToRemove Files / Directories to delete after
+   * killing jekyll process.
+   * @param {Array<Watcher>} fileWatchers An array of watchers to close.
    */
-  stopServingDocSite(filesToRemove) {
+  stopServingDocSite(filesToRemove, fileWatchers) {
     logHelper.info('Stopping Jekyll serve.');
 
     this._spawnedProcesses.forEach((spawnedProcess) => {
@@ -651,6 +686,12 @@ class NPMPublishScriptCLI {
     if (filesToRemove && filesToRemove.length > 0) {
       filesToRemove.forEach((file) => {
         fse.removeSync(file);
+      });
+    }
+
+    if (fileWatchers && fileWatchers.length > 0) {
+      fileWatchers.forEach((watcher) => {
+        watcher.close();
       });
     }
   }
