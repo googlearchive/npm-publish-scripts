@@ -200,45 +200,52 @@ class NPMPublishScriptCLI {
       return Promise.reject();
     }
 
+    const filesRemove = [];
+
     return new Promise((resolve, reject) => {
       exitLifeCycle.addEventListener('exit', () => {
         try {
-          this.stopServingDocSite();
+          this.stopServingDocSite(filesRemove);
         } catch (err) {
           return reject(err);
         }
         resolve();
       });
 
+      const docsPath = path.join(process.cwd(), 'docs');
       try {
-        // Create temporary directory
-        this._servingDocInfo = {
-          tmpObj: tmp.dirSync({
-            dir: process.cwd(),
-          }),
-        };
+        // Check ./docs exists
+        const stats = fs.statSync(docsPath);
+        if (!stats.isDirectory()) {
+          throw new Error('./docs is a file, not a directory.');
+        }
       } catch (err) {
+        logHelper.error('Please ensure the docs directory exists in your ' +
+          'current directory.');
         logHelper.error(err);
         return Promise.reject(err);
       }
 
-      const tmpPath = this._servingDocInfo.tmpObj.name;
       return Promise.resolve()
       .then(() => {
-        this.copyDocs(tmpPath);
-        this.updateJekyllTemplate(tmpPath);
+        filesRemove.push(path.join(docsPath, 'themes'));
+        this.updateJekyllTemplate(docsPath);
       })
       .then(() => {
-        return this.buildJSDocs(tmpPath, 'stable', 'v0.0.0');
+        filesRemove.push(path.join(docsPath, 'reference-docs'));
+        return this.buildJSDocs(docsPath, 'stable', 'v0.0.0');
       })
       .then(() => {
-        this.buildReferenceDocsList(tmpPath);
+        filesRemove.push(path.join(docsPath, '_data'));
+        this.buildReferenceDocsList(docsPath);
 
         // Copy Jekyll gem - only needed for local build
         fse.copySync(
           path.join(__dirname, '..', '..', '..', 'Gemfile'),
-          path.join(this._servingDocInfo.tmpObj.name, 'Gemfile')
+          path.join(docsPath, 'Gemfile')
         );
+
+        filesRemove.push(path.join(docsPath, 'Gemfile'));
       })
       .then(() => {
         logHelper.info('Starting Jekyll serve.');
@@ -255,7 +262,7 @@ class NPMPublishScriptCLI {
         ];
 
         const jekyllProcess = spawn('bundle', params, {
-          cwd: this._servingDocInfo.tmpObj.name,
+          cwd: docsPath,
           stdio: 'inherit',
         });
 
@@ -268,6 +275,8 @@ class NPMPublishScriptCLI {
           logHelper.error('');
           logHelper.error(err);
         });
+
+        filesRemove.push(path.join(docsPath, '_site'));
 
         this._spawnedProcesses.push(jekyllProcess);
       });
@@ -631,15 +640,18 @@ class NPMPublishScriptCLI {
   /**
    * This method stops any currently running processes.
    */
-  stopServingDocSite() {
+  stopServingDocSite(filesToRemove) {
     logHelper.info('Stopping Jekyll serve.');
 
     this._spawnedProcesses.forEach((spawnedProcess) => {
       spawnedProcess.kill('SIGHUP');
     });
 
-    if (this._servingDocInfo.tmpObj) {
-      fse.removeSync(this._servingDocInfo.tmpObj.name);
+    logHelper.error('Perform tidy up');
+    if (filesToRemove && filesToRemove.length > 0) {
+      filesToRemove.forEach((file) => {
+        fse.removeSync(file);
+      });
     }
   }
 
