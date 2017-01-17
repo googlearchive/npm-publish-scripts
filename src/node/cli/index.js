@@ -82,7 +82,9 @@ class NPMPublishScriptCLI {
    */
   printHelpText() {
     const helpText = fs.readFileSync(
-      path.join(__dirname, 'cli-help.txt'), 'utf8');
+      path.join(__dirname, 'cli-help.txt'), {
+        encoding: 'utf8',
+      });
     logHelper.info(helpText);
   }
 
@@ -236,7 +238,7 @@ class NPMPublishScriptCLI {
         const jsdocConf = path.join(process.cwd(), 'jsdoc.conf');
         let jsdocConfContents = null;
         try {
-          jsdocConfContents = JSON.parse(fs.readFileSync(jsdocConf, fs.F_OK));
+          jsdocConfContents = JSON.parse(fs.readFileSync(jsdocConf));
         } catch (err) {
           logHelper.info('Skipping JSDocs due to no jsdoc.conf');
           return;
