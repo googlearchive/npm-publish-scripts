@@ -26,6 +26,7 @@ const semver = require('semver');
 const inquirer = require('inquirer');
 const gitBranch = require('git-branch');
 const updateNotifier = require('update-notifier');
+const glob = require('glob');
 
 const exitLifeCycle = require('./exit-lifecycle');
 const logHelper = require('./log-helper');
@@ -669,6 +670,32 @@ class NPMPublishScriptCLI {
       file.write(line + '\n');
     });
     file.end();
+
+    if (versionedRelease.stable.length > 0) {
+      const latestDocsPath = path.join(newPath, 'reference-docs', 'stable',
+        'latest');
+      fse.ensureDirSync(latestDocsPath);
+
+      const refDocPath = path.join(newPath, 'reference-docs', 'stable',
+        versionedRelease.stable[0]);
+      const referenceDocFiles = glob.sync(
+        path.join(refDocPath, '**', '*')
+      );
+      referenceDocFiles.forEach((refDocFile) => {
+        const docsRelPath = path.relative(refDocPath, refDocFile);
+        const redirectRelPath = path.relative(newPath, refDocFile);
+
+        const file = fs.createWriteStream(
+          path.join(latestDocsPath, docsRelPath));
+        file.on('error', (err) => {
+          logHelper.error(err);
+        });
+        file.write(
+          `<meta http-equiv="refresh" ` +
+          `content="0; url=/${redirectRelPath}" />\n`);
+        file.end();
+      });
+    }
   }
 
   /**
