@@ -26,6 +26,7 @@ const semver = require('semver');
 const inquirer = require('inquirer');
 const gitBranch = require('git-branch');
 const updateNotifier = require('update-notifier');
+const glob = require('glob');
 
 const exitLifeCycle = require('./exit-lifecycle');
 const logHelper = require('./log-helper');
@@ -82,7 +83,9 @@ class NPMPublishScriptCLI {
    */
   printHelpText() {
     const helpText = fs.readFileSync(
-      path.join(__dirname, 'cli-help.txt'), 'utf8');
+      path.join(__dirname, 'cli-help.txt'), {
+        encoding: 'utf8',
+      });
     logHelper.info(helpText);
   }
 
@@ -236,7 +239,7 @@ class NPMPublishScriptCLI {
         const jsdocConf = path.join(process.cwd(), 'jsdoc.conf');
         let jsdocConfContents = null;
         try {
-          jsdocConfContents = JSON.parse(fs.readFileSync(jsdocConf, fs.F_OK));
+          jsdocConfContents = JSON.parse(fs.readFileSync(jsdocConf));
         } catch (err) {
           logHelper.info('Skipping JSDocs due to no jsdoc.conf');
           return;
@@ -667,6 +670,32 @@ class NPMPublishScriptCLI {
       file.write(line + '\n');
     });
     file.end();
+
+    if (versionedRelease.stable.length > 0) {
+      const latestDocsPath = path.join(newPath, 'reference-docs', 'stable',
+        'latest');
+      fse.ensureDirSync(latestDocsPath);
+
+      const refDocPath = path.join(newPath, 'reference-docs', 'stable',
+        versionedRelease.stable[0]);
+      const referenceDocFiles = glob.sync(
+        path.join(refDocPath, '**', '*')
+      );
+      referenceDocFiles.forEach((refDocFile) => {
+        const docsRelPath = path.relative(refDocPath, refDocFile);
+        const redirectRelPath = path.relative(newPath, refDocFile);
+
+        const file = fs.createWriteStream(
+          path.join(latestDocsPath, docsRelPath));
+        file.on('error', (err) => {
+          logHelper.error(err);
+        });
+        file.write(
+          `<meta http-equiv="refresh" ` +
+          `content="0; url=/${redirectRelPath}" />\n`);
+        file.end();
+      });
+    }
   }
 
   /**
