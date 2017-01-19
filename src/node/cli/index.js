@@ -685,14 +685,20 @@ class NPMPublishScriptCLI {
         const docsRelPath = path.relative(refDocPath, refDocFile);
         const redirectRelPath = path.relative(newPath, refDocFile);
 
+        const pathParts = path.parse(docsRelPath);
+        pathParts.ext = '.md';
+        const newFilePath = path.format(pathParts);
+
         const file = fs.createWriteStream(
-          path.join(latestDocsPath, docsRelPath));
+          path.join(latestDocsPath, newFilePath));
         file.on('error', (err) => {
           logHelper.error(err);
         });
         file.write(
-          `<meta http-equiv="refresh" ` +
-          `content="0; url=/${redirectRelPath}" />\n`);
+          `---\n` +
+          `layout: redirect\n` +
+          `relPath: ${redirectRelPath}\n` +
+          `---\n`);
         file.end();
       });
     }
