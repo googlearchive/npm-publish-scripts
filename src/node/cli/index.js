@@ -617,6 +617,11 @@ class NPMPublishScriptCLI {
           path.join(referenceDocsPath, refDocsDir)
         );
         releaseGroup.forEach((releaseDir) => {
+          if (releaseDir === 'latest') {
+            // Exclude latest directory from the sorted list. Latest is just
+            // used for re-directs.
+            return;
+          }
           versionedRelease[refDocsDir].push(releaseDir);
         });
       } else {
