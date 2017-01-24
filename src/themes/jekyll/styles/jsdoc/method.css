@@ -1,6 +1,10 @@
 @import "../variables/dimens.css";
 @import "../variables/colors.css";
 
+.subsection-classes {
+  padding-bottom: calc(var(--grid) * 3);
+}
+
 .collapsing-entry h4{
   cursor: pointer;
 }

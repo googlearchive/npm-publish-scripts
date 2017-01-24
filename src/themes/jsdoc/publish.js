@@ -177,8 +177,14 @@ function addSignatureReturns(f) {
 function addSignatureTypes(f) {
     var types = f.type ? buildItemTypeStrings(f) : [];
 
-    f.signature = (f.signature || '') + '<span class="type-signature">' +
-        (types.length ? ' :' + types.join('|') : '') + '</span>';
+    if (types.length) {
+      const typesString = '<span class="type-signature">' + types.join('|') + '</span>'
+
+      const returnValue = util.format(
+        ' <span class="return-arrow">&rarr;</span> %s', typesString);
+
+      f.signature = (f.signature || '') + returnValue;
+    }
 }
 
 function addAttribs(f) {
@@ -186,7 +192,7 @@ function addAttribs(f) {
     var attribsString = buildAttribsString(attribs);
 
     if (attribsString && attribsString.length > 0) {
-      f.attribs = util.format('<span class="type-signature">%s</span>', attribsString);
+      f.attribs = util.format('<span class="type-attribs">%s</span>', attribsString);
     }
 }
 
