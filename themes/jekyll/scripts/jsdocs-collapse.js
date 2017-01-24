@@ -8,11 +8,19 @@ class JSDocCollapse {
    * The class configures the behaviors in the constructor.
    */
   constructor() {
-    const signatureElements = document.querySelectorAll('.collapsing-entry');
-    signatureElements.forEach((element) => {
-      if (element.querySelector('.js-collapse-details')) {
-        this._configureElementBehavior(element);
-      }
+    const collapsingTypes = [
+      'method-type-function',
+      'method-type-class',
+      'member-type-member',
+    ];
+    collapsingTypes.forEach((methodClassname) => {
+      const signatureElements =
+        document.querySelectorAll(`.collapsing-entry.${methodClassname}`);
+      signatureElements.forEach((element) => {
+        if (element.querySelector('.js-collapse-details')) {
+          this._configureElementBehavior(element);
+        }
+      });
     });
   }
 
