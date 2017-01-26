@@ -12,6 +12,7 @@ class JSDocCollapse {
       'method-type-function',
       'method-type-class',
       'member-type-member',
+      'member-type-typedef',
     ];
     collapsingTypes.forEach((methodClassname) => {
       const signatureElements =
