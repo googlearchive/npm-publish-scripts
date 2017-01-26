@@ -38,4 +38,11 @@ gulp.task('css-next', () => {
 
 gulp.task('build', gulp.series('clean', 'copy-release-files', 'css-next'));
 
+gulp.task('watch', gulp.series(
+  'build',
+  () => {
+    gulp.watch([`${SRC_PATH}/**/*`], gulp.series('build'));
+  }
+));
+
 gulp.task('default', gulp.series('build'));

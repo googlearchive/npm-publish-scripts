@@ -109,7 +109,7 @@ function buildItemTypeStrings(item) {
 
     if (item && item.type && item.type.names) {
         item.type.names.forEach(function(name) {
-            types.push( helper.linkto(name, htmlsafe(name)) );
+          types.push( helper.linkto(name, htmlsafe(customPublish.moduleNameFilter(name)) ) );
         });
     }
 
@@ -488,6 +488,7 @@ exports.publish = function(taffyData, opts, tutorials) {
     // add template helpers
     view.find = find;
     view.linkto = linkto;
+    view.moduleNameFilter = customPublish.moduleNameFilter;
     view.resolveAuthorLinks = resolveAuthorLinks;
     view.tutoriallink = tutoriallink;
     view.htmlsafe = htmlsafe;

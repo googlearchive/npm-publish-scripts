@@ -40,9 +40,15 @@ onward:
 
     npm link
 
-Now when you make changes, run the `serve` command after building your changes:
+Now if you run the watch task, all your changes can be seen when you run
+`npm-publish-scripts` from the command lin. Typically I'd run the watch
+task in the `npm-publish-scripts` directory:
 
-    gulp && npm-publish-scripts serve
+    gulp watch
+
+Then on any project I'm working on I'll start and stop the serve command:
+
+    npm-publish-scripts serve
 
 You can set a Github Token to your `env` variables to increase the Github
 API quota (if you need to).

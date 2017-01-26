@@ -9,16 +9,6 @@ if (data.defaultvalue && (data.defaultvaluetype === 'object' || data.defaultvalu
     defaultObjectClass = ' class="object-value"';
 }
 ?>
-<?js
-    var properties = data.properties;
-    if (properties && properties.length && properties.forEach) {
-?>
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    <?js= this.partial('properties.tmpl', data) ?>
-
-<?js } ?>
 
 <dl class="details">
 
@@ -132,5 +122,14 @@ if (data.defaultvalue && (data.defaultvaluetype === 'object' || data.defaultvalu
             <li><?js= t ?></li>
         <?js }); ?></ul>
     </dd>
+    <?js } ?>
+
+    <?js
+        var properties = data.properties;
+        if (properties && properties.length && properties.forEach) {
+    ?>
+
+        <?js= this.partial('properties.tmpl', data) ?>
+
     <?js } ?>
 </dl>
