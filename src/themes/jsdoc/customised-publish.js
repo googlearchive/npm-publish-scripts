@@ -66,7 +66,13 @@ const buildNav = (members) => {
   return nav;
 };
 
+const moduleNameFilter = (name) => {
+  const pieces = name.split('.');
+  return pieces[pieces.length - 1] || name;
+};
+
 module.exports = {
   buildMemberNav,
   buildNav,
+  moduleNameFilter
 };
