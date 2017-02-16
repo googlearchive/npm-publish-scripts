@@ -39,8 +39,13 @@ gulp.task('css-next', () => {
 
 gulp.task('anchorjs', () => {
   return gulp.src('./node_modules/anchor-js/anchor.min.js')
-  .pipe(gulp.dest(path.join(BUILD_OUTPUT_PATH, 'themes/jekyll/third_party/anchor-js/')));
-})
+  .pipe(gulp.dest(
+    path.join(
+      BUILD_OUTPUT_PATH,
+      'themes/jekyll/third_party/anchor-js/'
+    )
+  ));
+});
 
 gulp.task('third-party', gulp.parallel('anchorjs'));
 

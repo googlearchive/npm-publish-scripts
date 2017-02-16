@@ -1,7 +1,7 @@
 {
   "name": "npm-publish-scripts",
   "description": "A simple set of scripts to help when publishing to NPM from a Github Repo",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "bin": {
     "npm-publish-scripts": "./build/node/bin/cli.js"
   },
