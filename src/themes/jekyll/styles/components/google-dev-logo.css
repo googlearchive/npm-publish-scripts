@@ -12,7 +12,7 @@
   height: 100%;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 960px) {
   .google-dev-logo {
     display: inline-block;
     height: var(--svg-btn-size-l);

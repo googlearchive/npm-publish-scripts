@@ -18,7 +18,7 @@
   height: calc(var(--grid) * 3);
 }
 
-@media (min-width: 900px) {
+@media (min-width: 960px) {
   .svg-btn {
     width: var(--svg-btn-size-l);
     height: var(--svg-btn-size-l);

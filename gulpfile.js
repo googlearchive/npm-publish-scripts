@@ -5,6 +5,7 @@ const SRC_PATH = './src';
 
 const gulp = require('gulp');
 const del = require('del');
+const path = require('path');
 const postcss = require('gulp-postcss');
 const cssimport = require('gulp-cssimport');
 const cssnext = require('postcss-cssnext');
@@ -36,7 +37,19 @@ gulp.task('css-next', () => {
   .pipe(gulp.dest(BUILD_OUTPUT_PATH));
 });
 
-gulp.task('build', gulp.series('clean', 'copy-release-files', 'css-next'));
+gulp.task('anchorjs', () => {
+  return gulp.src('./node_modules/anchor-js/anchor.min.js')
+  .pipe(gulp.dest(path.join(BUILD_OUTPUT_PATH, 'themes/jekyll/third_party/anchor-js/')));
+})
+
+gulp.task('third-party', gulp.parallel('anchorjs'));
+
+gulp.task('build', gulp.series('clean', gulp.parallel(
+    'copy-release-files',
+    'css-next',
+    'third-party'
+  )
+));
 
 gulp.task('watch', gulp.series(
   'build',

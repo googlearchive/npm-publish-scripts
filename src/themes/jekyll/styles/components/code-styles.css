@@ -1,5 +1,4 @@
 @import "../variables/dimens.css";
-@import "../../third_party/prism/prism.css";
 
 .token.attr-name, .token.builtin, .token.selector, .token.string {
   color: #E91E63;

@@ -16,7 +16,7 @@ footer {
   flex: 1;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 960px) {
   footer {
     height: calc(var(--grid) * 17.5);
   }

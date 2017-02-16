@@ -1,6 +1,6 @@
 @import "../variables/dimens.css";
 
-@media (min-width: 900px) {
+@media (min-width: 960px) {
   .nav-content {
     display:flex;
     flex-direction:row;
