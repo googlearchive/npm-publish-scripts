@@ -276,7 +276,7 @@ class NPMPublishScriptCLI {
 
         // Copy Jekyll gem - only needed for local build
         fse.copySync(
-          path.join(__dirname, '..', '..', '..', 'Gemfile'),
+          path.join(__dirname, '..', '..', 'defaults', 'Gemfile'),
           path.join(docsPath, 'Gemfile')
         );
 
