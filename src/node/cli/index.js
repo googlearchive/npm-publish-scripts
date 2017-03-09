@@ -27,6 +27,7 @@ const inquirer = require('inquirer');
 const gitBranch = require('git-branch');
 const updateNotifier = require('update-notifier');
 const glob = require('glob');
+const findup = require('findup-sync');
 
 const exitLifeCycle = require('./exit-lifecycle');
 const logHelper = require('./log-helper');
@@ -559,10 +560,12 @@ class NPMPublishScriptCLI {
           newPath, REFERENCE_DOCS_DIR, results.tag, results.version
         ),
       ];
+      /* eslint-disable no-console */
 
+      const jsdocPath = findup(
+        path.join('node_modules', '.bin', 'jsdoc'));
       const jsdocProcess = spawnSync(
-        path.join(__dirname, '..', '..', '..',
-          'node_modules', '.bin', 'jsdoc'),
+        jsdocPath,
         jsDocParams,
         {
           cwd: process.cwd(),
