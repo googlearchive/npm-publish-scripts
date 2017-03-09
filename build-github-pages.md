@@ -78,9 +78,3 @@ On `github.com`, Go to `Settings > Github Pages > Source` and select
 Then run the following command to push the latest changes:
 
     npm-publish-scripts publish-docs
-
-## Publish from CI
-
-To publish docs from Travis, you can do the following:
-
-    - if [[ "$TRAVIS_BRANCH" = "master" && "$TRAVIS_PULL_REQUEST" = "false" ]]; then npm install -g npm-publish-scripts && npm-publish-scripts publish-docs --non-interactive; fi
