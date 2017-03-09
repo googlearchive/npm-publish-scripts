@@ -125,7 +125,7 @@ blockquote {
   border-left-color: var(--primary-highlight-color);
 }
 
-@media (min-width: 900px) {
+@media (min-width: 960px) {
   main {
     padding: calc(var(--grid) * 8);
   }

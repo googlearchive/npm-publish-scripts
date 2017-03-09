@@ -98,7 +98,7 @@ nav .current-page a {
   touch-action: none;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 960px) {
   nav {
     position: relative;
     min-width: auto;
@@ -126,5 +126,11 @@ nav .current-page a {
 
   .nav-backdrop.isOpen, .nav-backdrop {
     display: none;
+  }
+
+  nav ul li a, nav ul li.subheading, nav ul li.heading {
+    display: block;
+    text-decoration: none;
+    padding: calc(var(--grid) * 1.5) calc(var(--grid) * 8);
   }
 }

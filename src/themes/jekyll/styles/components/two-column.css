@@ -2,15 +2,20 @@
 @import "../variables/colors.css";
 
 .two-column {
-  display: flex;
-  flex-direction: column;
   border-bottom-style: solid;
   border-width: var(--layout-border-width);
   border-color: var(--border-color);
 }
 
+.two-column_wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .two-column__section {
   padding: calc(var(--grid) * 4);
+  border-width: var(--layout-border-width);
+  border-color: var(--border-color);
 }
 
 .two-column__section > *:last-child {
@@ -19,13 +24,14 @@
 
 .two-column__section:first-child {
   border-bottom-style: solid;
-  border-width: var(--layout-border-width);
-  border-color: var(--border-color);
 }
 
-@media (min-width: 900px) {
-  .two-column {
+@media (min-width: 960px) {
+  .two-column_wrapper {
     flex-direction: row;
+    max-width: var(--max-content-width);
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .two-column__section {
@@ -35,6 +41,7 @@
   }
 
   .two-column__section:first-child {
+    border-bottom-style: none;
     border-right-style: solid;
   }
 }

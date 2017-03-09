@@ -24,7 +24,7 @@
   margin: 0;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 960px) {
   .page-header {
     background-color: var(--primary-highlight-color);
     color: var(--primary-highlight-color__inverse);
