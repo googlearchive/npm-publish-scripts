@@ -789,7 +789,7 @@ class NPMPublishScriptCLI {
           });
         })
         .then(() => {
-          return this.publishDocs([tag, newVersion]);
+          return this.publishDocs([publishDetails.tag, newVersion]);
         });
       });
     });
