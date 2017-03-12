@@ -136,7 +136,7 @@ class NPMPublishScriptCLI {
         return this.pushRelease();
       }
       case 'publish-docs': {
-        return this.publishDocs();
+        return this.publishDocs(args, flags);
       }
       default:
         logHelper.error(`Invlaid command given '${command}'`);
@@ -322,11 +322,11 @@ class NPMPublishScriptCLI {
   /**
    * Should get the latest docs from git-pages branch, update the entries
    * build any reference docs and commit changes accordingly.
-   * @param {String} [tag] Tag for JSDocs.
-   * @param {String} [newVersion] Version name for JSDocs.
+   * @param {Array<String>} [args] Tag for JSDocs.
+   * @param {Array<String>} [flags] Version name for JSDocs.
    * @return {Promise} Returns a promise which resolves the publish is complete.
    */
-  publishDocs(tag, newVersion) {
+  publishDocs(args, flags) {
     const githubPagesRoot = path.join(process.cwd(), 'gh-pages');
 
     let ghPageDirExists = false;
@@ -352,7 +352,11 @@ class NPMPublishScriptCLI {
       this.updateJekyllTemplate(githubPagesRoot);
     })
     .then(() => {
-      return this.buildJSDocs(githubPagesRoot, tag, newVersion);
+      if (flags['non-interactive']) {
+        return;
+      }
+
+      return this.buildJSDocs(githubPagesRoot, args[0], args[1]);
     })
     .then(() => {
       this.buildReferenceDocsList(githubPagesRoot);
@@ -785,7 +789,7 @@ class NPMPublishScriptCLI {
           });
         })
         .then(() => {
-          return this.publishDocs(publishDetails.tag, newVersion);
+          return this.publishDocs([tag, newVersion]);
         });
       });
     });
