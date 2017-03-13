@@ -1,0 +1,4181 @@
+---
+layout: jsdoc
+title: "Class: NPMPublishScriptCLI"
+jsdocNav: 
+  - Classes:
+    - <a href="ExitLifeCycle.html#main">ExitLifeCycle</a>
+    - <a href="LogHelper.html#main">LogHelper</a>
+    - <a href="NPMPublishScriptCLI.html#main">NPMPublishScriptCLI</a>
+---
+
+
+
+
+
+
+
+    
+        <h2>NPMPublishScriptCLI</h2>
+        
+            <p>The module that performs the logic of the CLI.</p>
+        
+    
+
+    
+      
+
+      
+        <h2 class="subsection-title">Constructor</h2>
+
+        <div class="subsection-constructor">
+        
+
+<div class="collapsing-entry method-type-class start-open">
+
+
+    <h4 class="js-collapse-title" id="NPMPublishScriptCLI">new NPMPublishScriptCLI<span class="signature">(<span class="signature-args"></span>)</span><span class="type-signature"></span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>Initialises the class.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+</table>
+
+</div>
+
+</div>
+
+        </div>
+      
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h2 class="subsection-title">Instance Methods</h2>
+
+        <div class="subsection-methods">
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="_runNPMScript"><span class="this">this.</span>_runNPMScript<span class="signature">(<span class="signature-args">scriptName</span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise</span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>A helper method that will execute npm run scripts.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+  <tr>
+    <th>Parameters</th>
+    <td>
+      
+
+<table class="params">
+    
+
+        <tr>
+            
+              <td class="name">scriptName</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>The name of the script to run.</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+</table>
+
+    </td>
+  </tr>
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise</span>
+
+
+
+
+
+<div class="param-desc">
+    <p>Resolves once the script has finished executing.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="argv"><span class="this">this.</span>argv<span class="signature">(<span class="signature-args">argv</span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise</span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>This method is the entry method that kicks of logic and expects the
+output of minimist module.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+  <tr>
+    <th>Parameters</th>
+    <td>
+      
+
+<table class="params">
+    
+
+        <tr>
+            
+              <td class="name">argv</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>This is the output minimist which parses the command
+line arguments.</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+</table>
+
+    </td>
+  </tr>
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise</span>
+
+
+
+
+
+<div class="param-desc">
+    <p>Returns a promise for the given task.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="buildJSDocs"><span class="this">this.</span>buildJSDocs<span class="signature">(<span class="signature-args">newPath, tag, version</span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise</span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>Building the JSDocs for the current project</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+  <tr>
+    <th>Parameters</th>
+    <td>
+      
+
+<table class="params">
+    
+
+        <tr>
+            
+              <td class="name">newPath</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>This should be the path to the root of
+the docs output (i.e. github pages or temp build directory).</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+
+        <tr>
+            
+              <td class="name">tag</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>The tag stable, beta or alpha for docs.</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+
+        <tr>
+            
+              <td class="name">version</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>The version string for the directories.</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+</table>
+
+    </td>
+  </tr>
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise</span>
+
+
+
+
+
+<div class="param-desc">
+    <p>that resolves once the docs have been built if requested
+by the developer.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="buildReferenceDocsList"><span class="this">this.</span>buildReferenceDocsList<span class="signature">(<span class="signature-args">newPath</span>)</span><span class="type-signature"></span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>The way reference docs are surfaced to Jekyll are through a
+_data/ list that defines all the stable, beta and alpha reference
+docs.</p>
+<p>This method will build that list and make it available to the Jekyll
+theme.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+  <tr>
+    <th>Parameters</th>
+    <td>
+      
+
+<table class="params">
+    
+
+        <tr>
+            
+              <td class="name">newPath</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>This should be the path to the root of
+the docs output (i.e. github pages or temp build directory).</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+</table>
+
+    </td>
+  </tr>
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="checkoutGithubPages"><span class="this">this.</span>checkoutGithubPages<span class="signature">(<span class="signature-args">newPath</span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise</span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>Checkout the current projects github pages branch</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+  <tr>
+    <th>Parameters</th>
+    <td>
+      
+
+<table class="params">
+    
+
+        <tr>
+            
+              <td class="name">newPath</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>This should be the path to the root of
+the docs output (i.e. github pages or temp build directory).</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+</table>
+
+    </td>
+  </tr>
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise</span>
+
+
+
+
+
+<div class="param-desc">
+    <p>Returns a promise that resolves once the github
+repo has been checked out.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="cleanupGithubPages"><span class="this">this.</span>cleanupGithubPages<span class="signature">(<span class="signature-args">newPath</span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise</span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>This method deletes any files that can be updated by
+npm-publish-scripts are documents that may be out of date with the
+master branch.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+  <tr>
+    <th>Parameters</th>
+    <td>
+      
+
+<table class="params">
+    
+
+        <tr>
+            
+              <td class="name">newPath</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>This should be the path to the root of
+the docs output (i.e. github pages or temp build directory).</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+</table>
+
+    </td>
+  </tr>
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise</span>
+
+
+
+
+
+<div class="param-desc">
+    <p>Returns a promise that resolves once the github
+repo has been checked out.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="confirmExpectedGitBranch"><span class="this">this.</span>confirmExpectedGitBranch<span class="signature">(<span class="signature-args"></span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise</span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>This method resolves if the user is on the master branch, otherwise
+the CLI confirms with the user if they really want to publish a release
+from the current branch.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise</span>
+
+
+
+
+
+<div class="param-desc">
+    <p>Resolves if the branch is ok to use.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="confirmNewPackageVersion"><span class="this">this.</span>confirmNewPackageVersion<span class="signature">(<span class="signature-args">publishDetails</span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise</span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>Confirms with the user the entered details are correct before finally
+publishing the changes.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+  <tr>
+    <th>Parameters</th>
+    <td>
+      
+
+<table class="params">
+    
+
+        <tr>
+            
+              <td class="name">publishDetails</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>This is the details for the release.</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+</table>
+
+    </td>
+  </tr>
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise</span>
+
+
+
+
+
+<div class="param-desc">
+    <p>Promsie that resolves if the user wishes to continue.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="copyDocs"><span class="this">this.</span>copyDocs<span class="signature">(<span class="signature-args">newPath</span>)</span><span class="type-signature"></span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>Copyies over contents of /docs in a project to Github pages.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+  <tr>
+    <th>Parameters</th>
+    <td>
+      
+
+<table class="params">
+    
+
+        <tr>
+            
+              <td class="name">newPath</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>This should be the path to the root of
+the docs output (i.e. github pages or temp build directory).</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+</table>
+
+    </td>
+  </tr>
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="getCurrentBranchName"><span class="this">this.</span>getCurrentBranchName<span class="signature">(<span class="signature-args"></span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise.&lt;String></span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise.&lt;String></span>
+
+
+
+
+
+<div class="param-desc">
+    <p>Returns a promise that resolves with the current
+branch name</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="getProjectPackage"><span class="this">this.</span>getProjectPackage<span class="signature">(<span class="signature-args"></span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise.&lt;Object></span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>Gets the current package.json file in the current working directory.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise.&lt;Object></span>
+
+
+
+
+
+<div class="param-desc">
+    <p>Returns the parsed JSON file.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="getPublishDetails"><span class="this">this.</span>getPublishDetails<span class="signature">(<span class="signature-args"></span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise.&lt;Object></span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>This gets what the release should be, patch, minor or major release with
+a tag of either stable, beta or alpha.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise.&lt;Object></span>
+
+
+
+
+
+<div class="param-desc">
+    <p>Resolves with the relevant details.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="handleCommand"><span class="this">this.</span>handleCommand<span class="signature">(<span class="signature-args">command, args, flags</span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise</span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>If a command is given in the command line args, this method will handle
+the appropriate action.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+  <tr>
+    <th>Parameters</th>
+    <td>
+      
+
+<table class="params">
+    
+
+        <tr>
+            
+              <td class="name">command</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>The command name.</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+
+        <tr>
+            
+              <td class="name">args</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>The arguments given to this command.</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+
+        <tr>
+            
+              <td class="name">flags</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>The flags supplied with the command line.</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+</table>
+
+    </td>
+  </tr>
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise</span>
+
+
+
+
+
+<div class="param-desc">
+    <p>A promise for the provided task.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="handleFlag"><span class="this">this.</span>handleFlag<span class="signature">(<span class="signature-args">args</span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise</span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>If there is no command given to the CLI then the flags will be passed
+to this function in case a relevant action can be taken.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+  <tr>
+    <th>Parameters</th>
+    <td>
+      
+
+<table class="params">
+    
+
+        <tr>
+            
+              <td class="name">args</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>The available flags from the command line.</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+</table>
+
+    </td>
+  </tr>
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise</span>
+
+
+
+
+
+<div class="param-desc">
+    <p>returns a promise once handled.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="initProject"><span class="this">this.</span>initProject<span class="signature">(<span class="signature-args"></span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise</span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>This method will create the appropriate directories and files
+to initialise the project.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise</span>
+
+
+
+
+
+<div class="param-desc">
+    <p>Returns a promise once initialising is done.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="loginToNPM"><span class="this">this.</span>loginToNPM<span class="signature">(<span class="signature-args"></span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise</span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>Logs the user into NPM if they aren't currently logged in.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise</span>
+
+
+
+
+
+<div class="param-desc">
+    <p>Returns a promise that resolves once the user is logged
+in to npm.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="printHelpText"><span class="this">this.</span>printHelpText<span class="signature">(<span class="signature-args"></span>)</span><span class="type-signature"></span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>Prints the help text to the terminal.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="publishDocs"><span class="this">this.</span>publishDocs<span class="signature">(<span class="signature-args">args, flags</span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise</span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>Should get the latest docs from git-pages branch, update the entries
+build any reference docs and commit changes accordingly.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+  <tr>
+    <th>Parameters</th>
+    <td>
+      
+
+<table class="params">
+    
+
+        <tr>
+            
+              <td class="name">args</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;String></span>
+
+
+
+            
+
+            
+                
+                
+
+                
+
+                
+                
+                  <span class="param-attributes">(Optional)</span>
+                  
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>Tag for JSDocs.</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+
+        <tr>
+            
+              <td class="name">flags</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;String></span>
+
+
+
+            
+
+            
+                
+                
+
+                
+
+                
+                
+                  <span class="param-attributes">(Optional)</span>
+                  
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>Version name for JSDocs.</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+</table>
+
+    </td>
+  </tr>
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise</span>
+
+
+
+
+
+<div class="param-desc">
+    <p>Returns a promise which resolves the publish is complete.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="publishToNPM"><span class="this">this.</span>publishToNPM<span class="signature">(<span class="signature-args">tag</span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise</span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>Publishes the project to NPM and will create a tag in Git.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+  <tr>
+    <th>Parameters</th>
+    <td>
+      
+
+<table class="params">
+    
+
+        <tr>
+            
+              <td class="name">tag</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>A tag of 'stable', 'beta' or 'alpha'</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+</table>
+
+    </td>
+  </tr>
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise</span>
+
+
+
+
+
+<div class="param-desc">
+    <p>Resolves once the npm publish call has finished.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="pushChangesToGithub"><span class="this">this.</span>pushChangesToGithub<span class="signature">(<span class="signature-args">newPath</span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise</span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>This method will push everything to Github on the gh-pages branch.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+  <tr>
+    <th>Parameters</th>
+    <td>
+      
+
+<table class="params">
+    
+
+        <tr>
+            
+              <td class="name">newPath</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>This should be the path to the root of
+the docs output (i.e. github pages or temp build directory).</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+</table>
+
+    </td>
+  </tr>
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise</span>
+
+
+
+
+
+<div class="param-desc">
+    <p>Returns a promise that resolves once the github
+repo has been pushed to.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="pushGithubTag"><span class="this">this.</span>pushGithubTag<span class="signature">(<span class="signature-args">tag</span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise</span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>Push the Github tag to the remote repo.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+  <tr>
+    <th>Parameters</th>
+    <td>
+      
+
+<table class="params">
+    
+
+        <tr>
+            
+              <td class="name">tag</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>The tag to assign to the git.</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+</table>
+
+    </td>
+  </tr>
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise</span>
+
+
+
+
+
+<div class="param-desc">
+    <p>Resolves once tags have been pushed.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="pushRelease"><span class="this">this.</span>pushRelease<span class="signature">(<span class="signature-args"></span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise</span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>A method that publishes a release to NPM.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise</span>
+
+
+
+
+
+<div class="param-desc">
+    <p>Promise that resolves once finished publishing release.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="runNPMScripts"><span class="this">this.</span>runNPMScripts<span class="signature">(<span class="signature-args"></span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise</span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>This should run the build and test scripts</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise</span>
+
+
+
+
+
+<div class="param-desc">
+    <p>Resolves once build and test scripts have run.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="serveSite"><span class="this">this.</span>serveSite<span class="signature">(<span class="signature-args"></span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise</span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>This method implements the 'serve' command and started jekyll
+serve and copies the appropriate files to demo the site.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise</span>
+
+
+
+
+
+<div class="param-desc">
+    <p>Returns a promise that resolves once serving has
+finished.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="stopServingDocSite"><span class="this">this.</span>stopServingDocSite<span class="signature">(<span class="signature-args">filesToRemove, fileWatchers</span>)</span><span class="type-signature"></span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>This method stops any currently running processes.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+  <tr>
+    <th>Parameters</th>
+    <td>
+      
+
+<table class="params">
+    
+
+        <tr>
+            
+              <td class="name">filesToRemove</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;String></span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>Files / Directories to delete after
+killing jekyll process.</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+
+        <tr>
+            
+              <td class="name">fileWatchers</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Watcher></span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>An array of watchers to close.</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+</table>
+
+    </td>
+  </tr>
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="updateJekyllTemplate"><span class="this">this.</span>updateJekyllTemplate<span class="signature">(<span class="signature-args">newPath</span>)</span><span class="type-signature"></span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>This method will remove any current jekyll files and copy over the
+new files.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+  <tr>
+    <th>Parameters</th>
+    <td>
+      
+
+<table class="params">
+    
+
+        <tr>
+            
+              <td class="name">newPath</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>This should be the path to the root of
+the docs output (i.e. github pages or temp build directory).</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+</table>
+
+    </td>
+  </tr>
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+            
+
+<div class="collapsing-entry method-type-function ">
+
+
+    <h4 class="js-collapse-title" id="updatePackageVersion"><span class="this">this.</span>updatePackageVersion<span class="signature">(<span class="signature-args">versionBump</span>)</span><span class="type-signature"> <span class="return-arrow">&rarr;</span> Promise.&lt;String></span></h4>
+
+
+<div class="collapse-details js-collapse-details">
+
+
+  
+
+  <div class="description">
+    <p>Bumps the current version with npm bump.</p>
+  </div>
+
+
+
+
+<table class="method-info-table">
+
+  
+
+  
+
+  
+
+
+  <tr>
+    <th>Parameters</th>
+    <td>
+      
+
+<table class="params">
+    
+
+        <tr>
+            
+              <td class="name">versionBump</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+
+            
+            </td>
+
+            
+              <td></td>
+            
+
+            <tr>
+              <td></td>
+              <td class="description last">
+                <p>This should be 'patch', 'minor' or 'major'</p>
+                
+              </td>
+            </tr>
+        </tr>
+
+    
+</table>
+
+    </td>
+  </tr>
+
+
+<!--
+<tr>
+<th>Details</th>
+<td>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</td>
+</tr>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+  <tr>
+  <th>Returns</th>
+  <td>
+  
+          
+
+
+
+<span class="param-type">Promise.&lt;String></span>
+
+
+
+
+
+<div class="param-desc">
+    <p>Resolves once the new version has been bumped.</p>
+</div>
+
+
+      
+  </td>
+  </tr>
+
+
+</table>
+
+</div>
+
+</div>
+
+        
+        </div>
