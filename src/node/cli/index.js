@@ -460,7 +460,8 @@ class NPMPublishScriptCLI {
         if (code === 0) {
           resolve();
         } else {
-          reject(new Error(`Unexpected status code. [${code}]`));
+          reject(new Error(`Unexpected exit code when pushing gh-pages ` +
+            `to Github. [${code}]`));
         }
       });
 
