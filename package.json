@@ -1,7 +1,7 @@
 {
   "name": "npm-publish-scripts",
   "description": "A simple set of scripts to help when publishing to NPM from a Github Repo",
-  "version": "4.1.2",
+  "version": "4.1.7",
   "bin": {
     "npm-publish-scripts": "./build/node/bin/cli.js"
   },
@@ -12,6 +12,7 @@
     "anchor-js": "^3.2.2",
     "chalk": "^1.1.3",
     "chokidar": "^1.6.1",
+    "findup-sync": "^0.4.3",
     "fs-extra": "^1.0.0",
     "git-branch": "^0.3.0",
     "glob": "^7.1.1",

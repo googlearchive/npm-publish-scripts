@@ -27,6 +27,7 @@ const inquirer = require('inquirer');
 const gitBranch = require('git-branch');
 const updateNotifier = require('update-notifier');
 const glob = require('glob');
+const findup = require('findup-sync');
 
 const exitLifeCycle = require('./exit-lifecycle');
 const logHelper = require('./log-helper');
@@ -135,7 +136,7 @@ class NPMPublishScriptCLI {
         return this.pushRelease();
       }
       case 'publish-docs': {
-        return this.publishDocs();
+        return this.publishDocs(args, flags);
       }
       default:
         logHelper.error(`Invlaid command given '${command}'`);
@@ -321,11 +322,11 @@ class NPMPublishScriptCLI {
   /**
    * Should get the latest docs from git-pages branch, update the entries
    * build any reference docs and commit changes accordingly.
-   * @param {String} [tag] Tag for JSDocs.
-   * @param {String} [newVersion] Version name for JSDocs.
+   * @param {Array<String>} [args] Tag for JSDocs.
+   * @param {Array<String>} [flags] Version name for JSDocs.
    * @return {Promise} Returns a promise which resolves the publish is complete.
    */
-  publishDocs(tag, newVersion) {
+  publishDocs(args, flags) {
     const githubPagesRoot = path.join(process.cwd(), 'gh-pages');
 
     let ghPageDirExists = false;
@@ -351,7 +352,11 @@ class NPMPublishScriptCLI {
       this.updateJekyllTemplate(githubPagesRoot);
     })
     .then(() => {
-      return this.buildJSDocs(githubPagesRoot, tag, newVersion);
+      if (flags['non-interactive']) {
+        return;
+      }
+
+      return this.buildJSDocs(githubPagesRoot, args[0], args[1]);
     })
     .then(() => {
       this.buildReferenceDocsList(githubPagesRoot);
@@ -455,7 +460,8 @@ class NPMPublishScriptCLI {
         if (code === 0) {
           resolve();
         } else {
-          reject(new Error(`Unexpected status code. [${code}]`));
+          reject(new Error(`Unexpected exit code when pushing gh-pages ` +
+            `to Github. [${code}]`));
         }
       });
 
@@ -559,10 +565,12 @@ class NPMPublishScriptCLI {
           newPath, REFERENCE_DOCS_DIR, results.tag, results.version
         ),
       ];
+      /* eslint-disable no-console */
 
+      const jsdocPath = findup(
+        path.join('node_modules', '.bin', 'jsdoc'));
       const jsdocProcess = spawnSync(
-        path.join(__dirname, '..', '..', '..',
-          'node_modules', '.bin', 'jsdoc'),
+        jsdocPath,
         jsDocParams,
         {
           cwd: process.cwd(),
@@ -784,7 +792,7 @@ class NPMPublishScriptCLI {
           });
         })
         .then(() => {
-          return this.publishDocs(publishDetails.tag, newVersion);
+          return this.publishDocs([publishDetails.tag, newVersion]);
         });
       });
     });
