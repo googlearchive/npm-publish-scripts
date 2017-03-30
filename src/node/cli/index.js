@@ -352,7 +352,7 @@ class NPMPublishScriptCLI {
       this.updateJekyllTemplate(githubPagesRoot);
     })
     .then(() => {
-      if (flags['non-interactive']) {
+      if (flags && flags['non-interactive']) {
         return;
       }
 
