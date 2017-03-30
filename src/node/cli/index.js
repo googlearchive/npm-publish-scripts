@@ -679,10 +679,12 @@ class NPMPublishScriptCLI {
     if (versionedRelease.stable.length > 0) {
       const latestDocsPath = path.join(newPath, 'reference-docs', 'stable',
         'latest');
+      fse.removeSync(latestDocsPath);
       fse.ensureDirSync(latestDocsPath);
 
       const refDocPath = path.join(newPath, 'reference-docs', 'stable',
         versionedRelease.stable[0]);
+
       const referenceDocFiles = glob.sync(
         path.join(refDocPath, '**', '*')
       );
