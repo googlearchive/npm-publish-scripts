@@ -419,18 +419,18 @@ describe('Test CLI - publish-release', function() {
     const CLI = require('../src/node/cli/index.js');
 
     const cli = new CLI();
-    const branchNameStub = sinon.stub(cli, 'confirmExpectedGitBranch', () => {
+    const branchNameStub = sinon.stub(cli, 'confirmExpectedGitBranch').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(branchNameStub);
 
-    const publishDetailsStub = sinon.stub(cli, 'getPublishDetails', () => {
+    const publishDetailsStub = sinon.stub(cli, 'getPublishDetails').callsFake(() => {
       return Promise.resolve({version: 'patch',
         tag: 'stable'});
     });
     globalStubs.push(publishDetailsStub);
 
-    const loginToNPMStub = sinon.stub(cli, 'loginToNPM', () => {
+    const loginToNPMStub = sinon.stub(cli, 'loginToNPM').callsFake(() => {
       return Promise.reject(new Error(errorMessage));
     });
     globalStubs.push(loginToNPMStub);
@@ -466,18 +466,18 @@ describe('Test CLI - publish-release', function() {
     });
 
     const cli = new CLI();
-    const branchNameStub = sinon.stub(cli, 'confirmExpectedGitBranch', () => {
+    const branchNameStub = sinon.stub(cli, 'confirmExpectedGitBranch').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(branchNameStub);
 
-    const publishDetailsStub = sinon.stub(cli, 'getPublishDetails', () => {
+    const publishDetailsStub = sinon.stub(cli, 'getPublishDetails').callsFake(() => {
       return Promise.resolve({version: 'patch',
         tag: 'stable'});
     });
     globalStubs.push(publishDetailsStub);
 
-    const loginToNPMStub = sinon.stub(cli, 'loginToNPM', () => {
+    const loginToNPMStub = sinon.stub(cli, 'loginToNPM').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(loginToNPMStub);
@@ -512,18 +512,18 @@ describe('Test CLI - publish-release', function() {
     });
 
     const cli = new CLI();
-    const branchNameStub = sinon.stub(cli, 'confirmExpectedGitBranch', () => {
+    const branchNameStub = sinon.stub(cli, 'confirmExpectedGitBranch').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(branchNameStub);
 
-    const publishDetailsStub = sinon.stub(cli, 'getPublishDetails', () => {
+    const publishDetailsStub = sinon.stub(cli, 'getPublishDetails').callsFake(() => {
       return Promise.resolve({version: 'patch',
         tag: 'stable'});
     });
     globalStubs.push(publishDetailsStub);
 
-    const loginToNPMStub = sinon.stub(cli, 'loginToNPM', () => {
+    const loginToNPMStub = sinon.stub(cli, 'loginToNPM').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(loginToNPMStub);
@@ -593,29 +593,29 @@ describe('Test CLI - publish-release', function() {
     const CLI = require('../src/node/cli/index.js');
     const cli = new CLI();
 
-    const branchNameStub = sinon.stub(cli, 'confirmExpectedGitBranch', () => {
+    const branchNameStub = sinon.stub(cli, 'confirmExpectedGitBranch').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(branchNameStub);
 
-    const publishDetailsStub = sinon.stub(cli, 'getPublishDetails', () => {
+    const publishDetailsStub = sinon.stub(cli, 'getPublishDetails').callsFake(() => {
       return Promise.resolve({version: 'patch',
         tag: 'stable'});
     });
     globalStubs.push(publishDetailsStub);
 
-    const loginToNPMStub = sinon.stub(cli, 'loginToNPM', () => {
+    const loginToNPMStub = sinon.stub(cli, 'loginToNPM').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(loginToNPMStub);
 
 
-    const confirmPublishStub = sinon.stub(cli, 'confirmNewPackageVersion', () => {
+    const confirmPublishStub = sinon.stub(cli, 'confirmNewPackageVersion').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(confirmPublishStub);
 
-    const updateVersionStub = sinon.stub(cli, 'updatePackageVersion', () => {
+    const updateVersionStub = sinon.stub(cli, 'updatePackageVersion').callsFake(() => {
       return Promise.reject(new Error(errorMessage));
     });
     globalStubs.push(updateVersionStub);
@@ -645,34 +645,34 @@ describe('Test CLI - publish-release', function() {
     const CLI = require('../src/node/cli/index.js');
     const cli = new CLI();
 
-    const branchNameStub = sinon.stub(cli, 'confirmExpectedGitBranch', () => {
+    const branchNameStub = sinon.stub(cli, 'confirmExpectedGitBranch').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(branchNameStub);
 
-    const publishDetailsStub = sinon.stub(cli, 'getPublishDetails', () => {
+    const publishDetailsStub = sinon.stub(cli, 'getPublishDetails').callsFake(() => {
       return Promise.resolve({version: 'patch',
         tag: 'stable'});
     });
     globalStubs.push(publishDetailsStub);
 
-    const loginToNPMStub = sinon.stub(cli, 'loginToNPM', () => {
+    const loginToNPMStub = sinon.stub(cli, 'loginToNPM').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(loginToNPMStub);
 
 
-    const confirmPublishStub = sinon.stub(cli, 'confirmNewPackageVersion', () => {
+    const confirmPublishStub = sinon.stub(cli, 'confirmNewPackageVersion').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(confirmPublishStub);
 
-    const updateVersionStub = sinon.stub(cli, 'updatePackageVersion', () => {
+    const updateVersionStub = sinon.stub(cli, 'updatePackageVersion').callsFake(() => {
       return Promise.resolve('v1.0.0');
     });
     globalStubs.push(updateVersionStub);
 
-    const publishToNPMStub = sinon.stub(cli, 'publishToNPM', () => {
+    const publishToNPMStub = sinon.stub(cli, 'publishToNPM').callsFake(() => {
       return Promise.reject(new Error(errorMessage));
     });
     globalStubs.push(publishToNPMStub);
@@ -702,39 +702,39 @@ describe('Test CLI - publish-release', function() {
     const CLI = require('../src/node/cli/index.js');
     const cli = new CLI();
 
-    const branchNameStub = sinon.stub(cli, 'confirmExpectedGitBranch', () => {
+    const branchNameStub = sinon.stub(cli, 'confirmExpectedGitBranch').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(branchNameStub);
 
-    const publishDetailsStub = sinon.stub(cli, 'getPublishDetails', () => {
+    const publishDetailsStub = sinon.stub(cli, 'getPublishDetails').callsFake(() => {
       return Promise.resolve({version: 'patch',
         tag: 'stable'});
     });
     globalStubs.push(publishDetailsStub);
 
-    const loginToNPMStub = sinon.stub(cli, 'loginToNPM', () => {
+    const loginToNPMStub = sinon.stub(cli, 'loginToNPM').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(loginToNPMStub);
 
 
-    const confirmPublishStub = sinon.stub(cli, 'confirmNewPackageVersion', () => {
+    const confirmPublishStub = sinon.stub(cli, 'confirmNewPackageVersion').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(confirmPublishStub);
 
-    const updateVersionStub = sinon.stub(cli, 'updatePackageVersion', () => {
+    const updateVersionStub = sinon.stub(cli, 'updatePackageVersion').callsFake(() => {
       return Promise.resolve('v1.0.0');
     });
     globalStubs.push(updateVersionStub);
 
-    const publishToNPMStub = sinon.stub(cli, 'publishToNPM', () => {
+    const publishToNPMStub = sinon.stub(cli, 'publishToNPM').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(publishToNPMStub);
 
-    const gitTagPushStub = sinon.stub(cli, 'pushGithubTag', () => {
+    const gitTagPushStub = sinon.stub(cli, 'pushGithubTag').callsFake(() => {
       return Promise.reject(new Error(errorMessage));
     });
     globalStubs.push(gitTagPushStub);
@@ -764,44 +764,44 @@ describe('Test CLI - publish-release', function() {
     const CLI = require('../src/node/cli/index.js');
     const cli = new CLI();
 
-    const branchNameStub = sinon.stub(cli, 'confirmExpectedGitBranch', () => {
+    const branchNameStub = sinon.stub(cli, 'confirmExpectedGitBranch').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(branchNameStub);
 
-    const publishDetailsStub = sinon.stub(cli, 'getPublishDetails', () => {
+    const publishDetailsStub = sinon.stub(cli, 'getPublishDetails').callsFake(() => {
       return Promise.resolve({version: 'patch',
         tag: 'stable'});
     });
     globalStubs.push(publishDetailsStub);
 
-    const loginToNPMStub = sinon.stub(cli, 'loginToNPM', () => {
+    const loginToNPMStub = sinon.stub(cli, 'loginToNPM').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(loginToNPMStub);
 
 
-    const confirmPublishStub = sinon.stub(cli, 'confirmNewPackageVersion', () => {
+    const confirmPublishStub = sinon.stub(cli, 'confirmNewPackageVersion').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(confirmPublishStub);
 
-    const updateVersionStub = sinon.stub(cli, 'updatePackageVersion', () => {
+    const updateVersionStub = sinon.stub(cli, 'updatePackageVersion').callsFake(() => {
       return Promise.resolve('v1.0.0');
     });
     globalStubs.push(updateVersionStub);
 
-    const publishToNPMStub = sinon.stub(cli, 'publishToNPM', () => {
+    const publishToNPMStub = sinon.stub(cli, 'publishToNPM').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(publishToNPMStub);
 
-    const gitTagPushStub = sinon.stub(cli, 'pushGithubTag', () => {
+    const gitTagPushStub = sinon.stub(cli, 'pushGithubTag').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(gitTagPushStub);
 
-    const publishDocsStub = sinon.stub(cli, 'publishDocs', () => {
+    const publishDocsStub = sinon.stub(cli, 'publishDocs').callsFake(() => {
       return Promise.reject(new Error(errorMessage));
     });
     globalStubs.push(publishDocsStub);
@@ -832,44 +832,44 @@ describe('Test CLI - publish-release', function() {
     const CLI = require('../src/node/cli/index.js');
     const cli = new CLI();
 
-    const branchNameStub = sinon.stub(cli, 'confirmExpectedGitBranch', () => {
+    const branchNameStub = sinon.stub(cli, 'confirmExpectedGitBranch').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(branchNameStub);
 
-    const publishDetailsStub = sinon.stub(cli, 'getPublishDetails', () => {
+    const publishDetailsStub = sinon.stub(cli, 'getPublishDetails').callsFake(() => {
       return Promise.resolve({version: 'patch',
         tag: 'stable'});
     });
     globalStubs.push(publishDetailsStub);
 
-    const loginToNPMStub = sinon.stub(cli, 'loginToNPM', () => {
+    const loginToNPMStub = sinon.stub(cli, 'loginToNPM').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(loginToNPMStub);
 
 
-    const confirmPublishStub = sinon.stub(cli, 'confirmNewPackageVersion', () => {
+    const confirmPublishStub = sinon.stub(cli, 'confirmNewPackageVersion').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(confirmPublishStub);
 
-    const updateVersionStub = sinon.stub(cli, 'updatePackageVersion', () => {
+    const updateVersionStub = sinon.stub(cli, 'updatePackageVersion').callsFake(() => {
       return Promise.resolve('v1.0.0');
     });
     globalStubs.push(updateVersionStub);
 
-    const publishToNPMStub = sinon.stub(cli, 'publishToNPM', () => {
+    const publishToNPMStub = sinon.stub(cli, 'publishToNPM').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(publishToNPMStub);
 
-    const gitTagPushStub = sinon.stub(cli, 'pushGithubTag', () => {
+    const gitTagPushStub = sinon.stub(cli, 'pushGithubTag').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(gitTagPushStub);
 
-    const publishDocsStub = sinon.stub(cli, 'publishDocs', () => {
+    const publishDocsStub = sinon.stub(cli, 'publishDocs').callsFake(() => {
       return Promise.resolve();
     });
     globalStubs.push(publishDocsStub);
