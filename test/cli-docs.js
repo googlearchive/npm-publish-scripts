@@ -270,7 +270,7 @@ describe('Test CLI - publish-docs', function() {
 
     const checkoutStub = sinon.stub(cli, 'checkoutGithubPages');
     checkoutStub.returns(Promise.resolve());
-    const cleanupGHPages = sinon.stub(cli, 'cleanupGithubPages', () => {
+    const cleanupGHPages = sinon.stub(cli, 'cleanupGithubPages').callsFake(() => {
       fse.ensureDirSync(path.join(testOutput, 'gh-pages'));
       return Promise.resolve();
     });
@@ -310,7 +310,7 @@ describe('Test CLI - publish-docs', function() {
 
     const checkoutStub = sinon.stub(cli, 'checkoutGithubPages');
     checkoutStub.returns(Promise.resolve());
-    const cleanupGHPages = sinon.stub(cli, 'cleanupGithubPages', () => {
+    const cleanupGHPages = sinon.stub(cli, 'cleanupGithubPages').callsFake(() => {
       fse.ensureDirSync(path.join(testOutput, 'gh-pages'));
       return Promise.resolve();
     });
