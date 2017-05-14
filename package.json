@@ -32,7 +32,7 @@
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-cssimport": "^5.0.0",
     "gulp-postcss": "^7.0.0",
-    "mocha": "^3.1.2",
+    "mocha": "^3.4.1",
     "node-fetch": "^1.6.3",
     "postcss-cssnext": "^2.8.0",
     "proxyquire": "^1.7.10",
