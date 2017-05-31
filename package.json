@@ -24,7 +24,7 @@
     "update-notifier": "^2.1.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
+    "chai": "^4.0.1",
     "cssnano": "^3.7.4",
     "del": "^2.2.2",
     "eslint": "^3.8.1",
