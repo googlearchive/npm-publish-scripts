@@ -14,7 +14,7 @@
     "chokidar": "^1.6.1",
     "findup-sync": "^1.0.0",
     "fs-extra": "^3.0.1",
-    "git-branch": "^0.3.0",
+    "git-branch": "^1.0.0",
     "glob": "^7.1.1",
     "inquirer": "^3.0.6",
     "jsdoc": "^3.4.1",
