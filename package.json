@@ -28,7 +28,7 @@
     "cssnano": "^3.7.4",
     "del": "^2.2.2",
     "eslint": "^3.8.1",
-    "eslint-config-google": "^0.7.0",
+    "eslint-config-google": "^0.8.0",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-cssimport": "^5.0.0",
     "gulp-postcss": "^7.0.0",
