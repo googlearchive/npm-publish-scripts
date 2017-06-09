@@ -26,7 +26,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "cssnano": "^3.7.4",
-    "del": "^2.2.2",
+    "del": "^3.0.0",
     "eslint": "^3.8.1",
     "eslint-config-google": "^0.7.0",
     "gulp": "github:gulpjs/gulp#4.0",
