@@ -16,7 +16,7 @@
     "fs-extra": "^3.0.1",
     "git-branch": "^0.3.0",
     "glob": "^7.1.1",
-    "inquirer": "^3.0.6",
+    "inquirer": "^3.1.1",
     "jsdoc": "^3.4.1",
     "minimist": "^1.2.0",
     "semver": "^5.3.0",
